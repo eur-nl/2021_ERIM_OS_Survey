@@ -2,9 +2,9 @@
 Code for analysis and visualization of the results of the 2021 ERIM Open Science Survey
 
 When comparing:
-1) Schools; Make sure both schools have the same weight (scale respondants to weight the same).
+1) Schools; Make sure both schools have the same weight (scale respondents to weight the same).
 2) Departments; Use the percentage of respondents per department. 
-3) Position; Use the percentage of respondets per position.
+3) Position; Use the percentage of respondents per position.
 
 # QUESTIONS
 
