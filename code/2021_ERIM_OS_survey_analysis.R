@@ -25,347 +25,128 @@ source(here("code", "split_into_multiple.R"))
 ERIM_OS <-
   read_csv(
     here("data", "PSEUDONYM_manual_20210608_ERIM_OS_Survey.csv"),
-    col_names = TRUE
+    col_names = TRUE,
+    skip_empty_rows = TRUE
   )
+
+# separate questions into clusters:
+# 0 = demographics [columns 2, 3, 4, 5, 6, 35]
+# 1 = OS, general [columns 7, 37]
+# 2 = preregistration [columns 8, 9, 10]
+# 3 = open materials/code [columns 11, 12, 13, 14]
+# 4 = open data [columns 15, 16, 17, 18]
+# 5 = pre-publication archiving [columns 19, 20, 21]
+# 6 = open access [columns 22, 23]
+# 7 = OS adoption/barriers [column 36]
+# 8 = tool awareness [columns 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
+# 9 = role of ERIM [columns 38, 39]
+# assign a cluster number to each question
+levels_question <- c(
+  "0" = "Which faculty are you from?",                                                                             
+  "0" = "Which department are you affiliated to? [RSM]",                                                                                                                                                              
+  "0" = "Which department are you affiliated to? [ESE]",                                                                                                                                                              
+  "0" = "What is your position?",                                                                                                                                                                                     
+  "0" = "Are you member of any research institute affiliated with RSM or ESE?",                                                                                                                                       
+  "1" = "What is your experience with open science practices?",                                                                                                                                                       
+  "2" = "In your opinion, how important for your field is it that researchers preregister their studies?",                                                                                                            
+  "2" = "What is your experience with study preregistration?",                                                                                                                                                        
+  "2" = "The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?",                                                            
+  "3" = "In your opinion, how important for your field is it that materials and/or code are openly available?",                                                                                                       
+  "3" = "What is your experience with using open materials and/or code?",                                                                                                                                             
+  "3" = "What is your experience with sharing open materials and/or code?",                                                                                                                                           
+  "3" = "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?",                                     
+  "4" = "In your opinion, how important for your field is it that data from published research are openly available?",                                                                                                
+  "4" = "What is your experience with using open data?",                                                                                                                                                              
+  "4" = "What is your experience with sharing open data?",                                                                                                                                                            
+  "4" = "The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?",                                                      
+  "5" = "In your opinion, how important is pre-publication archiving for your field?",                                                                                                                                
+  "5" = "What is your experience with pre-publication archiving?",                                                                                                                                                    
+  "5" = "The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?",
+  "6" = "Approximately what proportion of your publications from the last 5 years are open access?",                                                                                                                  
+  "6" = "Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?",                                                                             
+  "8" = "Please indicate your awareness of each of the open science resources listed below [Open Science Framework]",                                                                                                 
+  "8" = "Please indicate your awareness of each of the open science resources listed below [GitHub]",                                                                                                                 
+  "8" = "Please indicate your awareness of each of the open science resources listed below [EUR data repository/Figshare]",                                                                                           
+  "8" = "Please indicate your awareness of each of the open science resources listed below [4TU Center for Research Data]",                                                                                           
+  "8" = "Please indicate your awareness of each of the open science resources listed below [EUR SurfDrive]",                                                                                                          
+  "8" = "Please indicate your awareness of each of the open science resources listed below [EUR Dropbox (not personal)]",                                                                                             
+  "8" = "Please indicate your awareness of each of the open science resources listed below [FAIR data principles]",                                                                                                   
+  "8" = "Please indicate your awareness of each of the open science resources listed below [EUR RePub]",                                                                                                              
+  "8" = "Please indicate your awareness of each of the open science resources listed below [Zenodo]",                                                                                                                 
+  "8" = "Please indicate your awareness of each of the open science resources listed below [Other 1]",                                                                                                                
+  "8" = "Please indicate your awareness of each of the open science resources listed below [Other 2]",                                                                                                                
+  "1" = "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?",                                                                                                    
+  "7" = "The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field.",                                           
+  "1" = "Are you sharing your knowledge about open science practices with others?",                                                                                                                                   
+  "9" = "Do you expect that ERIM supports you in learning open science practices?",                                                                                                                                   
+  "9" = "Which of the following open science practices would you like ERIM to provide information or support for?"
+)
 
 # Clean data --------------------------------------------------------
 
-# extract questions
-ERIM_OS_questions <- 
-  ERIM_OS[1, ] %>%
-  add_column("ID", .before = "Q1.1") %>% 
-  dplyr::select(-Finished)
-
-# subset of data with variables that can be plotted 
+# subset of data with variables that can be plotted
 ERIM_OS_clean <- 
   ERIM_OS %>% 
-  dplyr::select(
-    Finished,                       # has the survey been completed?
-    Q1_1 = Q1.1,                    # faculty
-    Q1_2.RSM = Q1.2_RSM,            # department (RSM)
-    Q1_2_ESE = Q1.2_ESE,            # department (ESE)
-    Q1_3 = Q1.3,                    # position
-    Q1_4 = Q1.4,                    # research institute
-    Q2_1 = Q2.1,                    # open science: experience
-    Q3_1 = Q3.1,                    # preregistration: relevance
-    Q3_2 = Q3.2,                    # preregistration: personal experience
-    # Q3.2.1_TEXT,                    # preregistration: number (not included)
-    Q3_3 = Q3.3,                    # preregistration: concerns
-    # Q3.3_10_TEXT,            # preregistration: other concerns (not included)
-    Q4_1 = Q4.1,                    # open materials and code: relevance
-    Q4_2 = Q4.2,                    # open materials and code: experience using
-    Q4_3 = Q4.3,                    # open materials and code: experience sharing
-    Q4_4 = Q4.4,                    # open materials and code: concerns
-    # Q4.4_11_TEXT,            # open materials and code: other concerns (not included)
-    Q5_1 = Q5.1,                    # open data: relevance
-    Q5_2 = Q5.2,                    # open data: experience using
-    Q5_3 = Q5.3,                    # open data: experience sharing
-    Q5_4 = Q5.4,                    # open data: concerns
-    # Q5.4_13_TEXT,            # open data: other concerns (not included)
-    Q6_1 = Q6.1,                    # preprint: relevance
-    Q6_2 = Q6.2,                    # preprint: experience
-    Q6_3 = Q6.3,                    # preprint: concerns
-    # Q6.3_7_TEXT,             # preprint: other concerns (not included)
-    Q7_1 = Q7.1,                    # open access: number
-    Q7_2 = Q7.2,                    # open access: APC payment
-    # Q7.2_8_TEXT,             # open access: APC payment, other options (not included)
-    Q8_1.1 = Q8.1_1,                  # awareness open science resources: OSF
-    Q8_1.2 = Q8.1_2,                  # awareness open science resources: GitHub
-    Q8_1.3 = Q8.1_3,                  # awareness open science resources: EUR Data Repository
-    Q8_1.4 = Q8.1_4,                  # awareness open science resources: 4TU Center for Research Data
-    Q8_1.5 = Q8.1_5,                  # awareness open science resources: EUR SURFdrive
-    Q8_1.6 = Q8.1_6,                  # awareness open science resources: EUR Dropbox
-    Q8_1.7 = Q8.1_7,                  # awareness open science resources: FAIR data principles
-    Q8_1.8 = Q8.1_8,                  # awareness open science resources: EUR RePub
-    Q8_1.9 = Q8.1_9,                  # awareness open science resources: Zenodo
-    Q8_1.10 = Q8.1_10,                 # awareness open science resources: other (1)
-    # Q8.1_10_TEXT,            # awareness open science resources: other (1) (not included)
-    Q8_1.11 = Q8.1_11,                 # awareness open science resources: other (2)
-    # Q8.1_11_TEXT,            # awareness open science resources: other (2) (not included)
-    Q8_2 = Q8.2,                    # got an ORCID?
-    Q8_3 = Q8.3,                    # open science: barriers
-    # Q8.3_20_TEXT,            # open science: barriers (not included)
-    Q8_4 = Q8.4,                    # open science: sharing knowledge
-    # Q8.4_10_TEXT,            # open science: sharing knowledge (not included)
-    Q8_5 = Q8.5,                    # ERIM: training expectations
-    Q8_6 = Q8.6,                    # ERIM: training preferences 
-    # Q8.6_9_TEXT,             # ERIM: training preferences (not included)
-  ) %>%
-  rowid_to_column(var = "ID")  # assign ID to each participant
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# subset of data with variables that can be synthesized 
-ERIM_OS_clean <- 
-  ERIM_OS %>% 
-  dplyr::select(
-    # select and rename variables of interest for summaries and plots
-    # `Duration (in seconds)`, # duration (in seconds) (not included)
-    Q1_1 = Q1.1,                    # faculty
-    Q1_2 = Q1.2,                    # department (ESE)
-    Q1_2.1 = Q1.2_1,                  # department (RSM)
-    Q1_3 = Q1.3,                    # position
-    Q1_4 = Q1.4,                    # research institute
-    Q2_1 = Q2.1,                    # open science: experience
-    Q3_1 = Q3.1,                    # preregistration: relevance
-    Q3_2 = Q3.2,                    # preregistration: personal experience
-    # Q3.2.1,                  # preregistration: number (not included)
-    Q3_3 = Q3.3,                    # preregistration: concerns
-    # Q3.3_10_TEXT,            # preregistration: other concerns (not included)
-    Q4_1 = Q4.1,                    # open materials and code: relevance
-    Q4_2 = Q4.2,                    # open materials and code: experience using
-    Q4_3 = Q4.3,                    # open materials and code: experience sharing
-    Q4_4 = Q4.4,                    # open materials and code: concerns
-    # Q4.4_11_TEXT,            # open materials and code: other concerns (not included)
-    Q5_1 = Q5.1,                    # open data: relevance
-    Q5_2 = Q5.2,                    # open data: experience using
-    Q5_3 = Q5.3,                    # open data: experience sharing
-    Q5_4 = Q5.4,                    # open data: concerns
-    # Q5.4_13_TEXT,            # open data: other concerns (not included)
-    Q6_1 = Q6.1,                    # preprint: relevance
-    Q6_2 = Q6.2,                    # preprint: experience
-    Q6_3 = Q6.3,                    # preprint: concerns
-    # Q6.3_7_TEXT,             # preprint: other concerns (not included)
-    Q7_1 = Q7.1,                    # open access: number
-    Q7_2 = Q7.2,                    # open access: APC payment
-    # Q7.2_8_TEXT,             # open access: APC payment, other options (not included)
-    Q8_1.1 = Q8.1_1,                  # awareness open science resources: OSF
-    Q8_1.2 = Q8.1_2,                  # awareness open science resources: GitHub
-    Q8_1.3 = Q8.1_3,                  # awareness open science resources: EUR Data Repository
-    Q8_1.4 = Q8.1_4,                  # awareness open science resources: 4TU Center for Research Data
-    Q8_1.5 = Q8.1_5,                  # awareness open science resources: EUR SURFdrive
-    Q8_1.6 = Q8.1_6,                  # awareness open science resources: EUR Dropbox
-    Q8_1.7 = Q8.1_7,                  # awareness open science resources: FAIR data principles
-    Q8_1.8 = Q8.1_8,                  # awareness open science resources: EUR RePub
-    Q8_1.9 = Q8.1_9,                  # awareness open science resources: Zenodo
-    Q8_1.10 = Q8.1_10,                 # awareness open science resources: other (1)
-    # Q8.1_10_TEXT,            # awareness open science resources: other (1) (not included)
-    Q8_1.11 = Q8.1_11,                 # awareness open science resources: other (2)
-    # Q8.1_11_TEXT,            # awareness open science resources: other (2) (not included)
-    Q8_2 = Q8.2,                    # got an ORCID?
-    Q8_3 = Q8.3,                    # open science: barriers
-    # Q8.3_20_TEXT,            # open science: barriers (not included)
-    Q8_4 = Q8.4,                    # open science: sharing knowledge
-    # Q8.4_10_TEXT,            # open science: sharing knowledge (not included)
-    Q8_5 = Q8.5,                    # ERIM: training expectations
-    Q8_6 = Q8.6,                    # ERIM: training preferences 
-    # Q8.6_9_TEXT,             # ERIM: training preferences (not included)
-  ) %>% 
-  .[-c(1:2), ] %>%             # delete first 2 rows
-  rowid_to_column(var = "ID")  # assign ID to each participant
-
-# Multiple options can be selected for some questions
-# We need to separate answers into different columns
-ERIM_OS_clean_sep <- 
-  ERIM_OS_clean %>%
-  mutate(
-    across( # delete comma in some responses
-      .cols = c("Q2_1", "Q3_2", "Q4_2", "Q4_3", "Q4_4", "Q5_2", "Q5_3", "Q6_2", "Q8_1.1", "Q8_1.2", "Q8_1.3", "Q8_1.4",
-                "Q8_1.5", "Q8_1.6", "Q8_1.7", "Q8_1.8", "Q8_1.9", "Q8_1.10", "Q8_1.11", "Q8_2", "Q8_4"),
-      .fns = ~ gsub(",", " ", .)
-    ),
-    # delete semicolon in responses to question Q6_3
-    Q6_3 = gsub(";", " ", Q6_3)
-  ) %>% 
-  # delete "e.g.," in responses to question Q6_3
-  mutate(Q6_3 = gsub("e.g.,", "", Q6_3)) %>% 
+  dplyr::select(-c(11, 12, 17, 22, 26, 29, 40, 42, 45, 47, 50)) %>%  # discard columns with free text
+  rowid_to_column(var = "participant") %>%  # assign ID to each participant
+  # Multiple options can be selected for some questions
+  # We need to separate answers into different columns
   # convert to long format
   pivot_longer(
-    2:tail(names(.), n = 1),
+    3:tail(names(.), n = 1),
     names_to = "question",
     values_to = "value"
-  ) %>%
+  ) %>% 
   # separate answers into different columns
-  bind_cols(
-    split_into_multiple(
-      .$value,
-      pattern = ",",
-      into_prefix = "value"
-    )
-  ) %>% 
-  # delete column with redundant information
-  dplyr::select(-value) %>%
-# convert all columns to factors
-mutate(
-  across(
-    .cols = everything(),
-    .fns = ~ as_factor(.)
-  )
-)
-
-# %>%
-#   # re-convert to long format
-#   pivot_longer(
-#     3:17,
-#     names_to = "option",
-#     values_to = "response"
-#   ) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-survey_data <-
-  # read data
-  read.csv(
-    here("data/survey", "IGDORE Open Survey Form_FINAL.csv"),
-    stringsAsFactors = FALSE
-  ) %>%
-  # identify and remove duplicated entries
-  mutate(duplicate = duplicated(Username), .before = "Username") %>%
-  filter(duplicate != TRUE) %>%
-  # assign participant number
-  rowid_to_column(var = "participant") %>%
-  select(-c(Username, duplicate)) %>% # delete email address
-  # convert date
-  mutate(Timestamp = as.POSIXct(Timestamp, tz = "UTC")) %>%
-  # convert to long format
-  pivot_longer(
-    3:40,
-    names_to = "question",
-    values_to = "value"
-  ) %>%
-  # separate all possible values in different columns
   bind_cols(
     split_into_multiple(
       .$value,
       pattern = ";",
       into_prefix = "value"
     )
-  ) %>%
+  ) %>% 
+  # delete column with redundant information
+  dplyr::select(-value) %>% 
+  # convert all columns to factors
   mutate(
-    participant = as_factor(participant),
-    # recode questions to improve readability on graph
-    question = recode(
-      factor(question),
-      "Are.you.affiliated.with.IGDORE.as.a.Researcher.or.Researcher.in.training." =
-        "0_IGDORE affiliation",
-      "Are.you.currently.employed.by.an.educational.or.research.institution." =
-        "0_Employed by educational/research institution",
-      "What.is.your.highest.academic.career.level." =
-        "0_Current/highest career level",
-      "Choose.the.Field.of.Research..FOR..code.best.describes.your.main.area.of.research." =
-        "0_Field of Research",
-      "What.is.your.experience.with.open.science.practices." =
-        "1_OS experience",
-      "Are.you.sharing.your.knowledge.about.open.science.practices.with.others...tick.all.that.apply." =
-        "1_Sharing OS knowledge",
-      "In.your.opinion..how.important.for.your.field.is.it.that.researchers.preregister.their.studies.." =
-        "2_Importance of preregistration in your field",
-      "What.is.your.experience.with.study.preregistration." =
-        "2_Experience with preregistration",
-      "The.following.are.possible.concerns.that.researchers.could.have.about.preregistering.their.studies...Please.place.a.tick.beside.any.concern.that.you.share..tick.all.that.apply.." =
-        "2_Concerns related to preregistration",
-      "In.your.opinion..how.important.for.your.field.is.it.that.materials.and.or.code.are.openly.available.." =
-        "3_Importance of open materials/code in your field",
-      "What.is.your.experience.with.open.materials.and.or.code." =
-        "3_Experience with open materials/code",
-      "The.following.are.possible.concerns.that.researchers.could.have.about.making.their.materials.and.or.code.openly.available..Please.place.a.tick.beside.any.concern.that.you.share..tick.all.that.apply.." =
-        "3_Concerns related to open materials/code",
-      "In.your.opinion..how.important.for.your.field.is.it.that.data.from.published.research.are.openly.available.." =
-        "4_Importance of open data in your field",
-      "What.is.your.experience.with.open.data." =
-        "4_Experience with open data",
-      "The.following.are.possible.concerns.that.researchers.could.have.about.making.their.data.openly.available..Please.place.a.tick.beside.any.concern.that.you.share..tick.all.that.apply.." =
-        "4_Concerns related to open data",
-      "In.your.opinion..how.important.is.pre.publication.archiving.for.your.field.." =
-        "5_Importance of pre-publication archiving in your field",
-      "What.is.your.experience.with.pre.publication.archiving." =
-        "5_Experience with pre-publication archiving",
-      "The.following.are.possible.concerns.that.researchers.could.have.about.uploading.a.manuscript.to.a.pre.publication.archive.before.submitting.it.for.peer.review..Please.place.a.tick.beside.any.concern.that.you.share..tick.all.that.apply..." =
-        "5_Concerns related to pre-publication archiving",
-      "Approximately.what.proportion.of.your.publications.from.the.last.5.years.are.open.access." =
-        "5_Proportion of your publications (last 5 years) that are open access",
-      "Many.open.access.journals.charge.a.fee.for.processing.the.article.for.publication..How.have.you.managed.payment.of.these.fees...tick.all.that.apply." =
-        "5_APC payment for open access",
-      "Which.of.the.following.open.science.practices..if.any..are.commonly.used.in.your.field.....tick.all.that.apply.." =
-        "6_Common OS practices in your field",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....Open.Science.Framework.." =
-        "7_Awareness: OSF",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....Github." =
-        "7_Awareness: Github",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....Figshare." =
-        "7_Awareness: Figshare",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....Code.Ocean." =
-        "7_Awareness: Code Ocean",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....Data.Cite..including.re3data." =
-        "7_Awareness: Data Cite (re3data)",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....LMU.Open.Science.Toolbox." =
-        "7_Awareness: LMU Open Science Toolbox",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....ORCID." =
-        "7_Awareness: ORCID",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....FAIR.data.principles." =
-        "7_Awareness: FAIR data principles",
-      "Please.indicate.your.awareness.of.each.of.the.open.science.resources.listed.below..If.there.are.other.resources.that.you.use.or.are.aware.of..please.enter.them.in.the..other..box.at.the.bottom.of.the.table....Institutional.publication.repository..e.g..University.Research.Bank.." =
-        "7_Awareness: Institutional repositories",
-      "Other.than.above..if.you.use.or.are.aware.of.other.resources.in.your.discipline..please.list.them.below..including.a.URL.for.the.resource..where.possible" =
-        "7_Awareness: Other",
-      "The.following.are.possible.barriers.to.the.uptake.of.open.science.practices..Please.place.a.tick.beside.any.statement.that.you.agree.is.a.barrier.in.your.field..tick.all.that.apply..." =
-        "6_Barriers to OS in your field",
-      "In.the.last.five.years..have.you.conducted.independent.research." =
-        "0_Independent research (last 5 years)",
-      "In.the.last.five.years..have.you.conducted.publicly.funded.research." =
-        "0_Publicly funded research (last 5 years)",
-      "Are.you.aware.that.some.government.funding.agencies.are.now.requiring..or.will.require.within.the.next.few.years..that.research.publications.and.data.be.openly.available." =
-        "1_Funders requiring open publications/data",
-      "Do.you.expect.that.IGDORE.supports.you.in.learning.open.science.practices." =
-        "8_IGDORE support in learning OS",
-      "Which.of.the.following.open.science.practices.would.you.like.IGDORE.to.provide.information.or.support.for...tick.all.apply.." =
-        "8_IGDORE support in learning OS practices",
-      "Which.of.the.following.open.science.practices.could.you.support.other.IGDORE.members.with...tick.all.apply." =
-        "8_You support IGDORE members with OS"
+    across(
+      .cols = everything(),
+      .fns = ~ as_factor(.)
     )
-  ) %>%
-  ### separate questions into clusters:
-  # 0 = demographics [questions 1, 2, 3, 4, 25, 26]
-  # 1 = OS, general knowledge [questions 5, 6, 27]
-  # 2 = preregistration [questions 7, 8, 9]
-  # 3 = open materials/code [questions 10, 11, 12]
-  # 4 = open data [questions 13, 14, 15]
-  # 5 = open access [questions 16, 17, 18, 19, 20]
-  # 6 = OS adoption/barriers [questions 21, 24]
-  # 7 = tool awareness [questions 22, 23]
-  # 8 = role of IGDORE [questions 28, 29, 30]
-  separate(question, c("field_code", "question"), sep = "_", remove = TRUE) %>%
-  select(-value) %>%
-  rename("date_time" = Timestamp)
+  ) %>% 
+  # add column with cluster
+  mutate(
+    cluster = fct_recode(question, !!!levels_question),
+    .after = "Finished"
+  )
+# %>% 
+# # re-convert to long format
+# pivot_longer(
+#   4:tail(names(.), n = 1),
+#   names_to = "option",
+#   values_to = "response"
+# )
 
-# cluster 0: demographics ----------------------------------------------------------------
+
+# cluster 0: demographics [summary] ----------------------------------------------------------------
+
+ERIM_OS_clean_cluster0 <-
+  ERIM_OS_clean %>% 
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # list of possible answers
 survey_cluster0_answers <- 
