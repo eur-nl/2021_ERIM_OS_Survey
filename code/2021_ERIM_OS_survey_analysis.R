@@ -21,13 +21,91 @@ source(here("code", "split_into_multiple.R"))
 
 # Load data ----------------------------------------------------------------
 
-# pseudonymized data from the 2021 ERIM Open Science Survey (retrieved on June 8th 2021)
+# pseudonymized data from the 2021 ERIM Open Science Survey (retrieved on June 8th 2021) after manual cleaning 
 ERIM_OS <-
   read_csv(
-    here("data", "PSEUDONYM_20210608_ERIM_OS_Survey.csv")
+    here("data", "PSEUDONYM_manual_20210608_ERIM_OS_Survey.csv"),
+    col_names = TRUE
   )
 
 # Clean data --------------------------------------------------------
+
+# extract questions
+ERIM_OS_questions <- 
+  ERIM_OS[1, ] %>%
+  add_column("ID", .before = "Q1.1") %>% 
+  dplyr::select(-Finished)
+
+# subset of data with variables that can be plotted 
+ERIM_OS_clean <- 
+  ERIM_OS %>% 
+  dplyr::select(
+    Finished,                       # has the survey been completed?
+    Q1_1 = Q1.1,                    # faculty
+    Q1_2.RSM = Q1.2_RSM,            # department (RSM)
+    Q1_2_ESE = Q1.2_ESE,            # department (ESE)
+    Q1_3 = Q1.3,                    # position
+    Q1_4 = Q1.4,                    # research institute
+    Q2_1 = Q2.1,                    # open science: experience
+    Q3_1 = Q3.1,                    # preregistration: relevance
+    Q3_2 = Q3.2,                    # preregistration: personal experience
+    # Q3.2.1_TEXT,                    # preregistration: number (not included)
+    Q3_3 = Q3.3,                    # preregistration: concerns
+    # Q3.3_10_TEXT,            # preregistration: other concerns (not included)
+    Q4_1 = Q4.1,                    # open materials and code: relevance
+    Q4_2 = Q4.2,                    # open materials and code: experience using
+    Q4_3 = Q4.3,                    # open materials and code: experience sharing
+    Q4_4 = Q4.4,                    # open materials and code: concerns
+    # Q4.4_11_TEXT,            # open materials and code: other concerns (not included)
+    Q5_1 = Q5.1,                    # open data: relevance
+    Q5_2 = Q5.2,                    # open data: experience using
+    Q5_3 = Q5.3,                    # open data: experience sharing
+    Q5_4 = Q5.4,                    # open data: concerns
+    # Q5.4_13_TEXT,            # open data: other concerns (not included)
+    Q6_1 = Q6.1,                    # preprint: relevance
+    Q6_2 = Q6.2,                    # preprint: experience
+    Q6_3 = Q6.3,                    # preprint: concerns
+    # Q6.3_7_TEXT,             # preprint: other concerns (not included)
+    Q7_1 = Q7.1,                    # open access: number
+    Q7_2 = Q7.2,                    # open access: APC payment
+    # Q7.2_8_TEXT,             # open access: APC payment, other options (not included)
+    Q8_1.1 = Q8.1_1,                  # awareness open science resources: OSF
+    Q8_1.2 = Q8.1_2,                  # awareness open science resources: GitHub
+    Q8_1.3 = Q8.1_3,                  # awareness open science resources: EUR Data Repository
+    Q8_1.4 = Q8.1_4,                  # awareness open science resources: 4TU Center for Research Data
+    Q8_1.5 = Q8.1_5,                  # awareness open science resources: EUR SURFdrive
+    Q8_1.6 = Q8.1_6,                  # awareness open science resources: EUR Dropbox
+    Q8_1.7 = Q8.1_7,                  # awareness open science resources: FAIR data principles
+    Q8_1.8 = Q8.1_8,                  # awareness open science resources: EUR RePub
+    Q8_1.9 = Q8.1_9,                  # awareness open science resources: Zenodo
+    Q8_1.10 = Q8.1_10,                 # awareness open science resources: other (1)
+    # Q8.1_10_TEXT,            # awareness open science resources: other (1) (not included)
+    Q8_1.11 = Q8.1_11,                 # awareness open science resources: other (2)
+    # Q8.1_11_TEXT,            # awareness open science resources: other (2) (not included)
+    Q8_2 = Q8.2,                    # got an ORCID?
+    Q8_3 = Q8.3,                    # open science: barriers
+    # Q8.3_20_TEXT,            # open science: barriers (not included)
+    Q8_4 = Q8.4,                    # open science: sharing knowledge
+    # Q8.4_10_TEXT,            # open science: sharing knowledge (not included)
+    Q8_5 = Q8.5,                    # ERIM: training expectations
+    Q8_6 = Q8.6,                    # ERIM: training preferences 
+    # Q8.6_9_TEXT,             # ERIM: training preferences (not included)
+  ) %>%
+  rowid_to_column(var = "ID")  # assign ID to each participant
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # subset of data with variables that can be synthesized 
 ERIM_OS_clean <- 
@@ -118,15 +196,14 @@ ERIM_OS_clean_sep <-
     )
   ) %>% 
   # delete column with redundant information
-  dplyr::select(-value)
-# %>% 
-  # # convert all columns to factors
-  # mutate(
-  #   across(
-  #     .cols = everything(),
-  #     .fns = ~ as_factor(.)
-  #   )
-  # )
+  dplyr::select(-value) %>%
+# convert all columns to factors
+mutate(
+  across(
+    .cols = everything(),
+    .fns = ~ as_factor(.)
+  )
+)
 
 # %>%
 #   # re-convert to long format
