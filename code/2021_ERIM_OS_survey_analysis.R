@@ -16,7 +16,7 @@ library(here)
 library(tidyverse)
 library(viridisLite)
 
-### load custom function to split variable into multiple columns
+# load custom function to split variable into multiple columns
 source(here("code", "split_into_multiple.R"))
 
 # Load data ----------------------------------------------------------------
@@ -25,8 +25,7 @@ source(here("code", "split_into_multiple.R"))
 ERIM_OS <-
   read_csv(
     here("data", "PSEUDONYM_manual_20210608_ERIM_OS_Survey.csv"),
-    col_names = TRUE,
-    skip_empty_rows = TRUE
+    col_names = TRUE
   )
 
 # separate questions into clusters:
@@ -91,7 +90,7 @@ ERIM_OS_clean <-
   rowid_to_column(var = "participant") %>%  # assign ID to each participant
   # Multiple options can be selected for some questions
   # We need to separate answers into different columns
-  # convert to long format
+  # Convert to long format
   pivot_longer(
     3:tail(names(.), n = 1),
     names_to = "question",
@@ -119,97 +118,61 @@ ERIM_OS_clean <-
     cluster = fct_recode(question, !!!levels_question),
     .after = "Finished"
   )
-# %>% 
-# # re-convert to long format
-# pivot_longer(
-#   4:tail(names(.), n = 1),
-#   names_to = "option",
-#   values_to = "response"
-# )
 
+# incomplete questionnaires [summary] ----------------------------------------------------------------
+
+# percentage of incomplete questionnaires
+ERIM_OS_clean_unfinished <- 
+  ERIM_OS_clean %>% 
+  # mutate(Finished = as.logical(Finished)) %>%
+  group_by(participant) %>%
+  summarize(completed_survey = length(which(Finished == TRUE))/length(Finished)) %>%
+  count(completed_survey) %>% 
+  mutate(
+    completed_survey = ifelse(completed_survey == 0, FALSE, TRUE),
+    perc = round(n / sum(n) * 100, 2), # calculate percentage
+    lab_perc = paste(round(n / sum(n) * 100, 2), "%", sep = "") # percentage as text (for plot labels)
+  )
+
+ERIM_OS_clean_unfinished
 
 # cluster 0: demographics [summary] ----------------------------------------------------------------
 
 ERIM_OS_clean_cluster0 <-
   ERIM_OS_clean %>% 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# list of possible answers
-survey_cluster0_answers <- 
-  c(# several questions
-    "I don’t know/prefer not to answer",
-    # question 1
-    "Researcher", "Researcher in training", 
-    # question 2
-    "No", "Yes",
-    # question 3
-    "Professor/Associate/Assistant Professor", "Lecturer/Senior Lecturer", "Researcher/Senior Researcher",
-    "Postdoctoral fellow", "PhD student", "Research Master student", "Research Assistant",
-    # question 4
-    "Mathematical Sciences", "Physical Sciences", "Chemical Sciences", "Earth Sciences", "Environmental Sciences", "Biological Sciences",
-    "Agricultural and Veterinary Sciences", "Information and Computing Sciences", "Engineering", "Technology",
-    "Medical and Health Sciences", "Built Environment and Design", "Education", "Economics", "Commerce, Management, Tourism and Services",
-    "Studies in Human Societies", "Psychology and Cognitive Sciences", "Law and Legal Studies", "Studies in Creative Arts and Writing",
-    "Language, Communication and Culture", "History and Archaeology", "Philosophy and Religious Studies"
-    # question 25: same as question 2
-    # question 26: same as question 2
-  )
-
-survey_cluster0 <-
-  survey_data %>%
-  # keep only questions of relevant cluster
-  filter(field_code == "0") %>%
-  droplevels() %>%
-  # keep only columns without NAs
-  select_if(~ sum(!is.na(.)) > 0) %>%
-  # convert question to factor and reorder levels
-  mutate(
-    question = factor(
-      question,
-      levels = c(
-        "IGDORE affiliation",
-        "Employed by educational/research institution",
-        "Current/highest career level",
-        "Field of Research",
-        "Independent research (last 5 years)",
-        "Publicly funded research (last 5 years)"
-      )
-    )
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "0" # keep only questions of relevant cluster
   ) %>%
-  # delete unused columns
-  select(-c(date_time, field_code)) %>%
-  # convert to long format
-  pivot_longer(3, names_to = "response", values_to = "item") %>%
-  # calculate total response per item
-  group_by(item, question) %>%
-  summarize(response = n()) %>%
-  ungroup() %>%
-  select(question, item, response) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
   group_by(question) %>%
-  arrange(desc(item)) %>%
   mutate(
-    perc = round(response / sum(response) * 100, 2), # calculate percentage
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
   ) %>%
-  ungroup() %>%
-  # sort according to question
-  arrange(question) %>% 
-  # if answer is not in list of possible answers, classify it as "Other" 
-  mutate(item = ifelse(item %in% survey_cluster0_answers, item, "Other"))
+  ungroup()
+
+ERIM_OS_clean_cluster0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # cluster 0: graphs (donuts) ----------------------------------------------------------------
 
