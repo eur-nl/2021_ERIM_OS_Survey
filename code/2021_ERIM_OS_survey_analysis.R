@@ -88,15 +88,14 @@ ERIM_OS_clean <-
   ERIM_OS %>% 
   dplyr::select(-c(11, 12, 17, 22, 26, 29, 40, 42, 45, 47, 50)) %>%  # discard columns with free text
   rowid_to_column(var = "participant") %>%  # assign ID to each participant
-  # Multiple options can be selected for some questions
-  # We need to separate answers into different columns
-  # Convert to long format
+  # convert to long format
   pivot_longer(
     3:tail(names(.), n = 1),
     names_to = "question",
     values_to = "value"
   ) %>% 
-  # separate answers into different columns
+  # Multiple options can be selected for some questions
+  # We need to separate answers into different columns
   bind_cols(
     split_into_multiple(
       .$value,
@@ -118,6 +117,14 @@ ERIM_OS_clean <-
     cluster = fct_recode(question, !!!levels_question),
     .after = "Finished"
   )
+
+ERIM_OS_clean
+
+# save as .csv
+write_csv(
+  ERIM_OS_clean,
+  here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
+)
 
 # incomplete questionnaires [summary] ----------------------------------------------------------------
 
@@ -159,6 +166,10 @@ ERIM_OS_clean_cluster0 <-
   ungroup()
 
 ERIM_OS_clean_cluster0
+
+
+
+
 
 
 
