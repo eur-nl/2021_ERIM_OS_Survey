@@ -1,0 +1,244 @@
+---
+title: "Report of the 2021 ERIM Open Science Survey"
+author: '[Dr. Lizette Guzman-Ramirez](https://www.linkedin.com/in/drlizguzman/), [Dr. Antonio Schettino](https://antonio-schettino.com/)'
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    theme: united
+    highlight: tango
+    code_folding: hide
+    toc: true
+    toc_float: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r doc-setup, include = FALSE}
+
+# RNG
+seed_synth <- 135249315 
+set.seed(seed_synth)
+
+# ### install packages
+# install.packages("knitr")
+# install.packages("kableExtra")
+# install.packages("here")
+# install.packages("tidyverse")
+# install.packages("ggpubr")
+# install.packages("viridisLite")
+
+### load packages
+library(knitr)
+library(kableExtra)
+library(here)
+library(tidyverse)
+library(ggpubr)
+library(viridisLite)
+
+# RMarkdown
+options(digits = 2) # number of decimal digits
+opts_chunk$set(
+  echo = TRUE, # show code
+  warning = FALSE, # no package warnings
+  message = FALSE, # no package messages
+  fig.dim = c(8, 8) # figure width & height
+)
+
+# custom kable
+kable_custom <- function(data) {
+  knitr::kable(data, digits = getOption("digits")) %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+}
+
+# custom ggplot theme
+theme_custom <-
+  theme_pubr(base_size = 12) + # base theme from package 'ggpubr'
+  theme(
+    strip.text = element_text(
+      hjust = .5,
+      size = 20
+    ),
+    plot.title = element_text(size = 22, hjust = .5),
+    legend.box.background = element_rect(color = "transparent"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+
+```
+
+***
+***
+
+# Introduction
+
+```{r load-preproc-data, message = FALSE}
+
+ERIM_OS_clean <-
+  read_csv(
+    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
+  ) %>% 
+  # convert all columns to factors
+  mutate(
+    across(
+      .cols = everything(),
+      .fns = ~ as_factor(.)
+    )
+  )
+
+```
+
+**INSERT TEXT HERE**
+
+```{r complete-questionnaires-data}
+
+# percentage of (in)complete questionnaires
+ERIM_OS_clean_unfinished <- 
+  ERIM_OS_clean %>% 
+  group_by(participant) %>%
+  summarize(survey = length(which(Finished == TRUE))/length(Finished)) %>%
+  count(survey) %>% 
+  mutate(
+    survey = ifelse(survey == 0, "incomplete", "complete"),
+    perc = round(n / sum(n) * 100, 2), # calculate percentage
+    lab_perc = paste(round(n / sum(n) * 100, 2), "%", sep = "") # percentage as text (for plot labels)
+  )
+
+```
+
+```{r complete-questionnaires-table}
+
+ERIM_OS_clean_unfinished %>% 
+  dplyr::select(-perc) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 0: Demographics
+
+**INSERT TEXT HERE**
+
+```{r cluster-0-data}
+
+# summary of responses to cluster 0
+cluster0 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "0" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-0-table}
+
+cluster0 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+```{r cluster-0-plot}
+
+# questions as plot titles
+donuts_title_cluster0 <- levels(cluster0$question)
+
+# preallocate object with all plots
+donuts_cluster0 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster0)) {
+  
+  # subset data
+  temp_cluster0 <-
+    cluster0 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster0[[i_donut]] <-
+    temp_cluster0 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(8, "plain", "black"),
+      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster0[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster0_question", i_donut, ".png"),
+    plot = donuts_cluster0[[i_donut]],
+    device = "png",
+    path = here("img", "cluster0"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
+
+# Cluster 1: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 2: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 3: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 4: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 5: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 6: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 7: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 8: Demographics
+
+**INSERT TEXT HERE**
+
+# Cluster 9: Demographics
+
+**INSERT TEXT HERE**
+
+***
+***
+
+
