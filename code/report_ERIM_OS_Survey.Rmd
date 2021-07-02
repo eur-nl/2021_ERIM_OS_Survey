@@ -204,7 +204,7 @@ for (i_donut in 1:length(donuts_title_cluster0)) {
 
 ```
 
-# Cluster 1: Experience with Open Science practices 
+# Cluster 1: OS, general 
 
 **INSERT TEXT HERE**
 
@@ -271,17 +271,17 @@ for (i_donut in 1:length(donuts_title_cluster1)) {
       fill = "item",
       lab.font = c(20, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster2$item))),
+      palette = viridis(length(unique(temp_cluster1$item))),
       ggtheme = theme_custom
     ) +
-    ggtitle(donuts_title_cluster2[i_donut]) 
+    ggtitle(donuts_title_cluster1[i_donut]) 
 
   # save to file
   ggsave(
     filename = paste0("donut_cluster1_question", i_donut, ".png"),
     plot = donuts_cluster1[[i_donut]],
     device = "png",
-    path = here("img", "cluster1"),
+    path = here("img"),
     scale = 1.5,
     width = 8,
     height = 8,
@@ -293,36 +293,35 @@ for (i_donut in 1:length(donuts_title_cluster1)) {
 
 ```
 
-
-# Cluster 2: Demographics
-
-**INSERT TEXT HERE**
-
-# Cluster 3: Demographics
+# Cluster 2: preregistration
 
 **INSERT TEXT HERE**
 
-# Cluster 4: Demographics
+# Cluster 3: open materials/code
 
 **INSERT TEXT HERE**
 
-# Cluster 5: Demographics
+# Cluster 4: open data
 
 **INSERT TEXT HERE**
 
-# Cluster 6: Demographics
+# Cluster 5: pre-publication archiving
 
 **INSERT TEXT HERE**
 
-# Cluster 7: Demographics
+# Cluster 6: open access
 
 **INSERT TEXT HERE**
 
-# Cluster 8: Demographics
+# Cluster 7: OS adoption/barriers
 
 **INSERT TEXT HERE**
 
-# Cluster 9: Demographics
+# Cluster 8: tool awareness
+
+**INSERT TEXT HERE**
+
+# Cluster 9: role of ERIM
 
 **INSERT TEXT HERE**
 
