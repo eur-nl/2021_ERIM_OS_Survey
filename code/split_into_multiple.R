@@ -1,7 +1,7 @@
 # https://stackoverflow.com/questions/4350440/split-data-frame-string-column-into-multiple-columns
 # split variable into multiple columns
 # (when total number of levels is unknown)
-split_into_multiple <- function(column, pattern = ", ", into_prefix) {
+split_into_multiple <- function(column, pattern = ",", into_prefix) {
   
   cols <- str_split_fixed(column, pattern, n = Inf)
   # Sub out the ""'s returned by filling the matrix to the right, with NAs which are useful

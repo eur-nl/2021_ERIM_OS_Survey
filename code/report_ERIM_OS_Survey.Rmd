@@ -1,0 +1,634 @@
+---
+title: "Report of the 2021 ERIM Open Science Survey"
+author: '[Dr. Lizette Guzman-Ramirez](https://www.linkedin.com/in/drlizguzman/), [Dr. Antonio Schettino](https://antonio-schettino.com/)'
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    theme: united
+    highlight: tango
+    code_folding: hide
+    toc: true
+    toc_float: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r doc-setup, include = FALSE}
+
+# RNG
+seed_synth <- 135249315 
+set.seed(seed_synth)
+
+# ### install packages
+# install.packages("knitr")
+# install.packages("kableExtra")
+# install.packages("here")
+# install.packages("tidyverse")
+# install.packages("ggpubr")
+# install.packages("viridisLite")
+
+### load packages
+library(knitr)
+library(kableExtra)
+library(here)
+library(tidyverse)
+library(ggpubr)
+library(viridisLite)
+
+# RMarkdown
+options(digits = 2) # number of decimal digits
+opts_chunk$set(
+  echo = TRUE, # show code
+  warning = FALSE, # no package warnings
+  message = FALSE, # no package messages
+  fig.dim = c(8, 8) # figure width & height
+)
+
+# custom kable
+kable_custom <- function(data) {
+  knitr::kable(data, digits = getOption("digits")) %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+}
+
+# custom ggplot theme
+theme_custom <-
+  theme_pubr(base_size = 12) + # base theme from package 'ggpubr'
+  theme(
+    strip.text = element_text(
+      hjust = .5,
+      size = 20
+    ),
+    plot.title = element_text(size = 22, hjust = .5),
+    legend.box.background = element_rect(color = "transparent"),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
+
+```
+
+***
+***
+
+*Introduction*
+The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted using the Swinburne Open Science Survey.
+
+The survey aimed at examining how researchers perceive and use "open science" practices, including sharing data, preregistering research plans, and publishing in open access journals. Whether or not you are experienced in using open science practices, or fully understand what might be possible in your discipline.
+
+The survey covered 6 main topics: 
+1. Experience with Open Science practices
+2. Preregistration
+3. Open Code
+4. Open Data
+5. Open Access
+6. Awareness & Expectations
+
+#We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
+
+The percentages presented in the survey responses represent the percentage of the respondents, not the total percentage of researchers. 
+
+Any comments or question, please contact Dr. Lizette Guzman-Ramirez, ERIM Research Data Steward and/or Dr. Antonio Schettino, ERS Open Science Coordinator
+
+
+
+```{r load-preproc-data, message = FALSE}
+
+ERIM_OS_clean <-
+  read_csv(
+    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
+  ) %>% 
+  # convert all columns to factors
+  mutate(
+    across(
+      .cols = everything(),
+      .fns = ~ as_factor(.)
+    )
+  )
+
+```
+
+```{r complete-questionnaires-data}
+
+# percentage of (in)complete questionnaires
+ERIM_OS_clean_unfinished <- 
+  ERIM_OS_clean %>% 
+  group_by(participant) %>%
+  summarize(survey = length(which(Finished == TRUE))/length(Finished)) %>%
+  count(survey) %>% 
+  mutate(
+    survey = ifelse(survey == 0, "incomplete", "complete"),
+    perc = round(n / sum(n) * 100, 2), # calculate percentage
+    lab_perc = paste(round(n / sum(n) * 100, 2), "%", sep = "") # percentage as text (for plot labels)
+  )
+
+```
+
+```{r complete-questionnaires-table}
+
+ERIM_OS_clean_unfinished %>% 
+  dplyr::select(-perc) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 0: Demographics
+
+*Demographics*
+The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.
+
+
+|Position|RSM|ESE|Total|
+|-----------|----|-----|-----|
+|PhD student|20%|16%|18%|
+|Postdoc or researcher|23%|17%|20%|
+|Tenured Track|27%|6%|16%|
+|Tenured Faculty Member|27%|34%|30%|
+|Total|25%|19%|22%|
+
+
+```{r cluster-0-data}
+
+# summary of responses to cluster 0
+cluster0 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "0" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-0-table}
+
+cluster0 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+```{r cluster-0-plot}
+
+# questions as plot titles
+donuts_title_cluster0 <- levels(cluster0$question)
+
+# preallocate object with all plots
+donuts_cluster0 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster0)) {
+  
+  # subset data
+  temp_cluster0 <-
+    cluster0 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster0[[i_donut]] <-
+    temp_cluster0 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+#      lab.font = c(8, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = plasma(length(unique(temp_cluster0$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster0[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster0_question", i_donut, ".png"),
+    plot = donuts_cluster0[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
+
+# Cluster 1: OS, general 
+
+*Experience with Open Science practices*
+From question 2.1 (What is your experience with Open Science practices?) almost 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
+When comparing schools, ESE seems to be less aware and using less Open Science practices than RSM. And when comparing position, tenured faculty members have the most experience, while PhD seem to be the ones that use Open Science practices the least.  
+
+
+```{r cluster-1-data}
+
+# summary of responses to cluster 1
+cluster1 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "1" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-1-table}
+
+cluster1 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+```{r cluster-1-plot}
+
+# questions as plot titles
+donuts_title_cluster1 <- levels(cluster1$question)
+
+# preallocate object with all plots
+donuts_cluster1 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster1)) {
+  
+  # subset data
+  temp_cluster1 <-
+    cluster1 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster1[[i_donut]] <-
+    temp_cluster1 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster1$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster1[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster1_question", i_donut, ".png"),
+    plot = donuts_cluster1[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
+
+# Cluster 2: preregistration
+
+**INSERT TEXT HERE**
+
+```{r cluster-2-data}
+
+# summary of responses to cluster 2
+cluster2 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "2" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-2-table}
+
+cluster2 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 3: open materials/code
+
+**INSERT TEXT HERE**
+
+```{r cluster-3-data}
+
+# summary of responses to cluster 3
+cluster3 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "3" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-3-table}
+
+cluster3 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 4: open data
+
+**INSERT TEXT HERE**
+
+```{r cluster-4-data}
+
+# summary of responses to cluster 4
+cluster4 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "4" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-4-table}
+
+cluster4 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 5: pre-publication archiving
+
+**INSERT TEXT HERE**
+
+```{r cluster-5-data}
+
+# summary of responses to cluster 5
+cluster5 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "5" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-5-table}
+
+cluster5 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 6: open access
+
+**INSERT TEXT HERE**
+
+```{r cluster-6-data}
+
+# summary of responses to cluster 6
+cluster6 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "6" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-6-table}
+
+cluster6 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 7: OS adoption/barriers
+
+**INSERT TEXT HERE**
+
+```{r cluster-7-data}
+
+# summary of responses to cluster 7
+cluster7 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "7" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-7-table}
+
+cluster7 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 8: tool awareness
+
+**INSERT TEXT HERE**
+
+```{r cluster-8-data}
+
+# summary of responses to cluster 8
+cluster8 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "8" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-8-table}
+
+cluster8 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+# Cluster 9: role of ERIM
+
+**INSERT TEXT HERE**
+
+```{r cluster-9-data}
+
+# summary of responses to cluster 9
+cluster9 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "9" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-9-table}
+
+cluster9 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
+***
+***
+
+
