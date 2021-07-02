@@ -192,7 +192,7 @@ for (i_donut in 1:length(donuts_title_cluster0)) {
     filename = paste0("donut_cluster0_question", i_donut, ".png"),
     plot = donuts_cluster0[[i_donut]],
     device = "png",
-    path = here("img", "cluster0"),
+    path = here("img"),
     scale = 1.5,
     width = 8,
     height = 8,
@@ -204,23 +204,23 @@ for (i_donut in 1:length(donuts_title_cluster0)) {
 
 ```
 
-# Cluster 2: Experience with Open Science practices 
+# Cluster 1: Experience with Open Science practices 
 
 **INSERT TEXT HERE**
 
-```{r cluster-2-data}
+```{r cluster-1-data}
 
-# summary of responses to cluster 2
-cluster2 <-
+# summary of responses to cluster 1
+cluster1 <-
   ERIM_OS_clean %>% 
   dplyr::filter(
     Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "2" # keep only questions of relevant cluster
+      cluster == "1" # keep only questions of relevant cluster
   ) %>%
   droplevels() %>% # drop unused levels
   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  drop_na() %>% # drop rows with missing values
+  # drop_na() %>% # drop rows with missing values
   rename("item" = "value_1") %>% 
   group_by(question, item) %>%
   summarize(number_responses = n()) %>%
@@ -233,36 +233,36 @@ cluster2 <-
 
 ```
 
-```{r cluster-2-table}
+```{r cluster-1-table}
 
-cluster2 %>% 
+cluster1 %>% 
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
 
 ```
 
-```{r cluster-2-plot}
+```{r cluster-1-plot}
 
 # questions as plot titles
-donuts_title_cluster2 <- levels(cluster2$question)
+donuts_title_cluster1 <- levels(cluster1$question)
 
 # preallocate object with all plots
-donuts_cluster2 <- NULL
+donuts_cluster1 <- NULL
 
 # loop through questions and make donut plots
-#for (i_donut in 1:length(donuts_title_cluster1)) {
+for (i_donut in 1:length(donuts_title_cluster1)) {
   
   # subset data
-  temp_cluster2 <-
+  temp_cluster1 <-
     cluster1 %>%
     filter(question == levels(question)[i_donut]) %>%
     droplevels() %>% 
     dplyr::select(-number_responses)
   
   # donut graph
-  donuts_cluster2[[i_donut]] <-
-    temp_cluster2 %>%
+  donuts_cluster1[[i_donut]] <-
+    temp_cluster1 %>%
     ggdonutchart(
       "perc",
       label = "lab_perc",
@@ -289,7 +289,7 @@ donuts_cluster2 <- NULL
     dpi = 600
   )
   
-#}
+}
 
 ```
 
