@@ -69,7 +69,26 @@ theme_custom <-
 ***
 ***
 
-# Introduction
+*Introduction*
+The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted using the Swinburne Open Science Survey.
+
+The survey aimed at examining how researchers perceive and use "open science" practices, including sharing data, preregistering research plans, and publishing in open access journals. Whether or not you are experienced in using open science practices, or fully understand what might be possible in your discipline.
+
+The survey covered 6 main topics: 
+1. Experience with Open Science practices
+2. Preregistration
+3. Open Code
+4. Open Data
+5. Open Access
+6. Awareness & Expectations
+
+#We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
+
+The percentages presented in the survey responses represent the percentage of the respondents, not the total percentage of researchers. 
+
+Any comments or question, please contact Dr. Lizette Guzman-Ramirez, ERIM Research Data Steward and/or Dr. Antonio Schettino, ERS Open Science Coordinator
+
+
 
 ```{r load-preproc-data, message = FALSE}
 
@@ -86,8 +105,6 @@ ERIM_OS_clean <-
   )
 
 ```
-
-**INSERT TEXT HERE**
 
 ```{r complete-questionnaires-data}
 
@@ -116,7 +133,18 @@ ERIM_OS_clean_unfinished %>%
 
 # Cluster 0: Demographics
 
-**INSERT TEXT HERE**
+*Demographics*
+The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.
+
+
+|Position|RSM|ESE|Total|
+|-----------|----|-----|-----|
+|PhD student|20%|16%|18%|
+|Postdoc or researcher|23%|17%|20%|
+|Tenured Track|27%|6%|16%|
+|Tenured Faculty Member|27%|34%|30%|
+|Total|25%|19%|22%|
+
 
 ```{r cluster-0-data}
 
@@ -206,7 +234,10 @@ for (i_donut in 1:length(donuts_title_cluster0)) {
 
 # Cluster 2: Experience with Open Science practices 
 
-**INSERT TEXT HERE**
+*Experience with Open Science practices*
+From question 2.1 (What is your experience with Open Science practices?) almost 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
+When comparing schools, ESE seems to be less aware and using less Open Science practices than RSM. And when comparing position, tenured faculty members have the most experience, while PhD seem to be the ones that use Open Science practices the least.  
+
 
 ```{r cluster-2-data}
 
