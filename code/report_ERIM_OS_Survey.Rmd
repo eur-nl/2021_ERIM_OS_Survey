@@ -411,6 +411,40 @@ cluster4 %>%
 
 **INSERT TEXT HERE**
 
+```{r cluster-5-data}
+
+# summary of responses to cluster 5
+cluster5 <-
+  ERIM_OS_clean %>% 
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "5" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>% 
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
+
+```
+
+```{r cluster-5-table}
+
+cluster5 %>% 
+  dplyr::select(-c(number_responses, perc)) %>% 
+  rename(percentage = lab_perc) %>% 
+  kable_custom()
+
+```
+
 # Cluster 6: open access
 
 **INSERT TEXT HERE**
