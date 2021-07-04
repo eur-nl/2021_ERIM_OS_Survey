@@ -97,7 +97,6 @@ donut_cluster0_question1 <-
     lab.pos = "out",
     color = "black",
     fill = "item",
-    lab.font = c(12, "plain", "black"),
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
@@ -132,7 +131,6 @@ donut_cluster0_question2 <-
     lab.pos = "out",
     color = "black",
     fill = "item",
-    lab.font = c(12, "plain", "black"),
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
@@ -168,7 +166,6 @@ donut_cluster0_question3 <-
     lab.pos = "out",
     color = "black",
     fill = "item",
-    lab.font = c(12, "plain", "black"),
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
@@ -203,7 +200,6 @@ donut_cluster0_question4 <-
     lab.pos = "out",
     color = "black",
     fill = "item",
-    lab.font = c(12, "plain", "black"),
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
@@ -226,8 +222,38 @@ ggsave(
 
 # Question 5 ----------------------------------------------------------------
 
+donut_cluster0_question5 <-
+  cluster %>%
+  filter(question == questions[5]) %>%
+  # subset data
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle("Are you member of any research institute\naffiliated with RSM or ESE?")
 
+donut_cluster0_question5
 
+# save to file
+ggsave(
+  filename = "donut_cluster0_question5.png",
+  plot = donut_cluster0_question5,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
+# END ----------------------------------------------------------------
 
 
