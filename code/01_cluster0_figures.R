@@ -137,10 +137,7 @@ donut_cluster0_question2 <-
     ggtheme = theme_custom
   ) +
   ggtitle(questions[2]) +
-  theme(
-    legend.text = element_text(size = 7)
-    # legend.position = "right"
-  )
+  theme(legend.text = element_text(size = 7))
 
 donut_cluster0_question2
 
@@ -159,11 +156,75 @@ ggsave(
 
 # Question 3 ----------------------------------------------------------------
 
+donut_cluster0_question3 <-
+  cluster %>%
+  filter(question == questions[3]) %>%
+  # subset data
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    lab.font = c(12, "plain", "black"),
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle(questions[3])
 
+donut_cluster0_question3
 
+# save to file
+ggsave(
+  filename = "donut_cluster0_question3.png",
+  plot = donut_cluster0_question3,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
+# Question 4 ----------------------------------------------------------------
 
+donut_cluster0_question4 <-
+  cluster %>%
+  filter(question == questions[4]) %>%
+  # subset data
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    lab.font = c(12, "plain", "black"),
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle(questions[4])
 
+donut_cluster0_question4
+
+# save to file
+ggsave(
+  filename = "donut_cluster0_question4.png",
+  plot = donut_cluster0_question4,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
+
+# Question 5 ----------------------------------------------------------------
 
 
 
