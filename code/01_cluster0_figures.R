@@ -81,11 +81,14 @@ questions <- levels(cluster$question)
 
 # Question 1 ----------------------------------------------------------------
 
-donut_cluster0_question1 <-
+data_cluster0_question1 <-
   cluster %>%
   filter(question == questions[1]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  dplyr::select(-number_responses)
+
+donut_cluster0_question1 <-
+  data_cluster0_question1 %>%
   ggdonutchart(
     "perc",
     label = "lab_perc",
@@ -114,11 +117,14 @@ ggsave(
 
 # Question 2 ----------------------------------------------------------------
 
-donut_cluster0_question2 <-
+data_cluster0_question2 <-
   cluster %>%
   filter(question == questions[2]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  dplyr::select(-number_responses)
+
+donut_cluster0_question2 <-
+  data_cluster0_question2 %>%
   ggdonutchart(
     "perc",
     label = "lab_perc",
@@ -129,7 +135,7 @@ donut_cluster0_question2 <-
     ggtheme = theme_custom
   ) +
   ggtitle(questions[2]) +
-  theme(legend.text = element_text(size = 7)) # legend too bit, font must be manually resized
+  guides(fill = guide_legend(nrow = length(unique(data_cluster0_question2$item)), byrow = TRUE))
 
 donut_cluster0_question2
 
@@ -148,11 +154,14 @@ ggsave(
 
 # Question 3 ----------------------------------------------------------------
 
-donut_cluster0_question3 <-
+data_cluster0_question3 <-
   cluster %>%
   filter(question == questions[3]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  dplyr::select(-number_responses)
+
+donut_cluster0_question3 <-
+  data_cluster0_question3 %>%
   ggdonutchart(
     "perc",
     label = "lab_perc",
@@ -181,11 +190,14 @@ ggsave(
 
 # Question 4 ----------------------------------------------------------------
 
-donut_cluster0_question4 <-
+data_cluster0_question4 <- 
   cluster %>%
   filter(question == questions[4]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  dplyr::select(-number_responses)
+
+donut_cluster0_question4 <-
+  data_cluster0_question4 %>%
   ggdonutchart(
     "perc",
     label = "lab_perc",
@@ -214,11 +226,14 @@ ggsave(
 
 # Question 5 ----------------------------------------------------------------
 
-donut_cluster0_question5 <-
+data_cluster0_question5 <- 
   cluster %>%
   filter(question == questions[5]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  dplyr::select(-number_responses)
+
+donut_cluster0_question5 <-
+  data_cluster0_question5 %>%
   ggdonutchart(
     "perc",
     label = "lab_perc",
