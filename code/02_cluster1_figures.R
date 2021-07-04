@@ -182,222 +182,47 @@ ggsave(
   dpi = 600
 )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Question 2 ----------------------------------------------------------------
-
-data_cluster1_question2 <-
-  cluster %>%
-  filter(question == questions[2]) %>%
-  droplevels() %>%
-  dplyr::select(-number_responses)
-
-donut_cluster1_question2 <-
-  data_cluster1_question2 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("Are you sharing your knowledge\nabout open science practices with others?") + # title is too long, must be manually split into two lines
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
-
-donut_cluster1_question2
-
-# save to file
-ggsave(
-  filename = "donut_cluster1_question2.png",
-  plot = donut_cluster1_question2,
-  device = "png",
-  path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
-  dpi = 600
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Question 2 ----------------------------------------------------------------
-
-donut_cluster0_question2 <-
-  cluster %>%
-  filter(question == questions[2]) %>%
-  droplevels() %>%
-  dplyr::select(-number_responses) %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle(questions[2]) +
-  theme(legend.text = element_text(size = 7)) # legend too bit, font must be manually resized
-
-donut_cluster0_question2
-
-# save to file
-ggsave(
-  filename = "donut_cluster0_question2.png",
-  plot = donut_cluster0_question2,
-  device = "png",
-  path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
-  dpi = 600
-)
-
 # Question 3 ----------------------------------------------------------------
 
-donut_cluster0_question3 <-
+data_cluster1_question3 <-
   cluster %>%
   filter(question == questions[3]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  drop_na() %>% # drop rows with missing values
+  dplyr::select(-number_responses) %>% 
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "No, I did not participate and I do not have an ORCID iD",
+      "No, I did not participate since I already had an ORCID iD",
+      "Yes, I participated and got an ORCID iD",
+      "I don't know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
+
+donut_cluster1_question3 <-
+  data_cluster1_question3 %>%
   ggdonutchart(
     "perc",
     label = "lab_perc",
     lab.pos = "out",
+    lab.adjust = .4,
     color = "black",
     fill = "item",
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
-  ggtitle(questions[3])
+  ggtitle(questions[3]) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE))
 
-donut_cluster0_question3
-
-# save to file
-ggsave(
-  filename = "donut_cluster0_question3.png",
-  plot = donut_cluster0_question3,
-  device = "png",
-  path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
-  dpi = 600
-)
-
-# Question 4 ----------------------------------------------------------------
-
-donut_cluster0_question4 <-
-  cluster %>%
-  filter(question == questions[4]) %>%
-  droplevels() %>%
-  dplyr::select(-number_responses) %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle(questions[4])
-
-donut_cluster0_question4
+donut_cluster1_question3
 
 # save to file
 ggsave(
-  filename = "donut_cluster0_question4.png",
-  plot = donut_cluster0_question4,
-  device = "png",
-  path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
-  dpi = 600
-)
-
-# Question 5 ----------------------------------------------------------------
-
-donut_cluster0_question5 <-
-  cluster %>%
-  filter(question == questions[5]) %>%
-  droplevels() %>%
-  dplyr::select(-number_responses) %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("Are you member of any research institute\naffiliated with RSM or ESE?") # title is too long, must be manually split into two lines
-
-donut_cluster0_question5
-
-# save to file
-ggsave(
-  filename = "donut_cluster0_question5.png",
-  plot = donut_cluster0_question5,
+  filename = "donut_cluster1_question3.png",
+  plot = donut_cluster1_question3,
   device = "png",
   path = here("img"),
   scale = 1,
