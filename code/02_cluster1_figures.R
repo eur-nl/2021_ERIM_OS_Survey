@@ -53,13 +53,12 @@ cluster <-
   droplevels() %>% # drop unused levels
   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
   rename("item" = "value_1") %>%
   mutate(question = factor(
     question,
     levels = c(
-      "What is your experience with open science practices?",   
-      "Are you sharing your knowledge about open science practices with others?",  
+      "What is your experience with open science practices?",
+      "Are you sharing your knowledge about open science practices with others?",
       "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?"
     ),
     ordered = TRUE
@@ -83,7 +82,7 @@ data_cluster1_question1 <-
   cluster %>%
   filter(question == questions[1]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>% 
+  dplyr::select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -133,7 +132,7 @@ data_cluster1_question2 <-
   cluster %>%
   filter(question == questions[2]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>% 
+  dplyr::select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -165,6 +164,7 @@ donut_cluster1_question2 <-
     ggtheme = theme_custom
   ) +
   ggtitle(questions[2]) +
+  ggtitle("Are you sharing your knowledge about\nopen science practices with others?") + # title is too long, must be manually split into two lines
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
 
 donut_cluster1_question2
@@ -188,8 +188,9 @@ data_cluster1_question3 <-
   cluster %>%
   filter(question == questions[3]) %>%
   droplevels() %>%
-  drop_na() %>% # drop rows with missing values
-  dplyr::select(-number_responses) %>% 
+  drop_na() %>%
+  # drop rows with missing values
+  dplyr::select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -214,7 +215,7 @@ donut_cluster1_question3 <-
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
-  ggtitle(questions[3]) +
+  ggtitle("During March 2021 ERIM launched an ORCID campaign.\nDid you participate in it and got your own ORCID iD?") + # title is too long, must be manually split into two lines
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE))
 
 donut_cluster1_question3
