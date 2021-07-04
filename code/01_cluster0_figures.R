@@ -88,7 +88,6 @@ questions <- levels(cluster$question)
 donut_cluster0_question1 <-
   cluster %>%
   filter(question == questions[1]) %>%
-  # subset data
   droplevels() %>%
   dplyr::select(-number_responses) %>%
   ggdonutchart(
@@ -122,7 +121,6 @@ ggsave(
 donut_cluster0_question2 <-
   cluster %>%
   filter(question == questions[2]) %>%
-  # subset data
   droplevels() %>%
   dplyr::select(-number_responses) %>%
   ggdonutchart(
@@ -135,7 +133,7 @@ donut_cluster0_question2 <-
     ggtheme = theme_custom
   ) +
   ggtitle(questions[2]) +
-  theme(legend.text = element_text(size = 7))
+  theme(legend.text = element_text(size = 7)) # legend too bit, font must be manually resized
 
 donut_cluster0_question2
 
@@ -157,7 +155,6 @@ ggsave(
 donut_cluster0_question3 <-
   cluster %>%
   filter(question == questions[3]) %>%
-  # subset data
   droplevels() %>%
   dplyr::select(-number_responses) %>%
   ggdonutchart(
@@ -191,7 +188,6 @@ ggsave(
 donut_cluster0_question4 <-
   cluster %>%
   filter(question == questions[4]) %>%
-  # subset data
   droplevels() %>%
   dplyr::select(-number_responses) %>%
   ggdonutchart(
@@ -225,7 +221,6 @@ ggsave(
 donut_cluster0_question5 <-
   cluster %>%
   filter(question == questions[5]) %>%
-  # subset data
   droplevels() %>%
   dplyr::select(-number_responses) %>%
   ggdonutchart(
@@ -237,7 +232,7 @@ donut_cluster0_question5 <-
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
-  ggtitle("Are you member of any research institute\naffiliated with RSM or ESE?")
+  ggtitle("Are you member of any research institute\naffiliated with RSM or ESE?") # title is too long, must be manually split into two lines
 
 donut_cluster0_question5
 
@@ -255,5 +250,3 @@ ggsave(
 )
 
 # END ----------------------------------------------------------------
-
-
