@@ -50,14 +50,10 @@ cluster <-
     Finished == "TRUE" & # keep only complete questionnaires
       cluster == "0" # keep only questions of relevant cluster
   ) %>%
-  droplevels() %>%
-  # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>%
-  # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>%
-  # keep columns without NAs
-  drop_na() %>%
-  # drop rows with missing values
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  drop_na() %>% # drop rows with missing values
   rename("item" = "value_1") %>%
   mutate(question = factor(
     question,
