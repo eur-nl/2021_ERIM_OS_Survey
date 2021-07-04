@@ -163,7 +163,6 @@ donut_cluster1_question2 <-
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
-  ggtitle(questions[2]) +
   ggtitle("Are you sharing your knowledge about\nopen science practices with others?") + # title is too long, must be manually split into two lines
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
 
