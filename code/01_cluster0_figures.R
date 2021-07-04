@@ -194,7 +194,18 @@ data_cluster0_question4 <-
   cluster %>%
   filter(question == questions[4]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses)
+  dplyr::select(-number_responses) %>% 
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "PhD student",
+      "Postdoc or researcher",
+      "Tenure track",
+      "Tenured faculty member"
+    ),
+    ordered = TRUE
+  ))
 
 donut_cluster0_question4 <-
   data_cluster0_question4 %>%
@@ -230,7 +241,18 @@ data_cluster0_question5 <-
   cluster %>%
   filter(question == questions[5]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses)
+  dplyr::select(-number_responses) %>% 
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "ERIM",
+      "Tinbergen",
+      "ERIM,Tinbergen",
+      "Neither"
+    ),
+    ordered = TRUE
+  ))
 
 donut_cluster0_question5 <-
   data_cluster0_question5 %>%
