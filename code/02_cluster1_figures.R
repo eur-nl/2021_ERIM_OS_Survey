@@ -83,7 +83,19 @@ data_cluster1_question1 <-
   cluster %>%
   filter(question == questions[1]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses)
+  dplyr::select(-number_responses) %>% 
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "Until now, I was unaware of open science practices",
+      "I am aware, but have not used open science practices in my research",
+      "I have some experience with open science practices",
+      "I have extensive experience with open science practices",
+      "I don’t know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
 
 donut_cluster1_question1 <-
   data_cluster1_question1 %>%
@@ -91,12 +103,14 @@ donut_cluster1_question1 <-
     "perc",
     label = "lab_perc",
     lab.pos = "out",
+    lab.adjust = .4,
     color = "black",
     fill = "item",
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
   ggtitle(questions[1]) +
+  # scale_x_discrete(guide = guide_axis(n.dodge = 10)) +
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE))
 
 donut_cluster1_question1
@@ -114,6 +128,63 @@ ggsave(
   dpi = 600
 )
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Question 2 ----------------------------------------------------------------
+
+data_cluster1_question2 <-
+  cluster %>%
+  filter(question == questions[2]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses)
+
+donut_cluster1_question2 <-
+  data_cluster1_question2 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle("Are you sharing your knowledge\nabout open science practices with others?") + # title is too long, must be manually split into two lines
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
+
+donut_cluster1_question2
+
+# save to file
+ggsave(
+  filename = "donut_cluster1_question2.png",
+  plot = donut_cluster1_question2,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
 
 
