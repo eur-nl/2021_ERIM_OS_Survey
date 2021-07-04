@@ -110,7 +110,6 @@ donut_cluster1_question1 <-
     ggtheme = theme_custom
   ) +
   ggtitle(questions[1]) +
-  # scale_x_discrete(guide = guide_axis(n.dodge = 10)) +
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE))
 
 donut_cluster1_question1
@@ -128,7 +127,60 @@ ggsave(
   dpi = 600
 )
 
+# Question 2 ----------------------------------------------------------------
 
+data_cluster1_question2 <-
+  cluster %>%
+  filter(question == questions[2]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>% 
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "No",
+      "I share my knowledge with my colleagues informally",
+      "I share my knowledge with my colleagues by offering seminars and/or giving talks",
+      "I share my knowledge with my students or fellow research students",
+      "I teach open science practices in postgraduate units",
+      "I teach open science practices in undergraduate units",
+      "I share my knowledge with others through forum discussions (e.g. Facebook groups)",
+      "I share my knowledge with others through writing posting (e.g. blogs, webs, magazines)",
+      "I don’t know/prefer not to answer",
+      "Other"
+    ),
+    ordered = TRUE
+  ))
+
+donut_cluster1_question2 <-
+  data_cluster1_question2 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    lab.adjust = .4,
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle(questions[2]) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
+
+donut_cluster1_question2
+
+# save to file
+ggsave(
+  filename = "donut_cluster1_question2.png",
+  plot = donut_cluster1_question2,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
 
 
