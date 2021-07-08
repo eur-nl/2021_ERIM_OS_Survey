@@ -109,8 +109,7 @@ donut_cluster2_question1 <-
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
-  ggtitle("In your opinion, how important for your field is it\nthat researchers preregister their studies?") + # title is too long, must be manually split into two lines
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE))
+  ggtitle("In your opinion, how important for your field is it\nthat researchers preregister their studies?") # title is too long, must be manually split into two lines
 
 donut_cluster2_question1
 
@@ -126,6 +125,62 @@ ggsave(
   units = "in",
   dpi = 600
 )
+
+# Question 2 ----------------------------------------------------------------
+
+data_cluster2_question2 <-
+  cluster %>%
+  filter(question == questions[2]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "Until now, I was unaware of study preregistration",
+      "I am aware of study preregistration, but have not used it in my research",
+      "I have some experience with study preregistration, but do not use it regularly",
+      "I regularly preregister my studies",
+      "I don’t know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
+
+donut_cluster2_question2 <-
+  data_cluster2_question2 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    lab.adjust = .4,
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle(questions[2]) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
+
+donut_cluster2_question2
+
+# save to file
+ggsave(
+  filename = "donut_cluster2_question2.png",
+  plot = donut_cluster2_question2,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
+
+
+
+
+
+
 
 
 
