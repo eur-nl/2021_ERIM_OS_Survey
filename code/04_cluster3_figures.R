@@ -79,6 +79,94 @@ questions <- levels(cluster$question)
 
 # Question 1 ----------------------------------------------------------------
 
+data_cluster3_question1 <-
+  cluster %>%
+  filter(question == questions[1]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "Extremely important",
+      "Very important",
+      "Moderately important",
+      "Slightly important",
+      "Not at all important",
+      "Researchers in my discipline do not use materials and/or code",
+      "I don’t know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
+
+donut_cluster3_question1 <-
+  data_cluster3_question1 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle("In your opinion, how important for your field is it\nthat materials and/or code are openly available?") + # title is too long, must be manually split into two lines
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE))
+
+donut_cluster3_question1
+
+# save to file
+ggsave(
+  filename = "donut_cluster3_question1.png",
+  plot = donut_cluster3_question1,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
+
+# Question 2 ----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+# Question 3 ----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+# Question 4 ----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
