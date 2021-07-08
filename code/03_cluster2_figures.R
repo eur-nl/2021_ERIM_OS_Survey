@@ -210,7 +210,7 @@ donut_cluster2_question3 <-
     palette = plasma(length(unique(.$item))),
     ggtheme = theme_custom
   ) +
-  ggtitle("The following are possible concerns that researchers\ncould have about preregistering their studies",  # title is too long, must be manually split into two lines
+  ggtitle("The following are possible concerns that researchers\ncould have about preregistering their studies", # title is too long, must be manually split into two lines
           subtitle = "Which of these concerns would apply to you?") +
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE))
 
