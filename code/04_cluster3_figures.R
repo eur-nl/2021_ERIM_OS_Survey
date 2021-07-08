@@ -228,22 +228,58 @@ ggsave(
 
 # Question 4 ----------------------------------------------------------------
 
+data_cluster3_question4 <-
+  cluster %>%
+  filter(question == questions[4]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "Reuse of my materials and/or code could violate the epistemological framework of my research",
+      "I might lose control over how my materials and/or code are being used",
+      "There could be issues related to intellectual property",
+      "Sharing these materials and/or code could result in others asking me to provide assistance for their research",
+      "Others might find it difficult to understand my materials and/or code",
+      "I might not receive appropriate credit for developing the materials and/or code if I make them openly available",
+      "Other researchers might criticise my materials and/or code",
+      "Other researchers might find errors in my published work",
+      "I do not share any of these concerns",
+      "Other",
+      "I don’t know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
 
+donut_cluster3_question4 <-
+  data_cluster3_question4 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle("The following are possible concerns that researchers\ncould have about making their materials\nand/or code openly available", # title is too long, must be manually split into two lines
+          subtitle = "Which of these concerns would apply to you?") +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[4])$item)), byrow = TRUE))
 
+donut_cluster3_question4
 
+# save to file
+ggsave(
+  filename = "donut_cluster3_question4.png",
+  plot = donut_cluster3_question4,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# END ----------------------------------------------------------------
