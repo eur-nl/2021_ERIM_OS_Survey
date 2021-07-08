@@ -178,14 +178,52 @@ ggsave(
 
 # Question 3 ----------------------------------------------------------------
 
+data_cluster4_question3 <-
+  cluster %>%
+  filter(question == questions[3]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "Until now, I was unaware of open data",
+      "I am aware of open data, but have not shared my data",
+      "I have some experience sharing open data, but not regularly",
+      "I regularly share open data",
+      "I don’t know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
 
+donut_cluster4_question3 <-
+  data_cluster4_question3 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle(questions[3]) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE))
 
+donut_cluster4_question3
 
-
-
-
-
-
+# save to file
+ggsave(
+  filename = "donut_cluster4_question3.png",
+  plot = donut_cluster4_question3,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
 # Question 4 ----------------------------------------------------------------
 
