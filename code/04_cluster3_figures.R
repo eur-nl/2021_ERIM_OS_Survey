@@ -130,14 +130,52 @@ ggsave(
 
 # Question 2 ----------------------------------------------------------------
 
+data_cluster3_question2 <-
+  cluster %>%
+  filter(question == questions[2]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "Until now, I hadn't heard of open materials and/or code",
+      "I am aware of open materials and/or code, but have not used it in my research",
+      "I have some experience with open materials and/or code, but do not use them regularly",
+      "I regularly use and/or create open materials and/or code",
+      "I don’t know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
 
+donut_cluster3_question2 <-
+  data_cluster3_question2 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle("What is your experience with\nusing open materials and/or code?") + # title is too long, must be manually split into two lines
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
 
+donut_cluster3_question2
 
-
-
-
-
-
+# save to file
+ggsave(
+  filename = "donut_cluster3_question2.png",
+  plot = donut_cluster3_question2,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
 # Question 3 ----------------------------------------------------------------
 
