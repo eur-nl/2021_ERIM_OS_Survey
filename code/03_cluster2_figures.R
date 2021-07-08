@@ -28,6 +28,7 @@ theme_custom <-
       size = 20
     ),
     plot.title = element_text(size = 22, hjust = .5),
+    plot.subtitle = element_text(hjust = .5),
     legend.box.background = element_rect(color = "transparent"),
     legend.title = element_blank(),
     legend.position = "bottom"
@@ -176,11 +177,60 @@ ggsave(
   dpi = 600
 )
 
+# Question 3 ----------------------------------------------------------------
 
+data_cluster2_question3 <-
+  cluster %>%
+  filter(question == questions[3]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  # reorder responses
+  mutate(item = factor(
+    item,
+    levels = c(
+      "Preregistration prevents exploratory research",
+      "Preregistration stifles research creativity or flexibility",
+      "Preregistration might make it more difficult to publish in certain journals",
+      "Preregistration might lead to other people taking my research idea and implementing my plan",
+      "It might delay data collection",
+      "I need to look at my data before I can decide how to best analyse it",
+      "I do not share any of these concerns",
+      "Other",
+      "I don’t know/prefer not to answer"
+    ),
+    ordered = TRUE
+  ))
 
+donut_cluster2_question3 <-
+  data_cluster2_question3 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    lab.adjust = .4,
+    lab.font = c(.1, "plain", "black"), # slightly smaller label font size
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle("The following are possible concerns that researchers\ncould have about preregistering their studies",  # title is too long, must be manually split into two lines
+          subtitle = "Which of these concerns would apply to you?") +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE))
 
+donut_cluster2_question3
 
+# save to file
+ggsave(
+  filename = "donut_cluster2_question3.png",
+  plot = donut_cluster2_question3,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
-
-
-
+# END ----------------------------------------------------------------
