@@ -227,13 +227,57 @@ ggsave(
 
 # Question 4 ----------------------------------------------------------------
 
+data_cluster4_question4 <-
+  cluster %>%
+  filter(question == questions[4]) %>%
+  droplevels() %>%
+  dplyr::select(-number_responses) %>%
+  # reorder responses (must also be recoded, one option is too long to fit in the legend)
+  mutate(item = recode_factor(
+    item, 
+    "There could be issues related to ethics" = "There could be issues related to ethics",
+    "I might lose control over how my data are being used" = "I might lose control over how my data are being used",
+    "There could be issues related to privacy" = "There could be issues related to privacy",
+    "There could be issues related to intellectual property" = "There could be issues related to intellectual property",
+    "I might not receive appropriate credit for my data collection" = "I might not receive appropriate credit for my data collection",
+    "I think it is unfair for researchers beyond the original team to benefit (e.g. through future publications, career advancement) from my data collection" = "It is unfair for researchers beyond the original team to benefit from my data collection",
+    "Other researchers could use my data for another study that I intended to conduct in the future" = "Other researchers could use my data for another study that I intended to conduct in the future",
+    "Other researchers might criticise my data and/or research practices" = "Other researchers might criticise my data and/or research practices",
+    "I do not share any of these concerns" = "I do not share any of these concerns",
+    "Other" = "Other",
+    "I don’t know/prefer not to answer" = "I don’t know/prefer not to answer" 
+  ),
+  ordered = TRUE
+  ) 
 
+donut_cluster4_question4 <-
+  data_cluster4_question4 %>%
+  ggdonutchart(
+    "perc",
+    label = "lab_perc",
+    lab.pos = "out",
+    color = "black",
+    fill = "item",
+    palette = plasma(length(unique(.$item))),
+    ggtheme = theme_custom
+  ) +
+  ggtitle("The following are possible concerns that researchers\ncould have about making their data openly available", # title is too long, must be manually split into two lines
+          subtitle = "Which of these concerns would apply to you?") +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[4])$item)), byrow = TRUE))
 
+donut_cluster4_question4
 
-
-
-
-
-
+# save to file
+ggsave(
+  filename = "donut_cluster4_question4.png",
+  plot = donut_cluster4_question4,
+  device = "png",
+  path = here("img"),
+  scale = 1,
+  width = 8,
+  height = 8,
+  units = "in",
+  dpi = 600
+)
 
 # END ----------------------------------------------------------------
