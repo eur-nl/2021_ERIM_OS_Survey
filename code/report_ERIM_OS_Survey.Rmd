@@ -82,7 +82,7 @@ The survey covered 6 main topics:
 5. Open Access
 6. Awareness & Expectations
 
-#We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
+We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
 
 The percentages presented in the survey responses represent the percentage of the respondents, not the total percentage of researchers. 
 
@@ -372,6 +372,56 @@ cluster2 %>%
   kable_custom()
 
 ```
+```{r cluster-2-plot}
+
+# questions as plot titles
+donuts_title_cluster2 <- levels(cluster2$question)
+
+# preallocate object with all plots
+donuts_cluster2 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster2)) {
+  
+  # subset data
+  temp_cluster2 <-
+    cluster2 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster2[[i_donut]] <-
+    temp_cluster2 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster2$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster2[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster2_question", i_donut, ".png"),
+    plot = donuts_cluster2[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
 
 # Cluster 3: open materials/code
 
@@ -418,6 +468,57 @@ cluster3 %>%
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
+
+```
+
+```{r cluster-3-plot}
+
+# questions as plot titles
+donuts_title_cluster3 <- levels(cluster3$question)
+
+# preallocate object with all plots
+donuts_cluster3 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster3)) {
+  
+  # subset data
+  temp_cluster3 <-
+    cluster3 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster3[[i_donut]] <-
+    temp_cluster3 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster3$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster3[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster3_question", i_donut, ".png"),
+    plot = donuts_cluster3[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
 
 ```
 
@@ -468,6 +569,55 @@ cluster4 %>%
   kable_custom()
 
 ```
+```{r cluster-4-plot}
+
+# questions as plot titles
+donuts_title_cluster4 <- levels(cluster4$question)
+
+# preallocate object with all plots
+donuts_cluster4 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster4)) {
+  
+  # subset data
+  temp_cluster4 <-
+    cluster4 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster4[[i_donut]] <-
+    temp_cluster4 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster3$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster4[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster4_question", i_donut, ".png"),
+    plot = donuts_cluster4[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+```
 
 # Cluster 5: pre-publication archiving
 
@@ -513,9 +663,58 @@ cluster5 %>%
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
-
 ```
 
+```{r cluster-5-plot}
+
+# questions as plot titles
+donuts_title_cluster5 <- levels(cluster5$question)
+
+# preallocate object with all plots
+donuts_cluster5 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster5)) {
+  
+  # subset data
+  temp_cluster5 <-
+    cluster5 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster5[[i_donut]] <-
+    temp_cluster5 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster5$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster3[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster5_question", i_donut, ".png"),
+    plot = donuts_cluster5[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
 # Cluster 6: open access
 
 *Open Access*
@@ -556,6 +755,55 @@ cluster6 %>%
   rename(percentage = lab_perc) %>% 
   kable_custom()
 
+```
+```{r cluster-6-plot}
+
+# questions as plot titles
+donuts_title_cluster6 <- levels(cluster6$question)
+
+# preallocate object with all plots
+donuts_cluster6 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster6)) {
+  
+  # subset data
+  temp_cluster6 <-
+    cluster6 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster6[[i_donut]] <-
+    temp_cluster6 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster6$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster6[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster6_question", i_donut, ".png"),
+    plot = donuts_cluster6[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
 ```
 
 # Cluster 7: OS adoption/barriers
@@ -602,9 +850,58 @@ cluster7 %>%
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
-
 ```
 
+```{r cluster-7-plot}
+
+# questions as plot titles
+donuts_title_cluster7 <- levels(cluster7$question)
+
+# preallocate object with all plots
+donuts_cluster7 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster7)) {
+  
+  # subset data
+  temp_cluster7 <-
+    cluster7 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster7[[i_donut]] <-
+    temp_cluster7 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster7$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster7[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster7_question", i_donut, ".png"),
+    plot = donuts_cluster7[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+ 
+``` 
 # Cluster 8: tool awareness
 
 *Awareness of ERIM/EUR tools*
@@ -642,8 +939,58 @@ cluster8 %>%
   rename(percentage = lab_perc) %>% 
   kable_custom()
 
-```
+``` 
 
+```{r cluster-8-plot}
+
+# questions as plot titles
+donuts_title_cluster8 <- levels(cluster8$question)
+
+# preallocate object with all plots
+donuts_cluster8 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster8)) {
+  
+  # subset data
+  temp_cluster8 <-
+    cluster8 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster8[[i_donut]] <-
+    temp_cluster8 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster8$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster8[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster8_question", i_donut, ".png"),
+    plot = donuts_cluster8[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
 # Cluster 9: role of ERIM
 
 *Role of ERIM*
@@ -688,7 +1035,56 @@ cluster9 %>%
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
+```
 
+```{r cluster-9-plot}
+
+# questions as plot titles
+donuts_title_cluster9 <- levels(cluster9$question)
+
+# preallocate object with all plots
+donuts_cluster9 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster9)) {
+  
+  # subset data
+  temp_cluster9 <-
+    cluster3 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster9[[i_donut]] <-
+    temp_cluster9 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster9$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster9[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster9_question", i_donut, ".png"),
+    plot = donuts_cluster9[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
 ```
 
 ***
