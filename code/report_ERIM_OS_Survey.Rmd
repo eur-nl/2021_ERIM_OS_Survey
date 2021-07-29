@@ -82,7 +82,7 @@ The survey covered 6 main topics:
 5. Open Access
 6. Awareness & Expectations
 
-#We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
+We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
 
 The percentages presented in the survey responses represent the percentage of the respondents, not the total percentage of researchers. 
 
@@ -326,7 +326,18 @@ for (i_donut in 1:length(donuts_title_cluster1)) {
 
 # Cluster 2: preregistration
 
-**INSERT TEXT HERE**
+*Preregistration*
+From question 3.1 (In your opinion, how important for your field is it that researchers preregister their studies?) we can see that more than 50% of the respondents think preregistration is important (combining very and moderately important), but a bit more than 16% think that preregistration is not at all important. 
+When comparing schools, RSM’s respondents think preregistration is more important than ESE’s respondents. And when looking at the different position, most PhD students think preregistration is important (extremely, very, and moderately), while tenured faculty members be dived into important (extremely, very, and moderately) and slightly or not at all important.  
+From question 3.2 (What is your experience with stud preregistration?) we see that both schools are aware of preregistration but mostly have not used it themselves, for both schools the distribution is similar but RSM seem to have a bit more experience with preregistration than ESE, and it is mostly tenured faculty members that have experience with preregistration. For experienced researchers the number of preregistrations goes from 2 all the way to 57.
+From question 3.3 (The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?) we can see that the top 5 concerns for that researchers could have about preregistration are the following: 
+Preregistration prevents exploratory research.
+I need to look at my data before I can decide how to best analyze it.
+Preregistration stifles research creativity or flexibility.
+Preregistration might lead to other people taking my research idea and implementing my plan
+It might delay data collection
+This is true for both schools and position. 
+
 
 ```{r cluster-2-data}
 
@@ -361,10 +372,70 @@ cluster2 %>%
   kable_custom()
 
 ```
+```{r cluster-2-plot}
+
+# questions as plot titles
+donuts_title_cluster2 <- levels(cluster2$question)
+
+# preallocate object with all plots
+donuts_cluster2 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster2)) {
+  
+  # subset data
+  temp_cluster2 <-
+    cluster2 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster2[[i_donut]] <-
+    temp_cluster2 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster2$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster2[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster2_question", i_donut, ".png"),
+    plot = donuts_cluster2[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
 
 # Cluster 3: open materials/code
 
-**INSERT TEXT HERE**
+*Open materials and/or code*
+From question 4.1 (In your opinion, how important for your field is it that materials and/or code are openly available?) we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
+When comparing schools, ESE’s respondents think that using open materials and/or code is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open materials and/or code is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
+From question 4.2 (What is your experience with using open materials and/or code?) we see that both schools are aware and have some experience with using open materials and/or code, for both schools the distribution is similar, but ESE seems to have a more experience using open materials and/or code than RSM, and it is mostly tenured faculty members that have experience using open materials and/or code. 
+From question 4.3 (What is your experience with sharing open materials and/or code?) we can see that 30% of respondents are aware of sharing materials and/or code, about 30% have some experience sharing materials and/or code, and similarly about 30% of respondents regularly share open materials and/or code. And the distribution per school is the same as 4.2, ESE’s respondents have more experience or regularly share their materials and/or code openly. Position wise, mostly PhD students are aware of open materials and/or code but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open materials and/or code. 
+From question 4.4 (The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
+I might lose control over how my materials and/or code are being used.
+I might not receive appropriate credit for developing the materials and/or code if I make them openly available.
+There could be issues related to intellectual property.
+This is true for both schools and position, but there is also a considerable amount (13%) of respondents that do not share any of these concerns with sharing their materials and/or code openly. 
+
 
 ```{r cluster-3-data}
 
@@ -400,9 +471,70 @@ cluster3 %>%
 
 ```
 
+```{r cluster-3-plot}
+
+# questions as plot titles
+donuts_title_cluster3 <- levels(cluster3$question)
+
+# preallocate object with all plots
+donuts_cluster3 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster3)) {
+  
+  # subset data
+  temp_cluster3 <-
+    cluster3 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster3[[i_donut]] <-
+    temp_cluster3 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster3$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster3[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster3_question", i_donut, ".png"),
+    plot = donuts_cluster3[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
+
 # Cluster 4: open data
 
-**INSERT TEXT HERE**
+*Open data*
+From question 5.1 (In your opinion, how important for your field is it that data from published research are openly available?) we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only 5.6% think is not at all important. 
+When comparing schools, ESE’s respondents think that using open data is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open data is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
+From question 5.2 (What is your experience with using open data?) we see that both schools are aware and have some experience with using open data, for both schools the distribution is similar, but ESE seems to have more experience regularly using open data than RSM, and it is mostly tenured faculty members that have experience using open data. 
+From question 5.3 (What is your experience with sharing open data?) we can see that almost 50% of respondents are aware of sharing open data and about 17% of respondents regularly share open data. The distribution per school is the same as 5.2, ESE’s respondents have more experience or regularly share their data openly. Position wise, mostly PhD students are aware of open data but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open data. 
+From question 5.4 (The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their data open are the following: 
+There could be issues related to privacy.
+There could be issues related to intellectual property.
+Other researchers could use my data for another study that I intended to conduct in the future.
+This is true for both schools, as for position, for tenured faculty members, the top 3 concern is that they might lose control over how their data is being used. 
+
 
 ```{r cluster-4-data}
 
@@ -437,10 +569,68 @@ cluster4 %>%
   kable_custom()
 
 ```
+```{r cluster-4-plot}
+
+# questions as plot titles
+donuts_title_cluster4 <- levels(cluster4$question)
+
+# preallocate object with all plots
+donuts_cluster4 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster4)) {
+  
+  # subset data
+  temp_cluster4 <-
+    cluster4 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster4[[i_donut]] <-
+    temp_cluster4 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster3$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster4[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster4_question", i_donut, ".png"),
+    plot = donuts_cluster4[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+```
 
 # Cluster 5: pre-publication archiving
 
-**INSERT TEXT HERE**
+*Pre-publication archiving*
+From question 6.1 (In your opinion, how important is pre-publication archiving for your field?) we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
+When comparing schools, ESE’s respondents think that pre-publication is more important than RSM’s respondents. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that pre-publication is moderately important.  
+From question 6.2 (What is your experience with pre-publication archiving?) we see that both schools are aware and have some experience with pre-publications, but ESE seems to have more experience with preprint archiving than RSM, and it is mostly tenured faculty members that have extensive experience with preprints. 
+From question 6.3 (The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?) the top 3 concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review are the following: 
+Some journals might not publish findings that are uploaded to a pre-publication archive.
+Non-peer-reviewed findings might add noise to the literature.
+Other people might copy my research and publish it before I do.
+This is true for both schools, except that for RSM, the 3rd top concern is that the availability of the pre-publication manuscript might highlight differences (e.g., errors in analysis; revisions to hypotheses) between the original conception of the research and the ultimately published work. As for position, for tenured faculty members, the top response is that they do not share any of these concerns.  
+
 
 ```{r cluster-5-data}
 
@@ -473,12 +663,65 @@ cluster5 %>%
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
-
 ```
 
+```{r cluster-5-plot}
+
+# questions as plot titles
+donuts_title_cluster5 <- levels(cluster5$question)
+
+# preallocate object with all plots
+donuts_cluster5 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster5)) {
+  
+  # subset data
+  temp_cluster5 <-
+    cluster5 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster5[[i_donut]] <-
+    temp_cluster5 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster5$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster3[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster5_question", i_donut, ".png"),
+    plot = donuts_cluster5[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
 # Cluster 6: open access
 
-**INSERT TEXT HERE**
+*Open Access*
+From question 7.1 (Approximately what proportion of your publications from the last 5 years are open access) that asks the percentage of open access publication in the last 5 years, we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent has some of their publication open access and 17% of the respondents have all or none (also 17%) of the publication open access. 
+When comparing schools, their distributions are similar, although more respondents from RSM answered don’t know or prefer not to answer than ESE’s respondents. When looking at the different position, most PhD were the ones to respond that they don’t know or prefer not to answer, and in the comments, they wrote that they do not have publication yet.  
+From question 7.2 (Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?) we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publishers, and by using the Erasmus Open Access Fund. Both schools have a similar distribution, and it is mostly tenured faculty members that have used the funds to pay for Open Access publications. 
+
 
 ```{r cluster-6-data}
 
@@ -513,10 +756,68 @@ cluster6 %>%
   kable_custom()
 
 ```
+```{r cluster-6-plot}
+
+# questions as plot titles
+donuts_title_cluster6 <- levels(cluster6$question)
+
+# preallocate object with all plots
+donuts_cluster6 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster6)) {
+  
+  # subset data
+  temp_cluster6 <-
+    cluster6 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster6[[i_donut]] <-
+    temp_cluster6 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster6$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster6[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster6_question", i_donut, ".png"),
+    plot = donuts_cluster6[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+```
 
 # Cluster 7: OS adoption/barriers
 
-**INSERT TEXT HERE**
+*Open Science Resources*
+
+From question 8.2 (During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?), we asked researchers about their participation in the ORCiD campaign organized by ERIM, from the responses, we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID.
+From question 8.3 (The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field.) the top 3 barriers to the uptake of open science practices are:  
+Lack of recognition in my field about the value of open science practices.
+Lack of time to learn Open Science practices.
+Lack of time to engage in Open Science practices.
+This is true for both schools, except that for ESE, the top concern is lack of funding for Open Access publishing. As for position, for PhD students, the 2nd top concern is the lack of information about open science practices. 
+From question 8.4 (Are you sharing your knowledge about open science practices with others?) we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. Looking at the school’s distribution seems that ESE’s researchers share less Open Science practices than RSM researchers. The distribution of positions states the same results as mentioned.  
+
 
 ```{r cluster-7-data}
 
@@ -549,12 +850,62 @@ cluster7 %>%
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
-
 ```
 
+```{r cluster-7-plot}
+
+# questions as plot titles
+donuts_title_cluster7 <- levels(cluster7$question)
+
+# preallocate object with all plots
+donuts_cluster7 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster7)) {
+  
+  # subset data
+  temp_cluster7 <-
+    cluster7 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster7[[i_donut]] <-
+    temp_cluster7 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster7$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster7[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster7_question", i_donut, ".png"),
+    plot = donuts_cluster7[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+ 
+``` 
 # Cluster 8: tool awareness
 
-**INSERT TEXT HERE**
+*Awareness of ERIM/EUR tools*
+From question 8.1 (Please indicate your awareness of each of the open science resources listed below.) we asked researchers their awareness of the following Open Science resources. The counts go from 0 (unaware) to 10 (often used). 
 
 ```{r cluster-8-data}
 
@@ -588,11 +939,70 @@ cluster8 %>%
   rename(percentage = lab_perc) %>% 
   kable_custom()
 
-```
+``` 
 
+```{r cluster-8-plot}
+
+# questions as plot titles
+donuts_title_cluster8 <- levels(cluster8$question)
+
+# preallocate object with all plots
+donuts_cluster8 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster8)) {
+  
+  # subset data
+  temp_cluster8 <-
+    cluster8 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster8[[i_donut]] <-
+    temp_cluster8 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster8$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster8[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster8_question", i_donut, ".png"),
+    plot = donuts_cluster8[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
+
+```
 # Cluster 9: role of ERIM
 
-**INSERT TEXT HERE**
+*Role of ERIM*
+In question 8.5 (Do you expect that ERIM supports you in learning open science practices?) researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. When looking at the schools, more researchers from RSM want support form ERIM than ESE’s researchers. As for position, mostly PhD students and postdocs responded yes.
+From question 8.6 (Which of the following open science practices would you like ERIM to provide information or support for?), the top 5 Open Science practices that respondents would like to get information or support for are: 
+Open Access publishing
+Open data
+Open materials and/or code
+Preregistration 
+Open access archiving in a repository
+The distribution per school and position follows the same distribution as the total one. 
+
 
 ```{r cluster-9-data}
 
@@ -625,7 +1035,56 @@ cluster9 %>%
   dplyr::select(-c(number_responses, perc)) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
+```
 
+```{r cluster-9-plot}
+
+# questions as plot titles
+donuts_title_cluster9 <- levels(cluster9$question)
+
+# preallocate object with all plots
+donuts_cluster9 <- NULL
+
+# loop through questions and make donut plots
+for (i_donut in 1:length(donuts_title_cluster9)) {
+  
+  # subset data
+  temp_cluster9 <-
+    cluster3 %>%
+    filter(question == levels(question)[i_donut]) %>%
+    droplevels() %>% 
+    dplyr::select(-number_responses)
+  
+  # donut graph
+  donuts_cluster9[[i_donut]] <-
+    temp_cluster9 %>%
+    ggdonutchart(
+      "perc",
+      label = "lab_perc",
+      lab.pos = "out",
+      color = "black",
+      fill = "item",
+      lab.font = c(20, "plain", "black"),
+#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
+      palette = viridis(length(unique(temp_cluster9$item))),
+      ggtheme = theme_custom
+    ) +
+    ggtitle(donuts_title_cluster9[i_donut]) 
+
+  # save to file
+  ggsave(
+    filename = paste0("donut_cluster9_question", i_donut, ".png"),
+    plot = donuts_cluster9[[i_donut]],
+    device = "png",
+    path = here("img"),
+    scale = 1.5,
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+  )
+  
+}
 ```
 
 ***
