@@ -8,30 +8,19 @@ set.seed(seed_synth)
 
 # install.packages("here")
 # install.packages("tidyverse")
-# install.packages("ggpubr")
+# install.packages("ggrepel")
 # install.packages("viridis")
 
 # Load packages --------------------------------------------------------
 
 library(here)
 library(tidyverse)
-library(ggpubr)
+library(ggrepel)
 library(viridis)
 
-# Custom ggplot theme ----------------------------------------------------------------
+source(here("code", "theme_custom.R")) # custom ggplot2 theme
 
-theme_custom <-
-  theme_pubr(base_size = 12) +
-  theme(
-    strip.text = element_text(
-      hjust = .5,
-      size = 20
-    ),
-    plot.title = element_text(size = 22, hjust = .5),
-    legend.box.background = element_rect(color = "transparent"),
-    legend.title = element_blank(),
-    legend.position = "bottom"
-  )
+options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of overlaps
 
 # Data ----------------------------------------------------------------
 
@@ -69,13 +58,23 @@ cluster <-
   ungroup() %>%
   group_by(question) %>%
   mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+    prop = number_responses / sum(number_responses), # calculate proportion
+    perc = round(prop * 100, 2), # calculate percentage
+    ymax = cumsum(prop), # top of each rectangle
+    ymin = c(0, head(ymax, n = -1)), # bottom of each rectangle
+    lab_pos = (ymax + ymin) / 2, # label position
+    lab_perc = paste(perc, "%", sep = ""), # percentage as text (for labels)
   ) %>%
   ungroup()
 
 # extract questions
 questions <- levels(cluster$question)
+
+# save for final report
+write_csv(
+  cluster,
+  here("data", "preproc", "cluster3.csv")
+)
 
 # Question 1 ----------------------------------------------------------------
 
@@ -101,18 +100,16 @@ data_cluster3_question1 <-
 
 donut_cluster3_question1 <-
   data_cluster3_question1 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("In your opinion, how important for your field is it\nthat materials and/or code are openly available?") + # title is too long, must be manually split into two lines
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE))
-
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
+  geom_rect() +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
+  scale_fill_viridis_d(option = "plasma") +
+  coord_polar(theta = "y") +
+  xlim(c(2, 4)) +
+  ggtitle(str_wrap(questions[1], width = 40)) + # if title is too long, split into two lines with specified max width
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE)) +
+  theme_custom
+  
 donut_cluster3_question1
 
 # save to file
@@ -121,11 +118,11 @@ ggsave(
   plot = donut_cluster3_question1,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # Question 2 ----------------------------------------------------------------
@@ -150,18 +147,16 @@ data_cluster3_question2 <-
 
 donut_cluster3_question2 <-
   data_cluster3_question2 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("What is your experience with\nusing open materials and/or code?") + # title is too long, must be manually split into two lines
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
-
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
+  geom_rect() +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
+  scale_fill_viridis_d(option = "plasma") +
+  coord_polar(theta = "y") +
+  xlim(c(2, 4)) +
+  ggtitle(str_wrap(questions[2], width = 40)) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE)) +
+  theme_custom
+  
 donut_cluster3_question2
 
 # save to file
@@ -170,11 +165,11 @@ ggsave(
   plot = donut_cluster3_question2,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # Question 3 ----------------------------------------------------------------
@@ -199,17 +194,15 @@ data_cluster3_question3 <-
 
 donut_cluster3_question3 <-
   data_cluster3_question3 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("What is your experience with\nsharing open materials and/or code?") + # title is too long, must be manually split into two lines
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE))
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
+  geom_rect() +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
+  scale_fill_viridis_d(option = "plasma") +
+  coord_polar(theta = "y") +
+  xlim(c(2, 4)) +
+  ggtitle(str_wrap(questions[3], width = 40)) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE)) +
+  theme_custom
 
 donut_cluster3_question3
 
@@ -219,11 +212,11 @@ ggsave(
   plot = donut_cluster3_question3,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # Question 4 ----------------------------------------------------------------
@@ -254,18 +247,15 @@ data_cluster3_question4 <-
 
 donut_cluster3_question4 <-
   data_cluster3_question4 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("The following are possible concerns that researchers\ncould have about making their materials\nand/or code openly available", # title is too long, must be manually split into two lines
-          subtitle = "Which of these concerns would apply to you?") +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[4])$item)), byrow = TRUE))
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
+  geom_rect() +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
+  scale_fill_viridis_d(option = "plasma") +
+  coord_polar(theta = "y") +
+  xlim(c(2, 4)) +
+  ggtitle(str_wrap(questions[4], width = 40)) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[4])$item)), byrow = TRUE)) +
+  theme_custom
 
 donut_cluster3_question4
 
