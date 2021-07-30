@@ -106,10 +106,10 @@ ggsave(
   plot = donut_cluster0_question1,
   device = "png",
   path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
+  scale = 3,
+  width = 6,
+  height = 6,
+  units = "cm",
   dpi = 600
 )
 
@@ -141,10 +141,10 @@ ggsave(
   plot = donut_cluster0_question2,
   device = "png",
   path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
+  scale = 3,
+  width = 6,
+  height = 6,
+  units = "cm",
   dpi = 600
 )
 
@@ -175,10 +175,10 @@ ggsave(
   plot = donut_cluster0_question3,
   device = "png",
   path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
+  scale = 3,
+  width = 6,
+  height = 6,
+  units = "cm",
   dpi = 600
 )
 
@@ -220,10 +220,10 @@ ggsave(
   plot = donut_cluster0_question4,
   device = "png",
   path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
+  scale = 3,
+  width = 6,
+  height = 6,
+  units = "cm",
   dpi = 600
 )
 
@@ -265,10 +265,10 @@ ggsave(
   plot = donut_cluster0_question5,
   device = "png",
   path = here("img"),
-  scale = 1,
-  width = 8,
-  height = 8,
-  units = "in",
+  scale = 3,
+  width = 6,
+  height = 6,
+  units = "cm",
   dpi = 600
 )
 
