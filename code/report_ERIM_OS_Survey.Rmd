@@ -300,7 +300,8 @@ for (i_donut in 1:length(donuts_title_cluster1)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
+#      lab.orientation = c("vertical"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster1$item))),
       ggtheme = theme_custom
@@ -313,6 +314,7 @@ for (i_donut in 1:length(donuts_title_cluster1)) {
     plot = donuts_cluster1[[i_donut]],
     device = "png",
     path = here("img"),
+#    scale = 1.5,
     scale = 1.5,
     width = 8,
     height = 8,
@@ -399,7 +401,7 @@ for (i_donut in 1:length(donuts_title_cluster2)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster2$item))),
       ggtheme = theme_custom
@@ -596,7 +598,7 @@ for (i_donut in 1:length(donuts_title_cluster4)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster3$item))),
       ggtheme = theme_custom
@@ -692,7 +694,7 @@ for (i_donut in 1:length(donuts_title_cluster5)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster5$item))),
       ggtheme = theme_custom
@@ -783,7 +785,7 @@ for (i_donut in 1:length(donuts_title_cluster6)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster6$item))),
       ggtheme = theme_custom
@@ -879,7 +881,7 @@ for (i_donut in 1:length(donuts_title_cluster7)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster7$item))),
       ggtheme = theme_custom
@@ -968,7 +970,7 @@ for (i_donut in 1:length(donuts_title_cluster8)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster8$item))),
       ggtheme = theme_custom
@@ -1064,7 +1066,7 @@ for (i_donut in 1:length(donuts_title_cluster9)) {
       lab.pos = "out",
       color = "black",
       fill = "item",
-      lab.font = c(20, "plain", "black"),
+      lab.font = c(4, "plain", "black"),
 #      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
       palette = viridis(length(unique(temp_cluster9$item))),
       ggtheme = theme_custom
