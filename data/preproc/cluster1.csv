@@ -1,0 +1,16 @@
+question,item,number_responses,prop,perc,ymax,ymin,lab_pos,lab_perc
+What is your experience with open science practices?,"I am aware, but have not used open science practices in my research",40,0.35398230088495575,35.4,0.35398230088495575,0,0.17699115044247787,35.4%
+What is your experience with open science practices?,I don’t know/prefer not to answer,1,0.008849557522123894,0.88,0.36283185840707965,0.35398230088495575,0.3584070796460177,0.88%
+What is your experience with open science practices?,I have extensive experience with open science practices,13,0.11504424778761062,11.5,0.47787610619469023,0.36283185840707965,0.42035398230088494,11.5%
+What is your experience with open science practices?,I have some experience with open science practices,57,0.504424778761062,50.44,0.9823008849557522,0.47787610619469023,0.7300884955752212,50.44%
+What is your experience with open science practices?,"Until now, I was unaware of open science practices",2,0.017699115044247787,1.77,1,0.9823008849557522,0.9911504424778761,1.77%
+Are you sharing your knowledge about open science practices with others?,I don’t know/prefer not to answer,8,0.07079646017699115,7.08,0.07079646017699115,0,0.035398230088495575,7.08%
+Are you sharing your knowledge about open science practices with others?,I share my knowledge with my colleagues informally,64,0.5663716814159292,56.64,0.6371681415929203,0.07079646017699115,0.35398230088495575,56.64%
+Are you sharing your knowledge about open science practices with others?,Other,3,0.02654867256637168,2.65,0.6637168141592921,0.6371681415929203,0.6504424778761062,2.65%
+Are you sharing your knowledge about open science practices with others?,No,34,0.3008849557522124,30.09,0.9646017699115045,0.6637168141592921,0.8141592920353983,30.09%
+Are you sharing your knowledge about open science practices with others?,I share my knowledge with my students or fellow research students,1,0.008849557522123894,0.88,0.9734513274336283,0.9646017699115045,0.9690265486725664,0.88%
+Are you sharing your knowledge about open science practices with others?,I share my knowledge with my colleagues by offering seminars and/or giving talks,3,0.02654867256637168,2.65,1,0.9734513274336283,0.9867256637168141,2.65%
+During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?,"No, I did not participate since I already had an ORCID iD",73,0.6460176991150443,64.6,0.6460176991150443,0,0.3230088495575221,64.6%
+During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?,"No, I did not participate and I do not have an ORCID iD",10,0.08849557522123894,8.85,0.7345132743362832,0.6460176991150443,0.6902654867256637,8.85%
+During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?,"Yes, I participated and got an ORCID iD",26,0.23008849557522124,23.01,0.9646017699115044,0.7345132743362832,0.8495575221238938,23.01%
+During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?,I don't know/prefer not to answer,4,0.035398230088495575,3.54,1,0.9646017699115044,0.9823008849557522,3.54%
