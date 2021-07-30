@@ -20,6 +20,8 @@ library(viridis)
 
 source(here("code", "theme_custom.R")) # custom ggplot2 theme
 
+options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of overlaps
+
 # Data ----------------------------------------------------------------
 
 cluster <-
