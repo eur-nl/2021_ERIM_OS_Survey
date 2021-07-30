@@ -107,8 +107,8 @@ ggsave(
   device = "png",
   path = here("img"),
   scale = 3,
-  width = 6,
-  height = 6,
+  width = 8,
+  height = 8,
   units = "cm",
   dpi = 96
 )
@@ -142,8 +142,8 @@ ggsave(
   device = "png",
   path = here("img"),
   scale = 3,
-  width = 6,
-  height = 6,
+  width = 8,
+  height = 8,
   units = "cm",
   dpi = 96
 )
@@ -176,8 +176,8 @@ ggsave(
   device = "png",
   path = here("img"),
   scale = 3,
-  width = 6,
-  height = 6,
+  width = 8,
+  height = 8,
   units = "cm",
   dpi = 96
 )
@@ -221,8 +221,8 @@ ggsave(
   device = "png",
   path = here("img"),
   scale = 3,
-  width = 6,
-  height = 6,
+  width = 8,
+  height = 8,
   units = "cm",
   dpi = 96
 )
@@ -266,8 +266,8 @@ ggsave(
   device = "png",
   path = here("img"),
   scale = 3,
-  width = 6,
-  height = 6,
+  width = 8,
+  height = 8,
   units = "cm",
   dpi = 96
 )

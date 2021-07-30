@@ -116,11 +116,11 @@ ggsave(
   plot = donut_cluster2_question1,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # Question 2 ----------------------------------------------------------------
@@ -163,11 +163,11 @@ ggsave(
   plot = donut_cluster2_question2,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # Question 3 ----------------------------------------------------------------
@@ -214,11 +214,11 @@ ggsave(
   plot = donut_cluster2_question3,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # END ----------------------------------------------------------------
