@@ -88,7 +88,7 @@ donut_cluster0_question1 <-
   data_cluster0_question1 %>% 
   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
   geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black") +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
@@ -123,7 +123,7 @@ donut_cluster0_question2 <-
   data_cluster0_question2 %>% 
   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
   geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black") +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
@@ -158,7 +158,7 @@ donut_cluster0_question3 <-
   data_cluster0_question3 %>%
   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
   geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black") +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
@@ -203,7 +203,7 @@ donut_cluster0_question4 <-
   data_cluster0_question4 %>%
   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
   geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black") +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
@@ -248,11 +248,11 @@ donut_cluster0_question5 <-
   data_cluster0_question5 %>%
   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
   geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black") +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[5], width = 40)) + # if title is too long, split into two lines with specified max width
+  ggtitle(str_wrap(questions[5], width = 40)) +
   theme_custom
 
 donut_cluster0_question5
