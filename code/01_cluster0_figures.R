@@ -92,7 +92,7 @@ donut_cluster0_question1 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(questions[1]) +
+  ggtitle(str_wrap(questions[1], width = 40)) + # if title is too long, split into two lines with specified max width
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE)) +
   theme_custom
 
@@ -127,7 +127,7 @@ donut_cluster0_question2 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(questions[2]) +
+  ggtitle(str_wrap(questions[2], width = 40)) +
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE)) +
   theme_custom
 
@@ -162,7 +162,7 @@ donut_cluster0_question3 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(questions[3]) +
+  ggtitle(str_wrap(questions[3], width = 40)) +
   theme_custom
 
 donut_cluster0_question3
@@ -207,7 +207,7 @@ donut_cluster0_question4 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(questions[4]) +
+  ggtitle(str_wrap(questions[4], width = 40)) +
   theme_custom
 
 donut_cluster0_question4
@@ -252,7 +252,7 @@ donut_cluster0_question5 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle("Are you member of any research institute\naffiliated with RSM or ESE?") + # title is too long, must be manually split into two lines
+  ggtitle(str_wrap(questions[5], width = 40)) + # if title is too long, split into two lines with specified max width
   theme_custom
 
 donut_cluster0_question5
