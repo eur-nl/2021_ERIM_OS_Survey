@@ -265,11 +265,11 @@ ggsave(
   plot = donut_cluster3_question4,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # END ----------------------------------------------------------------
