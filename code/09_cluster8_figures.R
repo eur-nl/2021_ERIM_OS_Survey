@@ -55,8 +55,8 @@ cluster <-
     "Please indicate your awareness of each of the open science resources listed below [FAIR data principles]" = "FAIR data principles",
     "Please indicate your awareness of each of the open science resources listed below [EUR RePub]" = "EUR RePub",
     "Please indicate your awareness of each of the open science resources listed below [Zenodo]" = "Zenodo",                 
-    "Please indicate your awareness of each of the open science resources listed below [Other 1]" = "Other",
-    "Please indicate your awareness of each of the open science resources listed below [Other 2]" = "Other"
+    "Please indicate your awareness of each of the open science resources listed below [Other 1]" = "Other 1",
+    "Please indicate your awareness of each of the open science resources listed below [Other 2]" = "Other 2"
     )
   ) %>%
   group_by(question, item) %>%
@@ -73,9 +73,6 @@ cluster <-
   ) %>%
   ungroup()
 
-# extract questions
-questions <- levels(cluster$question)
-
 # save for final report
 write_csv(
   cluster,
@@ -83,6 +80,14 @@ write_csv(
 )
 
 # Questions ----------------------------------------------------------------
+
+cluster <-
+  cluster %>% 
+  dplyr::filter(question != c("Other 1", "Other 2")) %>% # filter out "Other" responses
+  droplevels()
+
+# extract questions
+questions <- levels(cluster$question)
 
 for(i_question in 1:length(questions)){
   
