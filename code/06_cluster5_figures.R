@@ -203,7 +203,7 @@ donut_cluster5_question3 <-
   ggtitle(str_wrap(questions[3], width = 40)) +
   guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE)) +
   theme_custom +
-  theme(legend.position = "right")
+  theme(legend.position = "right") # legend is too big to be put below the graph, so now it's on the right
 
 donut_cluster5_question3
 
