@@ -26,7 +26,8 @@ options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of over
 
 cluster <-
   read_csv(
-    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
+    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv"),
+    show_col_types = FALSE
   ) %>%
   # convert all columns to factors
   mutate(
