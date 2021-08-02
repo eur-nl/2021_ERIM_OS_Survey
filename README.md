@@ -40,7 +40,7 @@ Code for analysis and visualization of the results of the 2021 ERIM Open Science
 - Approximately what proportion of your publications from the last 5 years are open access
 - Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees? 
 
-- [ ] Open Science Resources
+- [x] Open Science Resources
 
 - Please indicate your awareness of each of the open science resources listed below. If there are other resources that you use or are aware of, please enter them in the "other" box at the bottom of the table.
 - During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?
