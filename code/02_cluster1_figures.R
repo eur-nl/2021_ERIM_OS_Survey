@@ -24,9 +24,12 @@ options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of over
 
 # Data ----------------------------------------------------------------
 
+num_cluster = 1
+
 cluster <-
   read_csv(
-    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
+    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv"),
+    show_col_types = FALSE
   ) %>%
   # convert all columns to factors
   mutate(
@@ -35,13 +38,13 @@ cluster <-
       .fns = ~ as_factor(.)
     )
   ) %>%
-  dplyr::filter(
+  filter(
     Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "1" # keep only questions of relevant cluster
+      cluster == num_cluster # keep only questions of relevant cluster
   ) %>%
   droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  select(-c(Finished, cluster)) %>% # drop unused columns
+  select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
   rename("item" = "value_1") %>%
   mutate(question = factor(
     question,
@@ -57,12 +60,12 @@ cluster <-
   ungroup() %>%
   group_by(question) %>%
   mutate(
-    prop = number_responses / sum(number_responses), # calculate proportion
-    perc = round(prop * 100, 2), # calculate percentage
-    ymax = cumsum(prop), # top of each rectangle
-    ymin = c(0, head(ymax, n = -1)), # bottom of each rectangle
-    lab_pos = (ymax + ymin) / 2, # label position
+    prop = number_responses / sum(number_responses), # proportion
+    perc = round(prop * 100, 2), # percentage
     lab_perc = paste(perc, "%", sep = ""), # percentage as text (for labels)
+    ymax = cumsum(prop), # top of each label
+    ymin = c(0, head(ymax, n = -1)), # bottom of each label
+    lab_pos = (ymax + ymin) / 2 # label position
   ) %>%
   ungroup()
 
@@ -72,16 +75,18 @@ questions <- levels(cluster$question)
 # save for final report
 write_csv(
   cluster,
-  here("data", "preproc", "cluster1.csv")
+  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Question 1 ----------------------------------------------------------------
 
+num_question = 1
+
 data_cluster1_question1 <-
   cluster %>%
-  filter(question == questions[1]) %>%
+  filter(question == questions[num_question]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -103,15 +108,15 @@ donut_cluster1_question1 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[1], width = 40)) + # if title is too long, split into two lines with specified max width
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[1])$item)), byrow = TRUE)) +
+  ggtitle(str_wrap(questions[num_question], width = 40)) + # if title is too long, split into two lines with specified max width
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
   theme_custom
 
 donut_cluster1_question1
 
 # save to file
 ggsave(
-  filename = "donut_cluster1_question1.png",
+  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
   plot = donut_cluster1_question1,
   device = "png",
   path = here("img"),
@@ -124,11 +129,13 @@ ggsave(
 
 # Question 2 ----------------------------------------------------------------
 
+num_question = 2
+
 data_cluster1_question2 <-
   cluster %>%
-  filter(question == questions[2]) %>%
+  filter(question == questions[num_question]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -155,15 +162,15 @@ donut_cluster1_question2 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[2], width = 40)) +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE)) +
+  ggtitle(str_wrap(questions[num_question], width = 40)) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
   theme_custom
 
 donut_cluster1_question2
 
 # save to file
 ggsave(
-  filename = "donut_cluster1_question2.png",
+  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
   plot = donut_cluster1_question2,
   device = "png",
   path = here("img"),
@@ -176,13 +183,14 @@ ggsave(
 
 # Question 3 ----------------------------------------------------------------
 
+num_question = 3
+
 data_cluster1_question3 <-
   cluster %>%
-  filter(question == questions[3]) %>%
+  filter(question == questions[num_question]) %>%
   droplevels() %>%
-  drop_na() %>%
-  # drop rows with missing values
-  dplyr::select(-number_responses) %>%
+  drop_na() %>% # drop rows with missing values
+  select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -203,15 +211,15 @@ donut_cluster1_question3 <-
   scale_fill_viridis_d(option = "plasma") +
   coord_polar(theta = "y") +
   xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[3], width = 40)) +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE)) +
+  ggtitle(str_wrap(questions[num_question], width = 40)) +
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
   theme_custom
 
 donut_cluster1_question3
 
 # save to file
 ggsave(
-  filename = "donut_cluster1_question3.png",
+  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
   plot = donut_cluster1_question3,
   device = "png",
   path = here("img"),

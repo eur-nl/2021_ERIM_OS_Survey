@@ -23,7 +23,8 @@ source(here("code", "split_into_multiple.R"))
 ERIM_OS <-
   read_csv(
     here("data", "PSEUDONYM_manual_20210608_ERIM_OS_Survey.csv"),
-    col_names = TRUE
+    col_names = TRUE,
+    show_col_types = FALSE
   )
 
 # separate questions into clusters:
@@ -85,7 +86,7 @@ levels_question <- c(
 # subset of data with variables that can be plotted
 ERIM_OS_clean <- 
   ERIM_OS %>% 
-  dplyr::select(-c(11, 12, 17, 22, 26, 29, 40, 42, 45, 47, 50)) %>%  # discard columns with free text
+  select(-c(11, 12, 17, 22, 26, 29, 40, 42, 45, 47, 50)) %>%  # discard columns with free text
   rowid_to_column(var = "participant") %>%  # assign ID to each participant
   # convert to long format
   pivot_longer(
@@ -103,7 +104,7 @@ ERIM_OS_clean <-
     )
   ) %>% 
   # delete column with redundant information
-  dplyr::select(-value) %>% 
+  select(-value) %>% 
   # convert all columns to factors
   mutate(
     across(
@@ -126,5 +127,3 @@ write_csv(
 )
 
 # END ----------------------------------------------------------------
-
-
