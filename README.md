@@ -3,44 +3,44 @@ Code for analysis and visualization of the results of the 2021 ERIM Open Science
 
 ### QUESTIONS
 
-[ x ] Demographics
+- [x] Demographics
 
-[ x ] Open Science Practices
+- [x] Open Science Practices
 
 - What is your experience with open science practices?
 
-[ x ] Preregistration
+- [x] Preregistration
 
 - In your opinion, how important for your field is it that researchers preregister their studies?
 - What is your experience with study preregistration?
 - The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?
 
-[ x ] Open Materials and/or code
+- [x] Open Materials and/or code
 
 - In your opinion, how important for your field is it that materials and/or code are openly available?
 - What is your experience with using open materials and/or code?
 - What is your experience with sharing open materials and/or code?
 - The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?
 
-[ x ] Open Data
+- [x] Open Data
 
 - In your opinion, how important for your field is it that data from published research are openly available?
 - What is your experience with using open data?
 - What is your experience with sharing open data?
 - The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you? 
 
-[ x ] Pre-publication archiving
+- [x] Pre-publication archiving
 
 - In your opinion, how important is pre-publication archiving for your field?
 - What is your experience with pre-publication archiving?
 - The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you? 
 
-[ x ] Open Access publishing
+- [x] Open Access publishing
 
 - Approximately what proportion of your publications from the last 5 years are open access
 - Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees? 
 
-[   ] Open Science Resources
+- [ ] Open Science Resources
 
 - Please indicate your awareness of each of the open science resources listed below. If there are other resources that you use or are aware of, please enter them in the "other" box at the bottom of the table.
 - During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?
