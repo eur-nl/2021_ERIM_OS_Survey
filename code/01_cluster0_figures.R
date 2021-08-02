@@ -24,7 +24,7 @@ options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of over
 
 # Data ----------------------------------------------------------------
 
-num_cluster = 0
+num_cluster <- 0
 
 cluster <-
   read_csv(
@@ -83,7 +83,7 @@ write_csv(
 
 # Question 1 ----------------------------------------------------------------
 
-num_question = 1
+num_question <- 1
 
 data_cluster0_question1 <-
   cluster %>%
@@ -120,7 +120,7 @@ ggsave(
 
 # Question 2 ----------------------------------------------------------------
 
-num_question = 2
+num_question <- 2
 
 data_cluster0_question2 <-
   cluster %>%
@@ -157,7 +157,7 @@ ggsave(
 
 # Question 3 ----------------------------------------------------------------
 
-num_question = 3
+num_question <- 3
 
 data_cluster0_question3 <-
   cluster %>%
@@ -194,7 +194,7 @@ ggsave(
 
 # Question 4 ----------------------------------------------------------------
 
-num_question = 4
+num_question <- 4
 
 data_cluster0_question4 <-
   cluster %>%
@@ -231,7 +231,7 @@ ggsave(
 
 # Question 5 ----------------------------------------------------------------
 
-num_question = 5
+num_question <- 5
 
 data_cluster0_question5 <- 
   cluster %>%

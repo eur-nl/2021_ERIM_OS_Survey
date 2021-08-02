@@ -24,6 +24,8 @@ options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of over
 
 # Data ----------------------------------------------------------------
 
+num_cluster <- 8
+
 cluster <-
   read_csv(
     here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv"),
@@ -36,14 +38,14 @@ cluster <-
       .fns = ~ as_factor(.)
     )
   ) %>%
-  dplyr::filter(
+  filter(
     Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "8" # keep only questions of relevant cluster
+      cluster == num_cluster # keep only questions of relevant cluster
   ) %>%
   droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  dplyr::filter(!is.na(value_1)) %>% # keep rows where response to value_1 is not NAs
+  select(-c(Finished, cluster)) %>% # drop unused columns
+  select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  filter(!is.na(value_1)) %>% # keep rows where response to value_1 is not NAs
   rename("item" = "value_1") %>%
   mutate(question = recode_factor(
     question,
@@ -65,26 +67,33 @@ cluster <-
   ungroup() %>%
   group_by(question) %>%
   mutate(
-    prop = number_responses / sum(number_responses), # calculate proportion
-    perc = round(prop * 100, 2), # calculate percentage
-    ymax = cumsum(prop), # top of each rectangle
-    ymin = c(0, head(ymax, n = -1)), # bottom of each rectangle
-    lab_pos = (ymax + ymin) / 2, # label position
+    prop = number_responses / sum(number_responses), # proportion
+    perc = round(prop * 100, 2), # percentage
     lab_perc = paste(perc, "%", sep = ""), # percentage as text (for labels)
+    ymax = cumsum(prop), # top of each label
+    ymin = c(0, head(ymax, n = -1)), # bottom of each label
+    lab_pos = (ymax + ymin) / 2 # label position
   ) %>%
   ungroup()
 
 # save for final report
 write_csv(
   cluster,
-  here("data", "preproc", "cluster8.csv")
+  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Questions ----------------------------------------------------------------
 
 cluster <-
   cluster %>% 
-  dplyr::filter(question != c("Other 1", "Other 2")) %>% # filter out "Other" responses
+  filter(question != c("Other 1", "Other 2")) %>% # filter out "Other" responses
+  droplevels()
+
+# repeat it, or the filtering will not work
+# (I know, it sounds crazy...)
+cluster <-
+  cluster %>% 
+  filter(question != c("Other 1", "Other 2")) %>%
   droplevels()
 
 # extract questions
@@ -96,7 +105,7 @@ for(i_question in 1:length(questions)){
     cluster %>%
     filter(question == questions[i_question]) %>%
     droplevels() %>%
-    dplyr::select(-number_responses) %>%
+    select(-number_responses) %>%
     # reorder responses
     mutate(item = factor(
       item,
@@ -124,7 +133,7 @@ for(i_question in 1:length(questions)){
   
   # save to file
   ggsave(
-    filename = paste0("donut_cluster8_question", i_question, ".png"),
+    filename = paste0("donut_cluster", num_cluster, "_question", i_question, ".png"),
     plot = donut_cluster8_question,
     device = "png",
     path = here("img"),
