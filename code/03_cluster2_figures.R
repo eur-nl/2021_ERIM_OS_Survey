@@ -8,37 +8,28 @@ set.seed(seed_synth)
 
 # install.packages("here")
 # install.packages("tidyverse")
-# install.packages("ggpubr")
+# install.packages("ggrepel")
 # install.packages("viridis")
 
 # Load packages --------------------------------------------------------
 
 library(here)
 library(tidyverse)
-library(ggpubr)
+library(ggrepel)
 library(viridis)
 
-# Custom ggplot theme ----------------------------------------------------------------
+source(here("code", "theme_custom.R")) # custom ggplot2 theme
 
-theme_custom <-
-  theme_pubr(base_size = 12) +
-  theme(
-    strip.text = element_text(
-      hjust = .5,
-      size = 20
-    ),
-    plot.title = element_text(size = 22, hjust = .5),
-    plot.subtitle = element_text(hjust = .5),
-    legend.box.background = element_rect(color = "transparent"),
-    legend.title = element_blank(),
-    legend.position = "bottom"
-  )
+options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of overlaps
 
 # Data ----------------------------------------------------------------
 
+num_cluster <- 2
+
 cluster <-
   read_csv(
-    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
+    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv"),
+    show_col_types = FALSE
   ) %>%
   # convert all columns to factors
   mutate(
@@ -47,13 +38,13 @@ cluster <-
       .fns = ~ as_factor(.)
     )
   ) %>%
-  dplyr::filter(
+  filter(
     Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "2" # keep only questions of relevant cluster
+      cluster == num_cluster # keep only questions of relevant cluster
   ) %>%
   droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  select(-c(Finished, cluster)) %>% # drop unused columns
+  select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
   rename("item" = "value_1") %>%
   mutate(question = factor(
     question,
@@ -69,21 +60,33 @@ cluster <-
   ungroup() %>%
   group_by(question) %>%
   mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+    prop = number_responses / sum(number_responses), # proportion
+    perc = round(prop * 100, 2), # percentage
+    lab_perc = paste(perc, "%", sep = ""), # percentage as text (for labels)
+    ymax = cumsum(prop), # top of each label
+    ymin = c(0, head(ymax, n = -1)), # bottom of each label
+    lab_pos = (ymax + ymin) / 2 # label position
   ) %>%
   ungroup()
 
 # extract questions
 questions <- levels(cluster$question)
 
+# save for final report
+write_csv(
+  cluster,
+  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+)
+
 # Question 1 ----------------------------------------------------------------
+
+num_question <- 1
 
 data_cluster2_question1 <-
   cluster %>%
-  filter(question == questions[1]) %>%
+  filter(question == questions[num_question]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -100,39 +103,40 @@ data_cluster2_question1 <-
 
 donut_cluster2_question1 <-
   data_cluster2_question1 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("In your opinion, how important for your field is it\nthat researchers preregister their studies?") # title is too long, must be manually split into two lines
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
+  geom_rect() +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
+  scale_fill_viridis_d(option = "plasma") +
+  coord_polar(theta = "y") +
+  xlim(c(2, 4)) +
+  ggtitle(str_wrap(questions[num_question], width = 40)) + # if title is too long, split into two lines with specified max width
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
+  theme_custom
 
 donut_cluster2_question1
 
 # save to file
 ggsave(
-  filename = "donut_cluster2_question1.png",
+  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
   plot = donut_cluster2_question1,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # Question 2 ----------------------------------------------------------------
 
+num_question <- 2
+
 data_cluster2_question2 <-
   cluster %>%
-  filter(question == questions[2]) %>%
+  filter(question == questions[num_question]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -148,40 +152,40 @@ data_cluster2_question2 <-
 
 donut_cluster2_question2 <-
   data_cluster2_question2 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle(questions[2]) +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[2])$item)), byrow = TRUE))
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
+  geom_rect() +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
+  scale_fill_viridis_d(option = "plasma") +
+  coord_polar(theta = "y") +
+  xlim(c(2, 4)) +
+  ggtitle(str_wrap(questions[num_question], width = 40)) + # if title is too long, split into two lines with specified max width
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
+  theme_custom
 
 donut_cluster2_question2
 
 # save to file
 ggsave(
-  filename = "donut_cluster2_question2.png",
+  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
   plot = donut_cluster2_question2,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # Question 3 ----------------------------------------------------------------
 
+num_question <- 3
+
 data_cluster2_question3 <-
   cluster %>%
-  filter(question == questions[3]) %>%
+  filter(question == questions[num_question]) %>%
   droplevels() %>%
-  dplyr::select(-number_responses) %>%
+  select(-number_responses) %>%
   # reorder responses
   mutate(item = factor(
     item,
@@ -201,32 +205,29 @@ data_cluster2_question3 <-
 
 donut_cluster2_question3 <-
   data_cluster2_question3 %>%
-  ggdonutchart(
-    "perc",
-    label = "lab_perc",
-    lab.pos = "out",
-    color = "black",
-    fill = "item",
-    palette = plasma(length(unique(.$item))),
-    ggtheme = theme_custom
-  ) +
-  ggtitle("The following are possible concerns that researchers\ncould have about preregistering their studies", # title is too long, must be manually split into two lines
-          subtitle = "Which of these concerns would apply to you?") +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[3])$item)), byrow = TRUE))
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
+  geom_rect() +
+  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
+  scale_fill_viridis_d(option = "plasma") +
+  coord_polar(theta = "y") +
+  xlim(c(2, 4)) +
+  ggtitle(str_wrap(questions[num_question], width = 40)) + # if title is too long, split into two lines with specified max width
+  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
+  theme_custom
 
 donut_cluster2_question3
 
 # save to file
 ggsave(
-  filename = "donut_cluster2_question3.png",
+  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
   plot = donut_cluster2_question3,
   device = "png",
   path = here("img"),
-  scale = 1,
+  scale = 3,
   width = 8,
   height = 8,
-  units = "in",
-  dpi = 600
+  units = "cm",
+  dpi = 96
 )
 
 # END ----------------------------------------------------------------
