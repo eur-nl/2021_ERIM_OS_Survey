@@ -11,7 +11,7 @@
 
 <meta name="author" content="Dr. Lizette Guzman-Ramirez, Dr. Antonio Schettino" />
 
-<meta name="date" content="2021-08-02" />
+<meta name="date" content="2021-08-13" />
 
 <title>Report of the 2021 ERIM Open Science Survey</title>
 
@@ -347,7 +347,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Report of the 2021 ERIM Open Science Survey</h1>
 <h4 class="author"><a href="https://www.linkedin.com/in/drlizguzman/">Dr. Lizette Guzman-Ramirez</a>, <a href="https://antonio-schettino.com/">Dr. Antonio Schettino</a></h4>
-<h4 class="date">2021-08-02</h4>
+<h4 class="date">2021-08-13</h4>
 
 </div>
 
@@ -380,11 +380,13 @@ div.tocify {
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(survey) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">survey =</span> <span class="fu">ifelse</span>(survey <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;incomplete&quot;</span>, <span class="st">&quot;complete&quot;</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">lab_perc =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">&quot;%&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>) <span class="co"># percentage as text</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">perc =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="co"># calculate percentage</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">lab_perc =</span> <span class="fu">paste</span>(<span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">&quot;%&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>) <span class="co"># percentage as text (for plot labels)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ERIM_OS_clean_unfinished <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">percentage =</span> lab_perc) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_custom</span>()</span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>perc) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">percentage =</span> lab_perc) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_custom</span>()</span></code></pre></div>
 <table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -427,6 +429,12 @@ complete
 <div id="cluster-0-demographics" class="section level1">
 <h1>Cluster 0: Demographics</h1>
 <p><em>Demographics</em> The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ERIM_OS_clean %&gt;% </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  dplyr::select(-perc) %&gt;% </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  mutate(perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels))</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  kable_custom()</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -469,15 +477,43 @@ complete
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of responses to cluster 0</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cluster0 <span class="ot">&lt;-</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;preproc&quot;</span>, <span class="st">&quot;cluster0.csv&quot;</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cluster0 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(question, item, <span class="at">percentage =</span> lab_perc)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_custom</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cluster0 <span class="ot">&lt;-</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;preproc&quot;</span>, <span class="st">&quot;cluster0.csv&quot;</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># convert all columns to factors</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">.cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">as_factor</span>(.)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 0</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster0 &lt;-</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;0&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cluster0 <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(number_responses, perc)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">percentage =</span> lab_perc) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_custom</span>()</span></code></pre></div>
 <table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -488,7 +524,19 @@ question
 item
 </th>
 <th style="text-align:left;">
+prop
+</th>
+<th style="text-align:left;">
 percentage
+</th>
+<th style="text-align:left;">
+ymax
+</th>
+<th style="text-align:left;">
+ymin
+</th>
+<th style="text-align:left;">
+lab_pos
 </th>
 </tr>
 </thead>
@@ -501,7 +549,19 @@ Which faculty are you from?
 Rotterdam School of Management (RSM)
 </td>
 <td style="text-align:left;">
+0.592920353982301
+</td>
+<td style="text-align:left;">
 59.29%
+</td>
+<td style="text-align:left;">
+0.592920353982301
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.29646017699115
 </td>
 </tr>
 <tr>
@@ -512,7 +572,19 @@ Which faculty are you from?
 Erasmus School of Economics (ESE)
 </td>
 <td style="text-align:left;">
+0.407079646017699
+</td>
+<td style="text-align:left;">
 40.71%
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.592920353982301
+</td>
+<td style="text-align:left;">
+0.79646017699115
 </td>
 </tr>
 <tr>
@@ -523,7 +595,19 @@ Which department are you affiliated to? [RSM]
 Finance
 </td>
 <td style="text-align:left;">
+0.0597014925373134
+</td>
+<td style="text-align:left;">
 5.97%
+</td>
+<td style="text-align:left;">
+0.0597014925373134
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.0298507462686567
 </td>
 </tr>
 <tr>
@@ -534,7 +618,19 @@ Which department are you affiliated to? [RSM]
 Business-society management
 </td>
 <td style="text-align:left;">
+0.149253731343284
+</td>
+<td style="text-align:left;">
 14.93%
+</td>
+<td style="text-align:left;">
+0.208955223880597
+</td>
+<td style="text-align:left;">
+0.0597014925373134
+</td>
+<td style="text-align:left;">
+0.134328358208955
 </td>
 </tr>
 <tr>
@@ -545,7 +641,19 @@ Which department are you affiliated to? [RSM]
 Marketing management
 </td>
 <td style="text-align:left;">
+0.194029850746269
+</td>
+<td style="text-align:left;">
 19.4%
+</td>
+<td style="text-align:left;">
+0.402985074626866
+</td>
+<td style="text-align:left;">
+0.208955223880597
+</td>
+<td style="text-align:left;">
+0.305970149253731
 </td>
 </tr>
 <tr>
@@ -556,7 +664,19 @@ Which department are you affiliated to? [RSM]
 Strategic management &amp; entrepreneurship
 </td>
 <td style="text-align:left;">
+0.149253731343284
+</td>
+<td style="text-align:left;">
 14.93%
+</td>
+<td style="text-align:left;">
+0.552238805970149
+</td>
+<td style="text-align:left;">
+0.402985074626866
+</td>
+<td style="text-align:left;">
+0.477611940298507
 </td>
 </tr>
 <tr>
@@ -567,7 +687,19 @@ Which department are you affiliated to? [RSM]
 Technology &amp; operation management
 </td>
 <td style="text-align:left;">
+0.238805970149254
+</td>
+<td style="text-align:left;">
 23.88%
+</td>
+<td style="text-align:left;">
+0.791044776119403
+</td>
+<td style="text-align:left;">
+0.552238805970149
+</td>
+<td style="text-align:left;">
+0.671641791044776
 </td>
 </tr>
 <tr>
@@ -578,7 +710,19 @@ Which department are you affiliated to? [RSM]
 Organisation &amp; personnel management
 </td>
 <td style="text-align:left;">
+0.149253731343284
+</td>
+<td style="text-align:left;">
 14.93%
+</td>
+<td style="text-align:left;">
+0.940298507462686
+</td>
+<td style="text-align:left;">
+0.791044776119403
+</td>
+<td style="text-align:left;">
+0.865671641791045
 </td>
 </tr>
 <tr>
@@ -589,7 +733,19 @@ Which department are you affiliated to? [RSM]
 Accounting and control
 </td>
 <td style="text-align:left;">
+0.0597014925373134
+</td>
+<td style="text-align:left;">
 5.97%
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.940298507462686
+</td>
+<td style="text-align:left;">
+0.970149253731343
 </td>
 </tr>
 <tr>
@@ -600,7 +756,19 @@ Which department are you affiliated to? [ESE]
 Economics
 </td>
 <td style="text-align:left;">
+0.239130434782609
+</td>
+<td style="text-align:left;">
 23.91%
+</td>
+<td style="text-align:left;">
+0.239130434782609
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.119565217391304
 </td>
 </tr>
 <tr>
@@ -611,7 +779,19 @@ Which department are you affiliated to? [ESE]
 Applied economics
 </td>
 <td style="text-align:left;">
+0.282608695652174
+</td>
+<td style="text-align:left;">
 28.26%
+</td>
+<td style="text-align:left;">
+0.521739130434783
+</td>
+<td style="text-align:left;">
+0.239130434782609
+</td>
+<td style="text-align:left;">
+0.380434782608696
 </td>
 </tr>
 <tr>
@@ -622,7 +802,19 @@ Which department are you affiliated to? [ESE]
 Econometrics
 </td>
 <td style="text-align:left;">
+0.239130434782609
+</td>
+<td style="text-align:left;">
 23.91%
+</td>
+<td style="text-align:left;">
+0.760869565217391
+</td>
+<td style="text-align:left;">
+0.521739130434783
+</td>
+<td style="text-align:left;">
+0.641304347826087
 </td>
 </tr>
 <tr>
@@ -633,7 +825,19 @@ Which department are you affiliated to? [ESE]
 Business economics
 </td>
 <td style="text-align:left;">
+0.239130434782609
+</td>
+<td style="text-align:left;">
 23.91%
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.760869565217391
+</td>
+<td style="text-align:left;">
+0.880434782608696
 </td>
 </tr>
 <tr>
@@ -644,7 +848,19 @@ What is your position?
 Tenured faculty member
 </td>
 <td style="text-align:left;">
+0.52212389380531
+</td>
+<td style="text-align:left;">
 52.21%
+</td>
+<td style="text-align:left;">
+0.52212389380531
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.261061946902655
 </td>
 </tr>
 <tr>
@@ -655,7 +871,19 @@ What is your position?
 PhD student
 </td>
 <td style="text-align:left;">
+0.221238938053097
+</td>
+<td style="text-align:left;">
 22.12%
+</td>
+<td style="text-align:left;">
+0.743362831858407
+</td>
+<td style="text-align:left;">
+0.52212389380531
+</td>
+<td style="text-align:left;">
+0.632743362831858
 </td>
 </tr>
 <tr>
@@ -666,7 +894,19 @@ What is your position?
 Postdoc or researcher
 </td>
 <td style="text-align:left;">
+0.0707964601769911
+</td>
+<td style="text-align:left;">
 7.08%
+</td>
+<td style="text-align:left;">
+0.814159292035398
+</td>
+<td style="text-align:left;">
+0.743362831858407
+</td>
+<td style="text-align:left;">
+0.778761061946903
 </td>
 </tr>
 <tr>
@@ -677,7 +917,19 @@ What is your position?
 Tenure track
 </td>
 <td style="text-align:left;">
+0.185840707964602
+</td>
+<td style="text-align:left;">
 18.58%
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.814159292035398
+</td>
+<td style="text-align:left;">
+0.907079646017699
 </td>
 </tr>
 <tr>
@@ -688,7 +940,19 @@ Are you member of any research institute affiliated with RSM or ESE?
 ERIM
 </td>
 <td style="text-align:left;">
+0.654867256637168
+</td>
+<td style="text-align:left;">
 65.49%
+</td>
+<td style="text-align:left;">
+0.654867256637168
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.327433628318584
 </td>
 </tr>
 <tr>
@@ -699,7 +963,19 @@ Are you member of any research institute affiliated with RSM or ESE?
 Neither
 </td>
 <td style="text-align:left;">
+0.0973451327433628
+</td>
+<td style="text-align:left;">
 9.73%
+</td>
+<td style="text-align:left;">
+0.752212389380531
+</td>
+<td style="text-align:left;">
+0.654867256637168
+</td>
+<td style="text-align:left;">
+0.70353982300885
 </td>
 </tr>
 <tr>
@@ -710,7 +986,19 @@ Are you member of any research institute affiliated with RSM or ESE?
 Tinbergen
 </td>
 <td style="text-align:left;">
+0.176991150442478
+</td>
+<td style="text-align:left;">
 17.7%
+</td>
+<td style="text-align:left;">
+0.929203539823009
+</td>
+<td style="text-align:left;">
+0.752212389380531
+</td>
+<td style="text-align:left;">
+0.84070796460177
 </td>
 </tr>
 <tr>
@@ -721,55 +1009,314 @@ Are you member of any research institute affiliated with RSM or ESE?
 ERIM,Tinbergen
 </td>
 <td style="text-align:left;">
+0.0707964601769911
+</td>
+<td style="text-align:left;">
 7.08%
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.929203539823009
+</td>
+<td style="text-align:left;">
+0.964601769911504
 </td>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="add-images-from-01_cluster0_figure.r" class="section level1">
+<h1>Add images from 01_cluster0_figure.R</h1>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA4sAAAOLCAIAAAB2cYE0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nOzdd2DU9f348XdCWMpQnFVQ68AtWqSu1oXyVWr9WWvF1S+irV8XamuLUrW2VizF1lUFtbhaB2oVtXVRtQ60DlyI2woqioMgggwDJL8/PjWNmZfL3X3GPR5/weWTu/ddAnnm9RlXUVdXFwAAIDEq414AAAB8hUIFACBZFCoAAMmiUAEASBaFCgBAsihUAACSRaECAJAsChXaZ+rUqRUVFRUVFYMGDWppmwMPPDDa5owzzmhpmzXWWCPaZvbs2dEtPXv2rKioGDNmTC7LqK6ujj79qquuau9TqNeuR2zdBx988L//+7/9+vVbeeWVf/Ob33T8DgtrxYoV0cv1hz/8Ie610LaEfzs164477jjkkEO23XbbHj16bLjhhkOHDr3oootqamriXhekVVXcC4CU+eY3v9m9e/clS5a88MILixcvXmmllRptUFtb+89//jP685QpU5rtv7feemvu3LkhhI022qhv377FXnOxLVu2bJ999nnppZeiv86bNy/e9eRu9uzZ77//flVV1cCBA+NeC/+Rum+nBQsW/OhHP7r11lvrb5k5c+bMmTPvvffe8ePH33zzzdttt12My4OUMkOF9unSpcvOO+8cQli+fPm0adOabvDss8/Onz8/+vNzzz1XXV3ddJt//etf0R922223oq20dB599NGoJw4//PCpU6eedtppca8oV1dcccWOO+64zz77xL0Q/it1306/+tWvojzdfvvtx44de/PNN59//vnbb799COHNN98cNmzY4sWL414jpI8ZKrTb7rvv/uCDD4YQnnjiiV133bXRRx944IH6P9fW1j744IMHH3xwo22efPLJ6A95F2qfPn0+/PDDEEKvXr3yu4cCeuutt6I/XHjhhWussUa8iyHt0vXt9O9///uyyy4LIRx00EE33XRTVdV/fqqeeuqpJ5xwwoQJE958880LL7ywlQN+gGaZoUK77b777tEf6kehDUWFuttuu/Xu3TuEMGXKlKbbdLxQKyoq1lprrbXWWqt79+753UMBLV++PPpD8nuC5EvXt9O9995bU1MTHc9dn6chhIqKigsuuKBnz54hhKeffjq+BUJaKVRot+hQ1BDCE0880ehDS5Ysefzxx0MI++yzz+DBg0MI//jHPxpts3jx4unTp4cQ1l9//fXXX78UKya1VqxY8fHHH8e9ioQq4IuzcOHCpUuX5vGJb7/9dghh7bXX7t+/f6MPdevWbeuttw4h1B9TC+ROoUK7denSZaeddgohzJ07t36PZGTq1KlffPFFCGGvvfYaMmRICOHdd999/fXXG24zbdq0aErUygD1vvvuGzp0aDQi3XLLLUeMGDFz5syGGyxatKiVc/mnT59+zDHHbLTRRt27d19zzTV32223Sy+9tPXTitt8xGaNGTOmoqLixBNPjP4aLeknP/lJw20eeuihY489dvfdd1977bV79uy5xRZbfPe7373zzjtra2ubvc9cFv/RRx9Fj3Xbbbc1vYc777wz+ug777zT0sqPO+64ioqKc889N4Qwd+7caPuLL744WnD015tvvrnZz91+++0rKiq22GKL1l6avF6Bzp07V1RU3H///SGE2267bdttt+3WrdvkyZPrN1i0aNH555+/0047rbbaaj179hwwYMBxxx3X6BuslWXk8bxmz549cuTIzTffvEePHj179tx8881Hjhz5xhtvNPrcjn9FQlvfTm2+OLmvNnx5IYu77777pZde2mWXXXr37t29e/eePXsOGjTo2muvjbZZsGDB6NGjN91005VWWulrX/vaHnvscc899zS6nzlz5vTo0WPjjTdu9hlFh6Q3PZ8SaFsd0H7nnHNO9C/ouuuua3j7qFGjQgirrrrqihUrouFKCOGPf/xjw21+97vfRbdfddVVDW/v0aNHCOE3v/nN6aef3vSfateuXf/1r3/Vb/z5559Ht0+cOLHR2n7729926tSp6T1suumms2bNyvsRmxUVXiOnnHJK9NGamppDDz20pf989t133+XLl+e3+OgY3BDCX//616aruuOOO6KP1n9K/Y7j3//+99Etxx57bNNHueiii6KNV1999RDCwQcf3PTO33zzzWjjMWPGtP7i5PEKRLuJ77vvvksvvbR+s8svvzz66PPPP9/slR8qKirOO++8NheTx/O64447+vTp0/QRO3fuHL1W9dr7FWlW699Orb847Vpt3Zff/GPGjIn+0MgvfvGLmTNnbrDBBk0/1Oifcyuee+656FN+9KMf5fgpQD2FCvl49NFHo589xx57bMPbv/GNb4QQDjzwwOiv0WTlu9/9bsNtDjjggOhz33rrrYa3Rz8po0/ZcsstJ0yY8NRTT91zzz3122+yySb1G7dUqPXjn7XXXnvUqFG33nrrxIkT99133+jGTTfddNmyZfk9Yivqi6HR7WPHjo1u79+///nnnz958uTbb7997Nix9ftDL7jggvwW3/FCjZx55pkhhNVXX73RPRx99NEhhB49eixZsqTRh6LLc1ZUVMycObPNV6a9r0AUYWeffXanTp3WWWed884775Zbbvnggw/q6uo+/vjjVVddNfqsYcOGXXHFFTfffPPPf/7z6HDnEMJvf/vbNtfTrud15513RvfcpUuXY4455pprrrn22muPOeaYLl26RLdPnjy5/tMLUqiRlr6dWnlx2rvaui+/+aNfhw499NC///3vTzzxxFlnndW5c+fodfja174WxeX999//6KOPnnTSSRUVFSGEnj17Lly4sM1n8fnnnw8YMCBaz0svvdTm9kAjChXy8cUXX0SHom6zzTb1N0Y7i0MI48ePj2457rjjoh9pNTU19ZutvfbaIYR111230X3Wz3L22GOPRj8CDzzwwOhDs2fPjm5ptlCXLFkSzdg233zzd955p+E9jB49Otq+4dC3XY/YipaSIjrKdrPNNluwYEHD2z/77LNoOrX//vvnt/hiF+q9994bbf+3v/2t0Ye23HLLEMIuu+zS+muSxytQ92WEVVVVDR48eP78+Q0/NHLkyOhDd9xxR8PbZ86cuemmm4YQunfv3mb/5f68li9fvtlmm0UvzhNPPNFwy6lTp0ajyi222KJ+BlyyQm32xWnvausafPOfe+65Dbdv+AYBl1xyScMPHX/88dHtTz/9dOtPYeHChfVX+bjwwgvbfMpAUwoV8rTHHnuEECorK+vj45Zbbol+Jr3xxhvRLfUHyT366KPRLbNmzYpuOfzwwxvdYfQjs7KycsaMGY0+VP8D/pFHHoluabZQ698w6YEHHmh0D8uWLYsmcMOHD8/vEVvRbFIsXbq0X79+ffv2bfRjPnLkkUeGELbaaqv8Fl/sQq2pqVlllVVCCCNGjGh4e/0pL/W/hLSiva9A3ZcR1vQrMnPmzGgWeOqppza9q+jaZyGEM844o/Ul5f686ufZze7Urv9i/eUvf4luKVmhNvvt2t7V1n35zd+/f/9GB1q8+uqr0cbbbrttbW1tww/V7zm55ZZbWln//Pnzo+PUQwhnn312m88XaJYzpSBP0TWnamtrn3rqqeiW6DpT/fr122STTaJb9txzz+jHav0Z/W1eq/9b3/pWNM1qaL311ov+UFdX18qSokfZcssto8sINFRVVTVhwoSxY8futddeBXzEVnTt2vXdd9997733ouFfI5988klBFl8knTt3/u53vxtCuOuuu1asWFF/+6RJk6KPNr3GbVPtfQXq7bLLLo2+Ivfcc090rtgpp5zSdPs999wz+paLriPRityfV3RXq6yySnRgQCPHHHNMVHhtPmLBNX1xQgdWu9tuuzU67nndddeN/jB48OBol0i9+oOAWzrJL4SwbNmy/fbbL/pnfvbZZ//qV79q+ykBzVGokKemV0WNCrVhRfXq1WuHHXYIDa6K2uaVUJtesyaEUFmZ0z/V6GSXlt5icdiwYaeddtoRRxxRwEfMXV1d3fvvvz916tQ//elPBx100N13391og/wWXzwHHXRQCKG6urp+cha+LLl99tlntdVWa+8dtvkK1Ntwww0b3RK9OOuuu25L75EbnYA/Y8aMNpeR4/OKLlKx2WabNXvB3R49ekRN/O9//7vNRyyspi9O6MBq11prrUa31H/nN70SXC7/KMaNGzd16tQQwqmnnipPoSO8pxTkaYcddujWrdvSpUujQp05c2Z08n6jOd+QIUMef/zxadOmffrpp6uuumpUqM1ePTHSr1+//NazfPny6FI+7b2HvB8xFy+//PLll1/+2GOPvfHGG0uWLGlps7wXXzxDhgzp0aPH559/Pnny5OiIjmnTpkWJc/jhh+d+Pzm+Ag01fRGiAnv//fcbTfUayeUt7HN8XtEjNnsye2SDDTZ4/vnnS1+ozX6HFGO1+f2S9uc//zmEsPbaa5933nl5fDpQzwwV8tS1a9foaLPokkz1b3a65557NtwsuirqihUrHnrooS+++OL5558PrV4JtdlrLeWipqYmOtqya9eu7frEvB+xTePGjRswYMCll1764osvrlix4hvf+MawYcN++ctf3n///UcddVTDLfNefPF069btO9/5TvjyHPDw5aCxZ8+e+++/f453kvsr0OihG93y0Ucf5fJwtbW19UfctnLnuT+vVoI4Onwlv6vcd0TTF6deElb7/vvvhxC23377+msIAPlRqJC/aEf//PnzX3vttahQt9pqq+hU/XqDBg2Kzk2ZMmXKc889Fx1NmPebnbZipZVWWmeddUIIrV8UvWQeeuih0047bcWKFVtttdXf/va3BQsWPPvss5MmTfr1r389ZMiQRj+/C7v4XEaJuYh2iM+ePfuZZ56pq6uLLnT/ve99L8d3mm3XK9C6r3/96yGEnXbaqc1zCxq+8WZHnld0DbL6E/uait7Qof6Q69YV6ivSksKutiOio3tbyWggRwoV8lcfmlOnTn3ooYdCk138IYROnTrVv/1pm6dJdVB05EBLByOOGTNm0KBB++23XzEeuqno9Oru3bs/8MAD++23X6PhaNNRX36Lb/ZErhzfY6lN++67bxRtkydPfvzxx2fPnh3as4u/va9AK6LrSb399tstnbi2YsWKFStWtHIGT0O5PK+o+V599dVm545LliyJ3qip6cEqRf2KtCTv1Rbc66+/PmvWrPHjxxf7gSDzFCrkb8cdd4yGJRMmTJg7d25orlDDlzv6Z86cef3114cQ1lhjjc0337wY64mOOnjmmWeeeOKJRh+qra3905/+NG3atJK9AWPUPRtuuGHTk1Hq6uqmTZvW6Mb8Fh89SkM1NTX1l/3qoJVXXnmfffYJIdx+++033XRTCGGttdZqeqmBlrT3FWjFwIEDQwgfffTRXXfd1fSjc+fOXXXVVauqqn75y1/mcm+5PK/oyzF//vxm31b3yiuvXLBgQQghOhGwoaJ+RVqS92oLbr311lt//fXXWGONYj8QZJ5Chfx17dp1xx13DCFER5dWVVXVX6a7oahQ6zfbddddWz/fJW8/+9nPoiMKTjjhhDlz5jT80JgxY6Id6PWLKbZorPXvf//7448/bnj70qVLR44c+cILL4Qvd4lG2rX4NdZYI7p+0PXXX99wGFlXV3fmmWdGu3Rz13AZjUQ7xN94441oIHrooYfmfthue1+BVuy///6DBg0KIRx11FGPPPJIww/V1NQcddRRCxcurKioGDFiRI5ra/N5/fCHP4wGt7/+9a+ffvrphh968skno8va9+/ff/jw4dGNhf2KtFd7V1s8ixYtWrRoUekPz4XsUajQIfXXnAoh7LDDDj179my6zQYbbNDwALgi7eIPIfTp0+ess84KIbzwwgsDBw4866yz7rjjjuuvv/773/9+NF3bZZddco+YDho6dGgIYenSpXvuueekSZOmT5/+8MMPX3LJJVtuueVll1228sorhxBef/31+++/f+HChe1dfGVlZfQyPvvss3vuueddd9314osvTpo0aejQoeeff37uZ2FHR23Onz9/8uTJL7/8cqMyDiHU751fvHhxaOdZ/O19BVpRUVFx8cUXV1RUzJs3b++99x4+fPjll19+9913X3TRRQMGDPjb3/4WQvjFL36x0UYb5bi2Np9XVVVV9Jatn3zyyW677TZy5Mgbb7zxxhtvPPHEE3fffffq6uoQwrhx4+oPey3UVyQ/7V1t8ay++uo9evT44Q9/WOwHguwrwrsAQBl5+OGH6/81tfL+MSeccEL9Zi+++GKz20QjqEbvwRiJ5m0hhIcffji6pdn3lIpceumlzZ4Rv+222zZ6K/l2PWIrWnoToGYvn15ZWTlq1KiGu30POOCAPBb/7rvvtrQvddy4cdEf2nxPqUY7zS+66KKmzy468z2E0L9//zZfig6+AlFCNfsVqaure+CBB+qvJ9/oDkeOHNneteXyvC688MJmq65Pnz6N3ua+rp1fkVa0/p5SLb047V1t9M1/5plnNrq9/l/WpZde2uhD9WdiTZo0qaU1RIf9HHTQQW0+TaB1ZqjQIfWHooYQWjlCsX73dJ8+fbbeeuuiLumEE0546qmnjjjiiPXWW69r164bbLDBPvvsc9lll02bNq2VC0YWw8SJEydPnrzXXnv169cvWsnRRx/9wgsv/O53v/v+97//f//3f6usskr37t3r37+qXYvv16/fa6+9duqppw4YMCCaR4YQevfufd1117VyIadGvvvd744ZM2b99dfv2rXruuuuu/rqqzfd5vvf/370h3YNUPN+BVoxePDgl156adSoUVtvvXWvXr169uz5jW9848gjj5w+ffoll1zS3rXl8rxOOeWUGTNmHH/88f3791955ZVXXnnlTTfd9MQTT5w+ffoBBxzQaOOCfEU6ol2rBRKuoi7ftzQESI7Zs2dXV1dvscUWnTt3Luw9X3jhhT/96U9DCG+++WZ0aGk2FPt5Fe8rApQDhQrQmgEDBkyfPn2HHXaof8fabMjq8wKywV5+gBY98cQT06dPDyEcccQRca+lkLL6vIDMMEMFaOyzzz6rrKycOXPmD3/4w+nTp6+88srvvPPOaqutFve6OiqrzwvIHjNUgMauv/76Xr16RfvBQwgjR47MRsZl9XkB2VP0i8MBpFdFRcVRRx117rnnxr2QAsvq8wIyw15+gMaWLl369NNPz549e+DAgdGbFWVDVp8XkD0KFQCAZHEcKgAAyaJQAQBIFoUKAECyKFQAAJJFoQIAkCwKFQCAZFGoAAAki0IFACBZFCoAAMmiUAEASBaFCgBAsihUAACSRaECAJAsChUAgGRRqAAAJItCBQAgWRQqAADJolABAEgWhQoAQLIoVAAAkkWhAgCQLAoVAIBkUagAACSLQgUAIFkUKgAAyaJQAQBIFoUKAECyKFQAAJJFoQIAkCwKFQCAZFGoAAAki0IFACBZFCoAAMmiUAEASBaFCgBAsihUAACSRaECAJAsChUAgGRRqAAAJItCBQAgWRQqAADJolABAEgWhQoAQLIoVAAAkkWhAgCQLAoVAIBkUagAACSLQgUAIFkUKgAAyaJQAQBIFoUKAECyKFQAAJJFoQIAkCwKFQCAZFGoAAAki0IFACBZFCoAAMmiUAEASBaFCgBAsihUAACSRaECAJAsChUAgGRRqAAAJItCBQAgWRQqAADJolABAEgWhQoAQLIoVAAAkkWhAgCQLAoVAIBkUagAACSLQgUAIFkUKgAAyaJQAQBIFoUKAECyKFQAAJJFoQIAkCwKFQCAZFGoAAAki0IFACBZquJeAECCfFazYd6f26/3MR156AVLTu/IpwNkiUIFykVH6rMEenUf2+Y2KhYoEwoVyJSEZ2gHtVKx4hXIEoUKpFW2Y7S9mo1X2QqklEIF0kGP5qFptmpWIBUUKpBEerRINCuQCgoVSARJGpdGzSpYgSRQqEBsVGkCNQxWtQrERaECpSNJ08V4FYiLQgWKS5VmhvEqUDIKFSg8VZp5ahUoKoUKFIYqLVtqFSg4hQp0iDClofpalapARyhUIB/ClNZJVaAjFCqQK1VKHhwDAORBoQJtEKYUisEqkCOFCjRPmFI8UhVonUIFvkKYUkpSFWiWQgVCEKbETaoCDSlUKHfalESJUlWnQplTqFCmhClJZqQKZU6hQnkRpqSLVIXypFChXGhTUs3efygrChUyTpiSJUaqUCYUKmSWNiXDjFQh2xQqZI0wpXwYqUJWKVTIDm1K2TJShYxRqJAF2hSCToUMUaiQYsIUmrLrHzJAoUIqaVNok5EqpJdChZTRptAuOhXSSKFCamhTyJtOhXRRqJAC2hQKQqdCWihUSDRtCgWnUyH5FCoklDaFotKpkGQKFRJHm0LJ6FRIJoUKCaJNIRY6FZJGoUIiaFOInU6F5FCoEDNtComiUyEJFCrERptCYulUiFdl3AuAMiVPIfl6dR8bpSpQYgoVSu2zmg3lKaSISIXSs5cfSkeYQkrZ6Q8lplChFLQpZIBOhZKxlx+KTp5CltjpDyVghgpFpE0hkwxTodgUKhSFNoXM06lQPPbyQ+HJUygfdvpDMZihQiFpUyhDhqlQcAoVCkObQpnTqVBA9vJDAchTIGKnPxSEGSp0iDYFGjFMhY4zQ4X8yVOgJYap0BFmqJAPbQq0yTAV8maGCu0mT4HcGaZCHsxQoR20KZAHw1RoLzNUyJU8BTrCMBVyZ4YKbdOmQEEYpkKOzFChDfIUKCzDVGiTGSq0SJsCRWKYCq0zQ4XmyVOg2AxToSUKFZohT4HSEKnQLHv54Su0KVBi9vhDU2ao8F/yFIiLYSo0ZIYKIWhTIAEMU6GeGSrIUyBBDFMhKFSQp0DSiFRQqJQ1eQokk0ilzDkOlTKlTYGEc1gq5cwMlXIkT4G0MEylPClUyo48BdJFpFKG7OWnjGhTIKXs8afcmKFSLuQpkHaGqZQPhUpZkKdANohUyoRCJfvkKZAlIpVyoFDJOHkKZI9IJfOcKUVmaVMgw5w7RbaZoZJN8hQoB4apZJVCJYPkKVA+RCqZpFDJGnkKlBuRSvYoVDJFngLlSaSSMQqV7JCnQDkTqWSJQiUj5CmASCUzXG2K1NOmAPVchYpsMEMl3eQpQFOGqaSdQiXF5ClAS0QqqaZQSSt5CtA6kUp6KVRSSZ4C5EKkklIKlfSRpwC5E6mkkUIlZeQpQHuJVFJHoZIm8hQgPyKVdFGopIY8BegIkUqKKFTSQZ4CdJxIJS0UKikgTwEKRaSSCgqVpJOnAIUlUkk+hUqiyVOAYhCpJJxCJbnkKUDxiFSSTKGSUPIUoNhEKomlUEkieQpQGiKVZFKoJI48BSglkUoCKVSSRZ4ClJ5IJWkUKgkiTwHiIlJJFIVKUshTgHiJVJJDoZII8hQgCUQqCaFQiZ88BUgOkUoSKFRiJk8BkkakEjuFCgBAsihU4mSACpBMxqjES6ESG3kKkGQilRgpVOIhTwGST6QSF4VKDOQpQFqIVGKhUCk1eQqQLiKV0lOolJQ8BUgjkUqJKVRKR54CpJdIpZQUKgAAyaJQKREDVIC0M0alZBQqpSBPAbJBpFIaCpWik6cAWSJSKQGFSnHJU4DsEakUm0KliOQpQFaJVIpKoQIAkCwKlWIxQAXINmNUikehUhTyFKAciFSKRKFSePIUoHyIVIpBoVJg8hSg3IhUCk6hAgCQLAqVQjJABShPxqgUlkKlYOQpQDkTqRSQQqUw5CkAIpVCUagAACSLQqUADFABiBijUhAKlY6SpwA0JFLpOIVKh8hTAJoSqXSQQgUAIFkUKvkzQAWgJcaodIRCJU/yFIDWiVTyplDJhzwFAIpHoQIAxWKMSn4UKu1mgApA7kQqeVCotI88BaC9RCrtpVABAEgWhUo7GKACkB9jVNpFoZIreQpAR4hUcqdQAQBIFoVKTgxQAeg4Y1RypFBpmzwFoFBEKrlQqAAAJItCpQ0GqAAUljEqbVKotEaeAlAMIpXWKVQAAJJFodIiA1QAiscYlVYoVAAAkkWh0jwDVACKzRiVlihUmiFPASgNkUqzFCoAAMmiUGnMABWAUjJGpSmFylfIUwBKT6TSiEIFACBZFCr/ZYAKQFyMUWlIoQIAkCwKlf8wQAUgXsao1FOohCBPAUgGkUqkKu4FACRR7y5vt/dTFizJ54H8PAZoqqKuri7uNRAzA1TKXB4xWmyylTK3YMnpcS+BmJmhAuUlgT3aVNMfz5oVKCtmqOXOAJXMS0WStpdgJfOMUcucGSqQQZms0oYa/vBWq0D2mKGWNQNUsiTzVZoLtUqWGKOWMzNUIN2EaUP1P9GlKpBqZqjlywCVVBOmOZKqpJoxatlSqGVKnpJGqrSD1CppJFLLk738QApo04KIftLrVCD5zFDLkQEqaSFMi0qqkhbGqGXIDBVIIm1aAkaqQGKZoZYdA1SSTJjGSKqSZMao5cYMFUgEbRo7I1UgOcxQy4sBKgmkTRNIp5JAxqhlxQwViI02TSzzVCBeZqhlxACV5NCm6SJVSQhj1PJhhgqUjjBNKSNVoMQq414AJWKASuzkadoZXxE7vyaVDzNUoOi0aWYYpgKl4TjUsmCASly0aYbpVOJinF8OzFCBotCmmWeeChSPGWr2GaBSYtq0DOlUSswYNfOcKQUUkjwtT3IBKCwz1IwzQKVktCnBMJUS8ntRtpmhAgUgT4mIBqAgnCkFdIg2pRFnUAEdZ4aaZXbxU2zylJYYplJsfgvKNjNUIB/alDYZpgJ5M0PNLANUikeekjvDVIrH7z8ZZoYKtIM2JQ+GqUB7maFmkwEqxSBP6QjDVIrBbz5ZpVCBnMhTOk6kAjlyxf4MMkClsLQpBWfuRWH55Sd7zFCB1shTikFPAK1TqECL5CnFI1KBVijUrLGLn0KRpxSbSKVQHDeSPa42BTSmTSkZF6ICmmWGmikGqHScPKX0DFPpOL/nZIxCBf5LnhIXkQo0pFCB/5CnxEukAvUUanbYxU9HyFOSQJRKibcAACAASURBVKTSEXb0Z4lCBeQpCSJSgaBQM8MAlbzJU5JGpJI3Y9TMUKhQ1uQpySRSocwpVChf8pQkE6lQzhRqFtjFTx7kKcknUsmDHf3ZoFChHMlT0kKkQnlSqKlngEp7yVPSRaTSXsaoGaBQobzIU9JIpEK5UahQRuQp6SVSoawo1HSzi5/cyVPSTqSSOzv6006hQlmQp2SDSIUyoVAh++QpWSJSoRwo1BSzi59cyFOyR6SSCzv6U02hQpbJU7JKpEK2KVTILHlKtolUyDCFmlZ28QOIVFpnR396KVTIJgNUANJLoUIGyVPKhzEqZJJCTSW7+GmFPKXciFRaYUd/SilUyBR5SnkSqZAxChUAgGRRqOljFz8tMUClnBmj0hI7+tNIoUJGyFMQqZAZChWyQJ5CRKRCNijUlLGLH6B1IpWm7OhPHYUKqWeACkDGKFRIN3kKTRmjQtop1DSxi59G5Cm0RKTSiB396aJQAQBIFoUKaWWACq0zRoX0UqiQSvIUciFSIaUUamo4CBUAOsKhqCmiUCF9DFAhd8aokEYKFVJGnkJ7iVRIHYWaDnbxA0DH2dGfFgoV0sQAFfJjjArpolABAEgWhQqpYYAKHWGMCimiUFPAQagEeQqFIFIJDkVNCYUKAECyKFRIAQNUKBRjVEgFhQoAQLIo1KRzECoGqFBYxqg4FDX5FCoAAMmiUCHRDFChGIxRIeEUKgAAyaJQE81BqGXOABWKxxi1zDkUNeEUKgAAyaJQIaEMUKHYjFEhsRQqyfLFF3Xvvbs87lUAAHFSqCRITU3doQd+tN/ec+JeSPwMUKE0jFEhmRRqcpXbaVJ1deGk4+Y+9sjS8y9eLe61AJB9TpZKMoVKUvzi59U33/D5xeNXH7LPSnGvJWYGqFBKxqiQQFVxLwBCCGHcefMn/HHBub/rc9j/9oh7LQBAzMxQid+1Exee9+tPf/LzVU48pXfca4mfASqUnjEqJI1CTajyOQj13r8v/tnJ1Ycc3uOXv1k17rUAAImgUInT1EeXjjj8472GdL/0ytUrKuJeTQIYoAKUkpOlEkuhEptXZtQc/oOPth7Q5err16yq0qdAnOzoh0RRqMRj1szl3xv64TrrVt1659orrSxPAYD/ci5/1ixdUvfxxytqa+NeR6vmzVsxfNjHVZ3DJRNWnz+/dv78ji63oiKsuWan7iulu3Tt4od4LVhyun2+kBAKNTsWL6ob9dPqz6p3/9rXvhb3Wtq2774hhHDr9QW7w+rq6hXhvt9fvNrqa3Qq2J0CAHFQqEmU34n8o35a/cND/zpkyJCCryctXnjhhROP2WXS5LXiXggAqdGr+1hHISeQ41AzYumSus+qdy/nPA0hbLvttv3WPfydWcvjXkg+7OKHJFAqkBAKNSPmf1a7xhprxL2K+K277rqffLwi7lUAAB2iULOjwgVFU8sAFZLDGBWSQKGWlzlz5vzud7+bNm1ajGt44oknrrjiivw+9/XXXx89evTs2bMLuyQAIFEUauIU7/1O6+rqhg8ffvrppz/++ONNP/rhhx8ef/zxW2+99Wqrrbbvvvted911bd5hz549K1q29dZbN/tZo0ePPvfcc5v90KRJk775zW/26tVr4MCBEydObLrBqaee+uCDD6677rptrg0ASC+FWkYuvvjif/zjH81+6IUXXhg0aNCECRPefvvt3r1733fffUceeeTxxx9fV1fXyh126tSpqjmdOnUKIXTr1q3pp9x9992PPfZYs/c2bty4Qw899NNPP91///0XL1784x//ePTo0Q03eOSRR+6+++5x48Zl7HgGu/ghaezoLzeug5tACrVcvPTSS6ef3vz/uTU1NcOGDZs9e/ZPfvKTefPmvf322zNmzFhzzTUnTJhw7bXXtnKf8+fPX9acY489tqKiYsyYMfVbvvbaa9dee+3hhx/+ve99r9nqra6uPuuss4YOHfrKK69cf/31M2bMOPjgg8eNGzdr1qz6bUaNGvWd73xn9913z+sFAABSQ6GWhS+++OKwww7r1q3bgQce2PSjd9xxxxtvvLH99tv/4Q9/6Nq1awhhyy23vPrqq0MI48aNa+9jPfLII+PHjz/++OMbXvpq9OjRI0aMuPHGG5ctW9bsZz377LM1NTUnnnhi586dQwidOnU66aSTamtrn3zyyWiDW265Zdq0aWPH+jUXALJPoZaF0047bcaMGePHj19vvfWafnTy5MkhhGHDhjXcez5kyJBVVlnltddee+ONN3J/oEWLFh111FEbb7xxo7T95S9/ed999913331/+ctfmv3E1VZbLYTQ8BSoOXPmhBD69OkTQli2bNkZZ5wxfPjwrbbaKvfFpIJd/JBMdvRDvLynVPZNmTLlkksuGTZs2GGHHfbMM8803eCFF14IIey2224Nb+zcufPOO+98zz33TJ8+vX///jk+1ujRo99+++2HHnpopZVWanj7dtttF/3h/fffb/YTt9lmm0033fTMM8/s27fvrrvu+swzz/z0pz/t27fvzjvvHEK44oor3n///XPOOSfHZQAAqWaGmnHV1dVHHnnkOuusM2HChJa2effdd0MIa665ZqPbo7cAeOedd3J8rFdffXX8+PH77rvvHnvs0d51du7c+aabburSpcvQoUN79Oixxx57fPHFFzfddFOPHj0WLlx4zjnnnHzyyX379m3v3QIAaWSGmiwFv9TUj3/84w8//HDKlCmrrrpqsxvU1tYuXrw4fLk/vaFoz/vnn3+e42OdfvrpdXV1v/3tb/Nb6nbbbTdjxoy//vWvr7322sYbb3zQQQdFCxg3blxtbW1Lp3mlml38kGQLlpzuFO/y0av7WId2JIpCzbKJEydOnjz5lFNO2WuvvVrapqKionPnzsuWLWvpEk6VlTkN2h977LG77rrrsMMOGzBgQJ7LDaF3795HH310w1vmzJlzwQUXjBkzpnfv3iGEmpqayZMnT58+vV+/fvvtt5+pKgBkkkLNrH//+9+nnHLKFlts0fpQs6KiYq211po9e/a8efN69OjR8EPz5s0LIayzzjq5PNx5550XQhg5cmQHltyMs88+e8011zz++ONDCO+9997QoUNnzJgRfei000679tprv/e97xX2EQGA2DkONbOmTp26aNGiBQsWfPvb3x70pRtvvDGE8Ic//GHQoEGHHHJItGXUoHPnzm10D9XV1SGEXN7A6Z133pkyZcrmm2++4447FvApvPrqq1dfffV5553XpUuXEMKIESPeeuut66+/fsGCBc8888x666135JFHtnTqFQCQXgo142bPnj2tgY8//jiE8N57702bNu3ll1+OtolO1W/0Vqj11yLdeOON23yUiRMn1tbWHnXUUYVd/Omnnz5gwICopKurqx988MGTTz758MMP79mz5/bbb3/NNdcsWLDg3nvvLeyDloyDUCH5HJgIcVGomTV8+PC6Jk455ZQQwkUXXVRXV/fSSy/VbxlCuP322xt++mOPPfbJJ5/ssssuuRTqddddF0IYNmxYAdc/derUu+66q/49TpsOdNdff/0QQtTcAECWKFTC4MGDN95444cffvjiiy+Obvnkk0+iM5aOO+64+s1qa2tvuOGGG264odH1p2bMmPHee+99/etf79evXwFXNWrUqH322Wfw4MHRXzfZZJPVV1/9qquuqr+2wEUXXRRC2GmnnQr4oABAEjhTKkEKfqmpHFVUVNx+++1Dhgw55ZRTLrvssr59+/7rX/9aunTpyJEjDzvssPrNli1bdsQRR4QQJk2aFM0vI1OmTAkhfOtb3yrgkm677bannnrq+eefb7jISy+99JBDDtl888333HPPN95448knnzzooIPyuPYqADTlglOJYoZKCCFsvfXWU6dOPfDAA+fNm/evf/1ro402+uMf/3jJJZe0dAmqhqJC/fa3v12oxSxfvvwXv/jFEUccsc022zS8fdiwYVOmTNlggw3uuOOOzz77bMyYMTfddFOhHrTEHIQKaSFZIBYVdXV1ca+B/+jIDPXDD1ecf87eEydOLOB60ujXv/71twZfuf03u8a9kDYoVEgR1+0vH34hSQ4z1OzwywYAkA0KNSN69ayMLrBf5ubOnbvKqr6rASDd/CzPiJVWrqio+sdzzz0X90LiNGvWrBmvXLXxJp3jXkgb7OKHdLHnF0rPufzZ8fuLVxt57Le/tuahq6++etxricGCBQtee+PaiyeU43MHgIxRqNmx2uqdbvzrWu+9O6V67oq41xKDHj0rN95k7bhXAQAUgELNmn7rVfVbz5cVAEgxx6ECAJAsCjUp4npDKUrMaVKQRk6WKhOufZscChUAgGRRqAAAJItCBQAgWRQqAADJolABAEgWhQql40R+SC+n80MpKVQAAJJFoQIAkCwKFQCAZFGoAAAki0IFACBZFCoAAMmiUAEASBaFmgif1WwY9xIAgNCr+9i4l0AIChVKxuX6Ie1ctB9KRqECAJAsChUAgGRRqAAAJItCBQAgWRQqAADJolABAEgWhQoAQLIoVAAAkkWhAgCQLAoVAIBkUagAACSLQgUAIFkUKgAAyaJQAQBIFoUKAECyKFQAAJJFoQIAkCwKFQCAZFGoAAAki0IFACBZFCoAAMmiUAEASBaFCgBAsihUAACSRaECAJAsChUAgGRRqAAAJItCBYCc9Oo+Nu4lQLlQqInQu8vbcS+BovusZsO4lwBAGxYsOT3uJRCCQgUAIGkUKgAAyaJQAQBIFoUKAECyKFQAAJJFoQIAkCwKFQCAZFGoUDouiQrp5XL9UEoKFQCAZFGoAAAki0IFACBZFCoAAMmiUAEASBaFCiXldH5IIyfyQ4kp1KTo3eXtuJcAAGVtwZLT414C/6FQAQBIlqq4FwAAdFxtzfKHv717Xffu3bt16xb3Ykrt008/ffThZV2r9hI2meELCQCp98Xye8dffuTRRx8d90Jic+uttx5+6Lhunb8f90IoDHv5odScLAXpkobTpJbtNaRXOedpCOEHP/jB976/YV3dorgXQmEoVABIt9q6Reutt17cq4jfRhttVBcWxL0KCkOhAkDqVVRUxL2E+FVUVIS6uBdBgShUACAFXn/99dGjR8+ePTvuhVAKChUAWpSGg1BbdNJJJ1U0Z+utt2605QMPPPD//t//22CDDVZeeeXttttu/PjxOT7EQw89dMABB6y99trdu3ffcsstjzzyyHfeeafpZrnc/6RJk775zW/26tVr4MCBEydObLrBqaee+uCDD6677ro5ro1UU6gJ4qL95cPJUkAJvPnmmyGETp06VX1Vp06dGm52yimn7L333nfddVddXV2/fv2mT59+wgkn/N///d+KFStav//f//73gwcPvvPOOxcsWNC/f/9Zs2Zdd911m2+++f3339/e+x83btyhhx766aef7r///osXL/7xj388evTohnfyyCOP3H333ePGjSve8Qwu158oChUAsumtt96qqKhYuHDhsq964YUX6re59dZbL7744nXXXXfq1KnvvPPOa6+99tZbb+24445XXnnlZZdd1sqdv/zyy6NGjQoh/P73v//0009ffPHF6urqn/zkJ0uWLBk+fPjcuXNzv//q6uqzzjpr6NChr7zyyvXXXz9jxoyDDz543Lhxs2bNqn+4UaNGfec739l9990L/SKRUAoVADJo+fLls2bNWm+99bp3797KZueee24I4Yorrthll12iW77+9a/fdtttPXr0uPDCC1sZo06YMKGuru7EE0889dRTu3btGkLo1q3bBRdcsOuuu3700Uf33HNP7vf/7LPP1tTUnHjiiZ07dw4hdOrU6aSTTqqtrX3yySejT7nlllumTZs2dmyKj7igvRQqxMOOfqCoZs2atXz58k033bSVbZYuXfrKK6906dJlyJAhDW9fZ511dt5551mzZj344IMtfe7LL78cQth///0b3b733nuHEJ577rnc73+11VYLITQ8BWrOnDkhhD59+oQQli1bdsYZZwwfPnyrrbbK5YmTDd5TCgCal+rTpKKDUDfZZJPbbrvt7rvv/uCDD/r377/zzjsPGzas/lDOxYsXL1++vGvXrpWVjSdW0eT1pZdeahSX9YYMGbLttts2Penq008/DSGsuuqqud//Nttss+mmm5555pl9+/bdddddn3nmmZ/+9Kd9+/bdeeedQwhXXHHF+++/f84553Ts9SBlzFABIIPeeuutEMI111xz0EEHXXPNNffff/8f//jHQw899Nvf/vZ7770XbdOnT5++fft+8cUXjz/+eMPP/eyzz5544okQQv3hpE2NHj36wgsvXHvttRve+OGHH/75z38OIQwdOjT3++/cufNNN93UpUuXoUOH9ujRY4899vjiiy9uuummHj16LFy48Jxzzjn55JP79u1biFeF1FCoAJBB0Qy1oqLiyiuvnDVrVnV19d13373ZZps9/vjjw4cPr9/sxz/+cQjhmGOOifbahxA++OCDYcOGffLJJyGEJUuW5P6I06dPHzx48Ny5c0eMGDFo0KB23f922203Y8aMiRMn/uxnP7v88stfeeWVb33rWyGEcePG1dbWnn66s+zLjr38EJvPajZ0iTFIrFTv4g8h/M///M9GG22055571u+IHzp06KBBgzbddNN//vOf99xzTzTmHD169COPPPLQQw9ts802G264YVVV1VtvvVVVVfWtb31r6tSprZ9lVW/evHm/+tWvJkyYsHz58uHDh1955ZX1H8r9/nv37n300Uc3vNs5c+ZccMEFY8aM6d27dwihpqZm8uTJ06dP79ev33777VfYqapLTSWNGWqy6BUACuI73/nOySef3Og40TXWWOOII44IITz99NPRLZ07d/7HP/5x6aWX7rLLLnPnzl22bNnBBx/81FNPRadYrbLKKm0+0J///OdNNtnkj3/84/rrr3/XXXdde+21VVX/nX915P7PPvvsNddc8/jjjw8hvPfeewMHDjzkkEPOO++84447bsstt5w8eXK7XxTSwwwVAMpI//79QwgN3/mpsrLyhBNOOOGEExpu9v7779dv3JLPP//8Bz/4wX333denT59LLrnk2GOPjS4X1Uh+9//qq69effXVf/nLX7p06RJCGDFixFtvvXX99dfvv//+r7/++ogRI4488shvfvOb3mIqq8xQIU6uOQXJlPZd/AsWLLj55pv//ve/N/3Qxx9/HEKovwrVvHnzPvroo2XLljXcZtGiRVOnTu3atWt0MGizampqDjjggPvuu2/fffd95ZVXRo4c2Wye5n3/p59++oABAw455JAQQnV19YMPPnjyyScffvjhPXv23H777a+55poFCxbce++9rb0KpJlCBYCs6dat249+9KNo3Njw9uXLl995550hhO233z665ec///naa6/9pz/9qeFmN9544+effz5s2LA11lijpYe4+uqrH3zwwaFDh/7tb39ba621Wtosv/ufOnXqXXfdVf8ep9XV1SGEhuPS9ddfP3xZ22SSQgWArOnSpcuIESPq6up+8IMfRJedCiHMnz//6KOPnj59+v/8z//stdde0Y3RkPLss89+8cUXo1vuueeek08+ubKy8qSTTqq/w9ra2htuuOGGG26oPzwges/SsWPHdurUqZWV5Hj/jYwaNWqfffYZPHhw9NdNNtlk9dVXv+qqqz7//PPolosuuiiEsNNOO7XnVSFNHIcKMXNGPyRN2nfxR8aOHVtdXX3jjTduttlmm2yySWVl5Ztvvrls2bKtt9664bn2e++997HHHnv55ZcPHDhws802++STTz7++OPKysqLL7544MCB9ZstW7YsOsVq0qRJ66+//pIlS6KrR+2000711/9vaNSoUWeddVbu99/Qbbfd9tRTTz3//PP1t1RUVFx66aWHHHLI5ptvvueee77xxhtPPvnkQQcdtMceexTo1SJxzFATR6wA0HErrbTSDTfccPXVV++www5z5syZM2fOLrvs8tvf/vbZZ59db731Gm45fvz4a6+9duDAge+++25dXd0BBxzw2GOPnXjiia3c+cyZM+vq6kIIixYt+rw5NTU1+d3/8uXLf/GLXxxxxBHbbLNNw9uHDRs2ZcqUDTbY4I477vjss8/GjBlz00035f/qfJVLTSVQRfQdRqI4e6bc+LUEEiV1M9Tauvn/e9SC8ePHx72QmJ1xxhkX//7zysqvtfcTFWoCmaFC/PxO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" width="100%" /></p>
 </div>
 <div id="cluster-1-os-general" class="section level1">
 <h1>Cluster 1: OS, general</h1>
 <p><em>Experience with Open Science practices</em> From question 2.1 (What is your experience with Open Science practices?) almost 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research. When comparing schools, ESE seems to be less aware and using less Open Science practices than RSM. And when comparing position, tenured faculty members have the most experience, while PhD seem to be the ones that use Open Science practices the least.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 1</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster1 &lt;-</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;1&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster1 %&gt;% </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-02_cluster1_figure.r" class="section level1">
+<h1>Add images from 02_cluster1_figure.R</h1>
 </div>
 <div id="cluster-2-preregistration" class="section level1">
 <h1>Cluster 2: preregistration</h1>
 <p><em>Preregistration</em> From question 3.1 (In your opinion, how important for your field is it that researchers preregister their studies?) we can see that more than 50% of the respondents think preregistration is important (combining very and moderately important), but a bit more than 16% think that preregistration is not at all important. When comparing schools, RSM’s respondents think preregistration is more important than ESE’s respondents. And when looking at the different position, most PhD students think preregistration is important (extremely, very, and moderately), while tenured faculty members be dived into important (extremely, very, and moderately) and slightly or not at all important.<br />
 From question 3.2 (What is your experience with stud preregistration?) we see that both schools are aware of preregistration but mostly have not used it themselves, for both schools the distribution is similar but RSM seem to have a bit more experience with preregistration than ESE, and it is mostly tenured faculty members that have experience with preregistration. For experienced researchers the number of preregistrations goes from 2 all the way to 57. From question 3.3 (The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?) we can see that the top 5 concerns for that researchers could have about preregistration are the following: Preregistration prevents exploratory research. I need to look at my data before I can decide how to best analyze it. Preregistration stifles research creativity or flexibility. Preregistration might lead to other people taking my research idea and implementing my plan It might delay data collection This is true for both schools and position.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 2</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster2 &lt;-</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;2&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster2 %&gt;% </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-03_cluster2_figure.r" class="section level1">
+<h1>Add images from 03_cluster2_figure.R</h1>
 </div>
 <div id="cluster-3-open-materialscode" class="section level1">
 <h1>Cluster 3: open materials/code</h1>
 <p><em>Open materials and/or code</em> From question 4.1 (In your opinion, how important for your field is it that materials and/or code are openly available?) we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. When comparing schools, ESE’s respondents think that using open materials and/or code is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open materials and/or code is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.<br />
 From question 4.2 (What is your experience with using open materials and/or code?) we see that both schools are aware and have some experience with using open materials and/or code, for both schools the distribution is similar, but ESE seems to have a more experience using open materials and/or code than RSM, and it is mostly tenured faculty members that have experience using open materials and/or code. From question 4.3 (What is your experience with sharing open materials and/or code?) we can see that 30% of respondents are aware of sharing materials and/or code, about 30% have some experience sharing materials and/or code, and similarly about 30% of respondents regularly share open materials and/or code. And the distribution per school is the same as 4.2, ESE’s respondents have more experience or regularly share their materials and/or code openly. Position wise, mostly PhD students are aware of open materials and/or code but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open materials and/or code. From question 4.4 (The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their materials and/or code open are the following: I might lose control over how my materials and/or code are being used. I might not receive appropriate credit for developing the materials and/or code if I make them openly available. There could be issues related to intellectual property. This is true for both schools and position, but there is also a considerable amount (13%) of respondents that do not share any of these concerns with sharing their materials and/or code openly.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 3</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster3 &lt;-</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;3&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster3 %&gt;% </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-04_cluster3_figure.r" class="section level1">
+<h1>Add images from 04_cluster3_figure.R</h1>
 </div>
 <div id="cluster-4-open-data" class="section level1">
 <h1>Cluster 4: open data</h1>
 <p><em>Open data</em> From question 5.1 (In your opinion, how important for your field is it that data from published research are openly available?) we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only 5.6% think is not at all important. When comparing schools, ESE’s respondents think that using open data is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open data is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.<br />
 From question 5.2 (What is your experience with using open data?) we see that both schools are aware and have some experience with using open data, for both schools the distribution is similar, but ESE seems to have more experience regularly using open data than RSM, and it is mostly tenured faculty members that have experience using open data. From question 5.3 (What is your experience with sharing open data?) we can see that almost 50% of respondents are aware of sharing open data and about 17% of respondents regularly share open data. The distribution per school is the same as 5.2, ESE’s respondents have more experience or regularly share their data openly. Position wise, mostly PhD students are aware of open data but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open data. From question 5.4 (The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their data open are the following: There could be issues related to privacy. There could be issues related to intellectual property. Other researchers could use my data for another study that I intended to conduct in the future. This is true for both schools, as for position, for tenured faculty members, the top 3 concern is that they might lose control over how their data is being used.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 4</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster4 &lt;-</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;4&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster4 %&gt;% </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-05_cluster4_figure.r" class="section level1">
+<h1>Add images from 05_cluster4_figure.R</h1>
 </div>
 <div id="cluster-5-pre-publication-archiving" class="section level1">
 <h1>Cluster 5: pre-publication archiving</h1>
 <p><em>Pre-publication archiving</em> From question 6.1 (In your opinion, how important is pre-publication archiving for your field?) we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. When comparing schools, ESE’s respondents think that pre-publication is more important than RSM’s respondents. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that pre-publication is moderately important.<br />
 From question 6.2 (What is your experience with pre-publication archiving?) we see that both schools are aware and have some experience with pre-publications, but ESE seems to have more experience with preprint archiving than RSM, and it is mostly tenured faculty members that have extensive experience with preprints. From question 6.3 (The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?) the top 3 concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review are the following: Some journals might not publish findings that are uploaded to a pre-publication archive. Non-peer-reviewed findings might add noise to the literature. Other people might copy my research and publish it before I do. This is true for both schools, except that for RSM, the 3rd top concern is that the availability of the pre-publication manuscript might highlight differences (e.g., errors in analysis; revisions to hypotheses) between the original conception of the research and the ultimately published work. As for position, for tenured faculty members, the top response is that they do not share any of these concerns.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 5</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster5 &lt;-</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;5&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster5 %&gt;% </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-06_cluster5_figure.r" class="section level1">
+<h1>Add images from 06_cluster5_figure.R</h1>
 </div>
 <div id="cluster-6-open-access" class="section level1">
 <h1>Cluster 6: open access</h1>
 <p><em>Open Access</em> From question 7.1 (Approximately what proportion of your publications from the last 5 years are open access) that asks the percentage of open access publication in the last 5 years, we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent has some of their publication open access and 17% of the respondents have all or none (also 17%) of the publication open access. When comparing schools, their distributions are similar, although more respondents from RSM answered don’t know or prefer not to answer than ESE’s respondents. When looking at the different position, most PhD were the ones to respond that they don’t know or prefer not to answer, and in the comments, they wrote that they do not have publication yet.<br />
 From question 7.2 (Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?) we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publishers, and by using the Erasmus Open Access Fund. Both schools have a similar distribution, and it is mostly tenured faculty members that have used the funds to pay for Open Access publications.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 6</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster6 &lt;-</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;6&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster6 %&gt;% </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-07_cluster6_figure.r" class="section level1">
+<h1>Add images from 07_cluster6_figure.R</h1>
 </div>
 <div id="cluster-7-os-adoptionbarriers" class="section level1">
 <h1>Cluster 7: OS adoption/barriers</h1>
 <p><em>Open Science Resources</em></p>
 <p>From question 8.2 (During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?), we asked researchers about their participation in the ORCiD campaign organized by ERIM, from the responses, we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID. From question 8.3 (The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field.) the top 3 barriers to the uptake of open science practices are:<br />
 Lack of recognition in my field about the value of open science practices. Lack of time to learn Open Science practices. Lack of time to engage in Open Science practices. This is true for both schools, except that for ESE, the top concern is lack of funding for Open Access publishing. As for position, for PhD students, the 2nd top concern is the lack of information about open science practices. From question 8.4 (Are you sharing your knowledge about open science practices with others?) we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. Looking at the school’s distribution seems that ESE’s researchers share less Open Science practices than RSM researchers. The distribution of positions states the same results as mentioned.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 7</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster7 &lt;-</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;7&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster7 %&gt;% </span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-08_cluster7_figure.r" class="section level1">
+<h1>Add images from 08_cluster7_figure.R</h1>
 </div>
 <div id="cluster-8-tool-awareness" class="section level1">
 <h1>Cluster 8: tool awareness</h1>
 <p><em>Awareness of ERIM/EUR tools</em> From question 8.1 (Please indicate your awareness of each of the open science resources listed below.) we asked researchers their awareness of the following Open Science resources. The counts go from 0 (unaware) to 10 (often used).</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 8</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster8 &lt;-</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;8&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster8 %&gt;% </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-09_cluster8_figure.r" class="section level1">
+<h1>Add images from 09_cluster8_figure.R</h1>
 </div>
 <div id="cluster-9-role-of-erim" class="section level1">
 <h1>Cluster 9: role of ERIM</h1>
 <p><em>Role of ERIM</em> In question 8.5 (Do you expect that ERIM supports you in learning open science practices?) researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. When looking at the schools, more researchers from RSM want support form ERIM than ESE’s researchers. As for position, mostly PhD students and postdocs responded yes. From question 8.6 (Which of the following open science practices would you like ERIM to provide information or support for?), the top 5 Open Science practices that respondents would like to get information or support for are: Open Access publishing Open data Open materials and/or code Preregistration Open access archiving in a repository The distribution per school and position follows the same distribution as the total one.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # summary of responses to cluster 9</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster9 &lt;-</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   ERIM_OS_clean %&gt;% </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     Finished == &quot;TRUE&quot; &amp; # keep only complete questionnaires</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       cluster == &quot;9&quot; # keep only questions of relevant cluster</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   droplevels() %&gt;% # drop unused levels</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(Finished, cluster)) %&gt;% # drop unused columns</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select_if(~ sum(!is.na(.)) &gt; 0) %&gt;% # keep columns without NAs</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # drop_na() %&gt;% # drop rows with missing values</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(&quot;item&quot; = &quot;value_1&quot;) %&gt;% </span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question, item) %&gt;%</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(number_responses = n()) %&gt;%</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(question) %&gt;%</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     lab_perc = paste(perc, &quot;%&quot;, sep = &quot;&quot;) # percentage as text (for labels)</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) %&gt;%</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   ungroup()</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cluster9 %&gt;% </span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-c(number_responses, perc)) %&gt;% </span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   rename(percentage = lab_perc) %&gt;% </span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_custom()</span></span></code></pre></div>
+</div>
+<div id="add-images-from-10_cluster9_figure.r" class="section level1">
+<h1>Add images from 10_cluster9_figure.R</h1>
 <hr />
 <hr />
 </div>
