@@ -295,48 +295,40 @@ knitr::include_graphics(here("img", "donut_cluster2_question3.png"))
 
 # Open materials/code
 
-From question 4.1 (In your opinion, how important for your field is it that materials and/or code are openly available?) we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
-When comparing schools, ESE’s respondents think that using open materials and/or code is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open materials and/or code is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
-From question 4.2 (What is your experience with using open materials and/or code?) we see that both schools are aware and have some experience with using open materials and/or code, for both schools the distribution is similar, but ESE seems to have a more experience using open materials and/or code than RSM, and it is mostly tenured faculty members that have experience using open materials and/or code. 
-From question 4.3 (What is your experience with sharing open materials and/or code?) we can see that 30% of respondents are aware of sharing materials and/or code, about 30% have some experience sharing materials and/or code, and similarly about 30% of respondents regularly share open materials and/or code. And the distribution per school is the same as 4.2, ESE’s respondents have more experience or regularly share their materials and/or code openly. Position wise, mostly PhD students are aware of open materials and/or code but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open materials and/or code. 
-From question 4.4 (The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
-I might lose control over how my materials and/or code are being used.
-I might not receive appropriate credit for developing the materials and/or code if I make them openly available.
-There could be issues related to intellectual property.
-This is true for both schools and position, but there is also a considerable amount (13%) of respondents that do not share any of these concerns with sharing their materials and/or code openly. 
+From the question In your opinion, how important for your field is it that materials and/or code are openly available?" we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
 
 
 ```{r cluster-3-data}
-
-# # summary of responses to cluster 3
-# cluster3 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "3" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+# 
+#  # summary of responses to cluster 3
+#  cluster3 <-
+#    ERIM_OS_clean %>% 
+#    dplyr::filter(
+#      Finished == "TRUE" & # keep only complete questionnaires
+#        cluster == "3" # keep only questions of relevant cluster
+#    ) %>%
+#    droplevels() %>% # drop unused levels
+#    dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+#    dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+#    # drop_na() %>% # drop rows with missing values
+#    rename("item" = "value_1") %>% 
+#    group_by(question, item) %>%
+#    summarize(number_responses = n()) %>%
+#    group_by(question) %>%
+#    mutate(
+#      perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+#      lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+#    ) %>%
+#    ungroup()
 
 ```
 
 ```{r cluster-3-table}
-
-# cluster3 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
+# 
+#  cluster3 %>% 
+#    dplyr::select(-c(number_responses, perc)) %>% 
+#    rename(percentage = lab_perc) %>% 
+#    kable_custom()
 
 # Add images from 04_cluster3_figure.R
 ```
@@ -347,17 +339,33 @@ knitr::include_graphics(here("img", "donut_cluster3_question1.png"))
 
 ```
 
+From the question "What is your experience with using open materials and/or code?" we see that both schools are aware and have some experience with using open materials and/or code. There is a considerable amount (21%) of researchers that regularly use and/or create open materials and/or code and it is only a bit more than 7% of the respondents that have not heard of open materials and/or code before answering this survey. 
+
 ```{r cluster-3-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster3_question2.png"))
 
 ```
 
+From the question "What is your experience with sharing open materials and/or code?" we can see that a bit more than 30% of respondents are aware of sharing materials and/or code, about 30% have some experience sharing materials and/or code, and similarly almost 30% of respondents regularly share open materials and/or code. 
+Comparing this figure to the one above, we can assume that researchers at ESE and RSM share their materials and/or code more than what they re-use.
+
+
 ```{r cluster-3-question-3, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster3_question3.png"))
 
 ```
+
+From the question "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?" the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
+
+19.47% - Others might find it difficult to understand my materials and/or code
+15.04% - I might lose control over how my materials and/or code are being used.
+8.85% - Other researchers might criticise my materials and/or code
+
+It is important to mention that the most popular answer (27.43%) was that researchers do not share any of these concerns with sharing their materials and/or code openly. 
+
+
 
 ```{r cluster-3-question-4, echo = FALSE, out.width = '100%'}
 
