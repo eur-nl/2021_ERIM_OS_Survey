@@ -530,9 +530,27 @@ This is true for both schools, except that for RSM, the 3rd top concern is that 
 #   rename(percentage = lab_perc) %>% 
 #   kable_custom()
 
+# Add images from 06_cluster5_figure.R
 ```
 
-# Add images from 06_cluster5_figure.R
+
+```{r cluster-5-question-1, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster5_question1.png"))
+
+```
+
+```{r cluster-5-question-2, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster5_question2.png"))
+
+```
+
+```{r cluster-5-question-3, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster5_question3.png"))
+
+```
 
 # Cluster 6: open access
 
