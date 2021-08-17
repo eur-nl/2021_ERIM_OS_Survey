@@ -580,17 +580,7 @@ knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
 
 # General experiences with open science practices 
 
-From question 2.1 (What is your experience with Open Science practices?) almost 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
-When comparing schools, ESE seems to be less aware and using less Open Science practices than RSM. And when comparing position, tenured faculty members have the most experience, while PhD seem to be the ones that use Open Science practices the least.  
-
-From question 8.2 (During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?), we asked researchers about their participation in the ORCiD campaign organized by ERIM, from the responses, we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID.
-From question 8.3 (The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field.) the top 3 barriers to the uptake of open science practices are:  
-Lack of recognition in my field about the value of open science practices.
-Lack of time to learn Open Science practices.
-Lack of time to engage in Open Science practices.
-This is true for both schools, except that for ESE, the top concern is lack of funding for Open Access publishing. As for position, for PhD students, the 2nd top concern is the lack of information about open science practices. 
-From question 8.4 (Are you sharing your knowledge about open science practices with others?) we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. Looking at the school’s distribution seems that ESE’s researchers share less Open Science practices than RSM researchers. The distribution of positions states the same results as mentioned.  
-
+From the question "What is your experience with Open Science practices?" more than 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
 
 
 ```{r cluster-1-data}
@@ -634,11 +624,16 @@ knitr::include_graphics(here("img", "donut_cluster1_question1.png"))
 
 ```
 
+From the question "Are you sharing your knowledge about open science practices with others?" we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. 
+
+
 ```{r cluster-1-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster1_question2.png"))
 
 ```
+
+From the question "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?", we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID.
 
 ```{r cluster-1-question-3, echo = FALSE, out.width = '100%'}
 
@@ -648,9 +643,9 @@ knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
 
 ```{r cluster-7-data}
 
-# # summary of responses to cluster 7
+# summary of responses to cluster 7
 # cluster7 <-
-#   ERIM_OS_clean %>% 
+#   ERIM_OS_clean %>%
 #   dplyr::filter(
 #     Finished == "TRUE" & # keep only complete questionnaires
 #       cluster == "7" # keep only questions of relevant cluster
@@ -659,7 +654,7 @@ knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
 #   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
 #   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
 #   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
+#   rename("item" = "value_1") %>%
 #   group_by(question, item) %>%
 #   summarize(number_responses = n()) %>%
 #   group_by(question) %>%
@@ -673,13 +668,22 @@ knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
 
 ```{r cluster-7-table}
 
-# cluster7 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
+# cluster7 %>%
+#   dplyr::select(-c(number_responses, perc)) %>%
+#   rename(percentage = lab_perc) %>%
 #   kable_custom()
 
 # Add images from 08_cluster7_figure.R
 ```
+
+From the statement "The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field" the top 3 barriers to the uptake of open science practices are:
+
+37.74% - Lack of funding for open access publishing.
+
+13.27% - Lack of recognition in my field about the value of open science practices.
+
+11.5% - Lack of credit in my institution for engaging in open science
+
 
 ```{r cluster-7-question-1, echo = FALSE, out.width = '100%'}
 
