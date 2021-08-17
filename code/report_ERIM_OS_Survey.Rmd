@@ -527,10 +527,7 @@ knitr::include_graphics(here("img", "donut_cluster5_question3.png"))
 
 # Open access
 
-From question 7.1 (Approximately what proportion of your publications from the last 5 years are open access) that asks the percentage of open access publication in the last 5 years, we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent has some of their publication open access and 17% of the respondents have all or none (also 17%) of the publication open access. 
-When comparing schools, their distributions are similar, although more respondents from RSM answered don’t know or prefer not to answer than ESE’s respondents. When looking at the different position, most PhD were the ones to respond that they don’t know or prefer not to answer, and in the comments, they wrote that they do not have publication yet.  
-From question 7.2 (Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?) we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publishers, and by using the Erasmus Open Access Fund. Both schools have a similar distribution, and it is mostly tenured faculty members that have used the funds to pay for Open Access publications. 
-
+From the question Approximately what proportion of your publications from the last 5 years are open access?" we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent have some of their publication open access, while almost 16% have most of their publication open access. However, 17.7% of the respondents have all or none (also 17.7%) of their publication open access. 
 
 ```{r cluster-6-data}
 
@@ -572,6 +569,8 @@ From question 7.2 (Many open access journals charge a fee for processing the art
 knitr::include_graphics(here("img", "donut_cluster6_question1.png"))
 
 ```
+
+From the question Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees? we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publisher, otherwise they responded that their open access publications did not involved fees. The 3rd mostly used resource was the Erasmus Open Access Fund.
 
 ```{r cluster-6-question-2, echo = FALSE, out.width = '100%'}
 
@@ -646,7 +645,6 @@ knitr::include_graphics(here("img", "donut_cluster1_question2.png"))
 knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
 
 ```
-
 
 ```{r cluster-7-data}
 
