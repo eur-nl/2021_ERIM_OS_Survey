@@ -19,7 +19,7 @@ editor_options:
 seed_synth <- 135249315 
 set.seed(seed_synth)
 
-# ### install packages
+### install packages
 # install.packages("knitr")
 # install.packages("kableExtra")
 # install.packages("here")
@@ -75,9 +75,9 @@ Any comments or question, please contact Dr. Lizette Guzman-Ramirez, ERIM Resear
 
 ERIM_OS_clean <-
   read_csv(
-    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv"),
-    show_col_types = FALSE
-  ) %>% 
+    here('data', 'preproc', 'CLEAN_20210608_ERIM_OS_Survey.csv') 
+    #show_col_types = FALSE
+    ) %>% 
   # convert all columns to factors
   mutate(
     across(
@@ -143,8 +143,8 @@ The total survey response rate was 22%, but depending on the research position, 
 
 cluster0 <-
   read_csv(
-    here("data", "preproc", "cluster0.csv"),
-    show_col_types = FALSE
+    here("data", "preproc", "cluster0.csv")
+  #  show_col_types = FALSE
   ) %>% 
   # convert all columns to factors
   mutate(
@@ -179,14 +179,21 @@ cluster0 <-
 
 ```{r cluster-0-table}
 
+#cluster0 %>% 
+#  dplyr::select(-c(number_responses, perc)) %>% 
+#  rename(percentage = lab_perc) %>% 
+#  kable_custom()
+
 cluster0 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
+  dplyr::select(question, item, lab_perc) %>% 
   rename(percentage = lab_perc) %>% 
   kable_custom()
 
+# Add images from 01_cluster0_figure.R 
+
 ```
 
-# Add images from 01_cluster0_figure.R 
+
 
 ```{r cluster-0-question-1, echo = FALSE, out.width = '100%'}
 
@@ -194,6 +201,29 @@ knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
 
 ```
 
+```{r cluster-0-question-2, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster0_question2.png"))
+
+```
+
+```{r cluster-0-question-3, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster0_question3.png"))
+
+```
+
+```{r cluster-0-question-4, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster0_question4.png"))
+
+```
+
+```{r cluster-0-question-5, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster0_question5.png"))
+
+```
 
 
 
