@@ -154,27 +154,6 @@ cluster0 <-
     )
   )
 
-# # summary of responses to cluster 0
-# cluster0 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "0" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
-
 ```
 
 ```{r cluster-0-table}
@@ -266,9 +245,27 @@ When comparing schools, ESE seems to be less aware and using less Open Science p
 #   rename(percentage = lab_perc) %>% 
 #   kable_custom()
 
+# Add images from 02_cluster1_figure.R
 ```
 
-# Add images from 02_cluster1_figure.R
+
+```{r cluster-1-question-1, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster1_question1.png"))
+
+```
+
+```{r cluster-1-question-2, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster1_question2.png"))
+
+```
+
+```{r cluster-1-question-3, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
+
+```
 
 # Cluster 2: preregistration
 
