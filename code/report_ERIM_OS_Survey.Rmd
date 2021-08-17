@@ -457,14 +457,7 @@ knitr::include_graphics(here("img", "donut_cluster4_question4.png"))
 
 # Pre-publication archiving
 
-From question 6.1 (In your opinion, how important is pre-publication archiving for your field?) we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
-When comparing schools, ESE’s respondents think that pre-publication is more important than RSM’s respondents. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that pre-publication is moderately important.  
-From question 6.2 (What is your experience with pre-publication archiving?) we see that both schools are aware and have some experience with pre-publications, but ESE seems to have more experience with preprint archiving than RSM, and it is mostly tenured faculty members that have extensive experience with preprints. 
-From question 6.3 (The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?) the top 3 concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review are the following: 
-Some journals might not publish findings that are uploaded to a pre-publication archive.
-Non-peer-reviewed findings might add noise to the literature.
-Other people might copy my research and publish it before I do.
-This is true for both schools, except that for RSM, the 3rd top concern is that the availability of the pre-publication manuscript might highlight differences (e.g., errors in analysis; revisions to hypotheses) between the original conception of the research and the ultimately published work. As for position, for tenured faculty members, the top response is that they do not share any of these concerns.  
+From the question "In your opinion, how important is pre-publication archiving for your field?" we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
 
 ```{r cluster-5-data}
 
@@ -501,18 +494,30 @@ This is true for both schools, except that for RSM, the 3rd top concern is that 
 # Add images from 06_cluster5_figure.R
 ```
 
-
 ```{r cluster-5-question-1, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster5_question1.png"))
 
 ```
 
+From the question "What is your experience with pre-publication archiving?" we see that both schools are aware and have some experience with pre-publications. However, there is a similar percentage of respondents with opposite experience, a bit more than 20% of respondents have extensive experience with preprint archiving, while almost 19% has never heard of pre-publication archiving before they took this survey. 
+
 ```{r cluster-5-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster5_question2.png"))
 
 ```
+
+From the question "The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?" the top 3 concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review are the following: 
+
+38.05% - Some journals might not publish findings that are uploaded to a pre-publication archive.
+
+14.16% - Other people might copy my research and publish it before I do.
+
+10.62% - Non-peer-reviewed findings might add noise to the literature.
+
+But the second most common response (26.55%) was that researchers do not share any of these concerns.  
+
 
 ```{r cluster-5-question-3, echo = FALSE, out.width = '100%'}
 
