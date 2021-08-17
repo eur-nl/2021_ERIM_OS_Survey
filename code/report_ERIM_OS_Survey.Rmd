@@ -118,8 +118,8 @@ ERIM_OS_clean_unfinished %>%
 
 # Demographics
 
-The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.
-
+We asked participants their school, department, and research institute affiliation together with their position. 
+Almost 60% of the respondents were from RSM, while a bit more than 40% are affiliated to ESE. 
 
 ```{r response-rate-table}
     
@@ -131,15 +131,6 @@ The total survey response rate was 22%, but depending on the research position, 
 #  kable_custom()
 
 ```
-
-|Position|RSM|ESE|Total|
-|-----------|----|-----|-----|
-|PhD student|20%|16%|18%|
-|Postdoc or researcher|23%|17%|20%|
-|Tenured Track|27%|6%|16%|
-|Tenured Faculty Member|27%|34%|30%|
-|Total|25%|19%|22%|
-
 
 ```{r cluster-0-data}
 
@@ -180,11 +171,16 @@ knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
 
 ```
 
+When dividing it into departments inside RSM, the department with higher response was the department of technology & operation management with almost 24% of the respondents, followed by the marketing management department with almost 20% respondents. The business-society management, strategic management & entrepeneurship, and then organization & personnel management departments got the exact same number of respondents (almost 15%) and lastly the departments of finance and accounting and control cover only 6% of the respondents. 
+
+
 ```{r cluster-0-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster0_question2.png"))
 
 ```
+
+As for ESE, the departmental distribution is almost exactly the same, except for the applied economics department, that covers a bit more than 28%, all the other 3 departments, economics, econometrics, and business economics respondents cover the exact same ratio, almost 24% each. 
 
 ```{r cluster-0-question-3, echo = FALSE, out.width = '100%'}
 
@@ -192,17 +188,32 @@ knitr::include_graphics(here("img", "donut_cluster0_question3.png"))
 
 ```
 
+When further dividing into position, the majority of the respondents (a bit more than 52%) were tenured faculty members, followed by a bit more than 22% of the respondents in the PhD position. 
+
 ```{r cluster-0-question-4, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster0_question4.png"))
 
 ```
 
+The majority of respondents were affiliated to ERIM (almost 66%), while almost 18% is affiliated to Tinbergen only. A bit more than 7% is affiliated to both ERIM and Tinbergen, and there is almost 10% of researchers that are not affiliated to any research institute. 
+
 ```{r cluster-0-question-5, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster0_question5.png"))
 
 ```
+
+The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.
+
+|Position|RSM|ESE|Total|
+|-----------|----|-----|-----|
+|PhD student|20%|16%|18%|
+|Postdoc or researcher|23%|17%|20%|
+|Tenured Track|27%|6%|16%|
+|Tenured Faculty Member|27%|34%|30%|
+|Total|25%|19%|22%|
+
 
 
 # General experiences with open science practices 
