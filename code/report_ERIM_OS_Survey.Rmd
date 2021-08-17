@@ -592,9 +592,21 @@ From question 7.2 (Many open access journals charge a fee for processing the art
 #   rename(percentage = lab_perc) %>% 
 #   kable_custom()
 
+# Add images from 07_cluster6_figure.R
 ```
 
-# Add images from 07_cluster6_figure.R
+
+```{r cluster-6-question-1, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster6_question1.png"))
+
+```
+
+```{r cluster-6-question-2, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
+
+```
 
 # Cluster 7: OS adoption/barriers
 
@@ -641,9 +653,14 @@ From question 8.4 (Are you sharing your knowledge about open science practices w
 #   rename(percentage = lab_perc) %>% 
 #   kable_custom()
 
+# Add images from 08_cluster7_figure.R
 ```
 
-# Add images from 08_cluster7_figure.R
+```{r cluster-7-question-1, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster7_question1.png"))
+
+```
 
 # Cluster 8: tool awareness
 
@@ -682,9 +699,54 @@ From question 8.1 (Please indicate your awareness of each of the open science re
 #   rename(percentage = lab_perc) %>% 
 #   kable_custom()
 
+# Add images from 09_cluster8_figure.R
 ``` 
 
-# Add images from 09_cluster8_figure.R
+```{r cluster-8-question-1, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question1.png"))
+
+```
+```{r cluster-8-question-2, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question2.png"))
+
+```
+```{r cluster-8-question-3, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question3.png"))
+
+```
+```{r cluster-8-question-4, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question4.png"))
+
+```
+```{r cluster-8-question-5, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question5.png"))
+
+```
+```{r cluster-8-question-6, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question6.png"))
+
+```
+```{r cluster-8-question-7, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question7.png"))
+
+```
+```{r cluster-8-question-8, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question8.png"))
+
+```
+```{r cluster-8-question-9, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
+
+```
 
 # Cluster 9: role of ERIM
 
