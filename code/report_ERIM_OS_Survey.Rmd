@@ -51,21 +51,24 @@ kable_custom <- function(data) {
 ***
 ***
 
-*Introduction*
+# Introduction
+
 The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted using the Swinburne Open Science Survey.
 
 The survey aimed at examining how researchers perceive and use "open science" practices, including sharing data, preregistering research plans, and publishing in open access journals. Whether or not you are experienced in using open science practices, or fully understand what might be possible in your discipline.
 
-The survey covered 6 main topics: 
-1. Experience with Open Science practices
+The survey covered 9 main topics: 
+1. General experience with open science practices
 2. Preregistration
-3. Open Code
-4. Open Data
-5. Open Access
-6. Awareness & Expectations
+3. Open materials/code
+4. Open data
+5. Pre-publication archiving
+6. Open access
+7. Open science adoption/barriers
+8. Awareness of available tools 
+9. Role of ERIM 
 
-We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
-
+This report has all the total responses (combined ESE and RSM).
 The percentages presented in the survey responses represent the percentage of the respondents, not the total percentage of researchers. 
 
 Any comments or question, please contact Dr. Lizette Guzman-Ramirez, ERIM Research Data Steward and/or Dr. Antonio Schettino, ERS Open Science Coordinator
@@ -113,9 +116,8 @@ ERIM_OS_clean_unfinished %>%
 
 ```
 
-# Cluster 0: Demographics
+# Demographics
 
-*Demographics*
 The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.
 
 
@@ -141,18 +143,18 @@ The total survey response rate was 22%, but depending on the research position, 
 
 ```{r cluster-0-data}
 
-cluster0 <-
-  read_csv(
-    here("data", "preproc", "cluster0.csv")
+#cluster0 <-
+#  read_csv(
+#    here("data", "preproc", "cluster0.csv")
   #  show_col_types = FALSE
-  ) %>% 
+#  ) %>% 
   # convert all columns to factors
-  mutate(
-    across(
-      .cols = everything(),
-      .fns = ~ as_factor(.)
-    )
-  )
+#  mutate(
+#    across(
+#      .cols = everything(),
+#      .fns = ~ as_factor(.)
+#    )
+#  )
 
 ```
 
@@ -163,16 +165,14 @@ cluster0 <-
 #  rename(percentage = lab_perc) %>% 
 #  kable_custom()
 
-cluster0 %>% 
-  dplyr::select(question, item, lab_perc) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+# cluster0 %>% 
+#   dplyr::select(question, item, lab_perc) %>% 
+#   rename(percentage = lab_perc) %>% 
+#   kable_custom()
 
 # Add images from 01_cluster0_figure.R 
 
 ```
-
-
 
 ```{r cluster-0-question-1, echo = FALSE, out.width = '100%'}
 
@@ -205,10 +205,8 @@ knitr::include_graphics(here("img", "donut_cluster0_question5.png"))
 ```
 
 
+# General experiences with open science practices 
 
-# Cluster 1: OS, general 
-
-*Experience with Open Science practices*
 From question 2.1 (What is your experience with Open Science practices?) almost 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
 When comparing schools, ESE seems to be less aware and using less Open Science practices than RSM. And when comparing position, tenured faculty members have the most experience, while PhD seem to be the ones that use Open Science practices the least.  
 
@@ -248,7 +246,6 @@ When comparing schools, ESE seems to be less aware and using less Open Science p
 # Add images from 02_cluster1_figure.R
 ```
 
-
 ```{r cluster-1-question-1, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster1_question1.png"))
@@ -267,9 +264,8 @@ knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
 
 ```
 
-# Cluster 2: preregistration
+# Preregistration
 
-*Preregistration*
 From question 3.1 (In your opinion, how important for your field is it that researchers preregister their studies?) we can see that more than 50% of the respondents think preregistration is important (combining very and moderately important), but a bit more than 16% think that preregistration is not at all important. 
 When comparing schools, RSM’s respondents think preregistration is more important than ESE’s respondents. And when looking at the different position, most PhD students think preregistration is important (extremely, very, and moderately), while tenured faculty members be dived into important (extremely, very, and moderately) and slightly or not at all important.  
 From question 3.2 (What is your experience with stud preregistration?) we see that both schools are aware of preregistration but mostly have not used it themselves, for both schools the distribution is similar but RSM seem to have a bit more experience with preregistration than ESE, and it is mostly tenured faculty members that have experience with preregistration. For experienced researchers the number of preregistrations goes from 2 all the way to 57.
@@ -317,7 +313,6 @@ This is true for both schools and position.
 # Add images from 03_cluster2_figure.R
 ```
 
-
 ```{r cluster-2-question-1, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster2_question1.png"))
@@ -337,9 +332,8 @@ knitr::include_graphics(here("img", "donut_cluster2_question3.png"))
 ```
 
 
-# Cluster 3: open materials/code
+# Open materials/code
 
-*Open materials and/or code*
 From question 4.1 (In your opinion, how important for your field is it that materials and/or code are openly available?) we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
 When comparing schools, ESE’s respondents think that using open materials and/or code is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open materials and/or code is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
 From question 4.2 (What is your experience with using open materials and/or code?) we see that both schools are aware and have some experience with using open materials and/or code, for both schools the distribution is similar, but ESE seems to have a more experience using open materials and/or code than RSM, and it is mostly tenured faculty members that have experience using open materials and/or code. 
@@ -386,7 +380,6 @@ This is true for both schools and position, but there is also a considerable amo
 # Add images from 04_cluster3_figure.R
 ```
 
-
 ```{r cluster-3-question-1, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster3_question1.png"))
@@ -411,9 +404,8 @@ knitr::include_graphics(here("img", "donut_cluster3_question4.png"))
 
 ```
 
-# Cluster 4: open data
+# Open data
 
-*Open data*
 From question 5.1 (In your opinion, how important for your field is it that data from published research are openly available?) we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only 5.6% think is not at all important. 
 When comparing schools, ESE’s respondents think that using open data is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open data is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
 From question 5.2 (What is your experience with using open data?) we see that both schools are aware and have some experience with using open data, for both schools the distribution is similar, but ESE seems to have more experience regularly using open data than RSM, and it is mostly tenured faculty members that have experience using open data. 
@@ -423,7 +415,6 @@ There could be issues related to privacy.
 There could be issues related to intellectual property.
 Other researchers could use my data for another study that I intended to conduct in the future.
 This is true for both schools, as for position, for tenured faculty members, the top 3 concern is that they might lose control over how their data is being used. 
-
 
 ```{r cluster-4-data}
 
@@ -484,10 +475,8 @@ knitr::include_graphics(here("img", "donut_cluster4_question4.png"))
 
 ```
 
+# Pre-publication archiving
 
-# Cluster 5: pre-publication archiving
-
-*Pre-publication archiving*
 From question 6.1 (In your opinion, how important is pre-publication archiving for your field?) we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
 When comparing schools, ESE’s respondents think that pre-publication is more important than RSM’s respondents. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that pre-publication is moderately important.  
 From question 6.2 (What is your experience with pre-publication archiving?) we see that both schools are aware and have some experience with pre-publications, but ESE seems to have more experience with preprint archiving than RSM, and it is mostly tenured faculty members that have extensive experience with preprints. 
@@ -496,7 +485,6 @@ Some journals might not publish findings that are uploaded to a pre-publication 
 Non-peer-reviewed findings might add noise to the literature.
 Other people might copy my research and publish it before I do.
 This is true for both schools, except that for RSM, the 3rd top concern is that the availability of the pre-publication manuscript might highlight differences (e.g., errors in analysis; revisions to hypotheses) between the original conception of the research and the ultimately published work. As for position, for tenured faculty members, the top response is that they do not share any of these concerns.  
-
 
 ```{r cluster-5-data}
 
@@ -552,9 +540,8 @@ knitr::include_graphics(here("img", "donut_cluster5_question3.png"))
 
 ```
 
-# Cluster 6: open access
+# Open access
 
-*Open Access*
 From question 7.1 (Approximately what proportion of your publications from the last 5 years are open access) that asks the percentage of open access publication in the last 5 years, we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent has some of their publication open access and 17% of the respondents have all or none (also 17%) of the publication open access. 
 When comparing schools, their distributions are similar, although more respondents from RSM answered don’t know or prefer not to answer than ESE’s respondents. When looking at the different position, most PhD were the ones to respond that they don’t know or prefer not to answer, and in the comments, they wrote that they do not have publication yet.  
 From question 7.2 (Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?) we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publishers, and by using the Erasmus Open Access Fund. Both schools have a similar distribution, and it is mostly tenured faculty members that have used the funds to pay for Open Access publications. 
@@ -595,7 +582,6 @@ From question 7.2 (Many open access journals charge a fee for processing the art
 # Add images from 07_cluster6_figure.R
 ```
 
-
 ```{r cluster-6-question-1, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster6_question1.png"))
@@ -608,9 +594,7 @@ knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
 
 ```
 
-# Cluster 7: OS adoption/barriers
-
-*Open Science Resources*
+# Open science adoption/barriers
 
 From question 8.2 (During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?), we asked researchers about their participation in the ORCiD campaign organized by ERIM, from the responses, we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID.
 From question 8.3 (The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field.) the top 3 barriers to the uptake of open science practices are:  
@@ -619,7 +603,6 @@ Lack of time to learn Open Science practices.
 Lack of time to engage in Open Science practices.
 This is true for both schools, except that for ESE, the top concern is lack of funding for Open Access publishing. As for position, for PhD students, the 2nd top concern is the lack of information about open science practices. 
 From question 8.4 (Are you sharing your knowledge about open science practices with others?) we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. Looking at the school’s distribution seems that ESE’s researchers share less Open Science practices than RSM researchers. The distribution of positions states the same results as mentioned.  
-
 
 ```{r cluster-7-data}
 
@@ -662,9 +645,8 @@ knitr::include_graphics(here("img", "donut_cluster7_question1.png"))
 
 ```
 
-# Cluster 8: tool awareness
+# Awareness of available tools
 
-*Awareness of ERIM/EUR tools*
 From question 8.1 (Please indicate your awareness of each of the open science resources listed below.) we asked researchers their awareness of the following Open Science resources. The counts go from 0 (unaware) to 10 (often used). 
 
 ```{r cluster-8-data}
@@ -707,50 +689,57 @@ From question 8.1 (Please indicate your awareness of each of the open science re
 knitr::include_graphics(here("img", "donut_cluster8_question1.png"))
 
 ```
+
 ```{r cluster-8-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question2.png"))
 
 ```
+
 ```{r cluster-8-question-3, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question3.png"))
 
 ```
+
 ```{r cluster-8-question-4, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question4.png"))
 
 ```
+
 ```{r cluster-8-question-5, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question5.png"))
 
 ```
+
 ```{r cluster-8-question-6, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question6.png"))
 
 ```
+
 ```{r cluster-8-question-7, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question7.png"))
 
 ```
+
 ```{r cluster-8-question-8, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question8.png"))
 
 ```
+
 ```{r cluster-8-question-9, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
 
 ```
 
-# Cluster 9: role of ERIM
+# Role of ERIM
 
-*Role of ERIM*
 In question 8.5 (Do you expect that ERIM supports you in learning open science practices?) researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. When looking at the schools, more researchers from RSM want support form ERIM than ESE’s researchers. As for position, mostly PhD students and postdocs responded yes.
 From question 8.6 (Which of the following open science practices would you like ERIM to provide information or support for?), the top 5 Open Science practices that respondents would like to get information or support for are: 
 Open Access publishing
@@ -759,7 +748,6 @@ Open materials and/or code
 Preregistration 
 Open access archiving in a repository
 The distribution per school and position follows the same distribution as the total one. 
-
 
 ```{r cluster-9-data}
 
@@ -801,6 +789,7 @@ The distribution per school and position follows the same distribution as the to
 knitr::include_graphics(here("img", "donut_cluster9_question1.png"))
 
 ```
+
 ```{r cluster-9-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
