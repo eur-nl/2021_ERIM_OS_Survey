@@ -359,8 +359,10 @@ knitr::include_graphics(here("img", "donut_cluster3_question3.png"))
 
 From the question "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?" the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
 
-19.47% - Others might find it difficult to understand my materials and/or code
+19.47% - Others might find it difficult to understand my materials and/or code.
+
 15.04% - I might lose control over how my materials and/or code are being used.
+
 8.85% - Other researchers might criticise my materials and/or code
 
 It is important to mention that the most popular answer (27.43%) was that researchers do not share any of these concerns with sharing their materials and/or code openly. 
@@ -375,15 +377,8 @@ knitr::include_graphics(here("img", "donut_cluster3_question4.png"))
 
 # Open data
 
-From question 5.1 (In your opinion, how important for your field is it that data from published research are openly available?) we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only 5.6% think is not at all important. 
-When comparing schools, ESE’s respondents think that using open data is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open data is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
-From question 5.2 (What is your experience with using open data?) we see that both schools are aware and have some experience with using open data, for both schools the distribution is similar, but ESE seems to have more experience regularly using open data than RSM, and it is mostly tenured faculty members that have experience using open data. 
-From question 5.3 (What is your experience with sharing open data?) we can see that almost 50% of respondents are aware of sharing open data and about 17% of respondents regularly share open data. The distribution per school is the same as 5.2, ESE’s respondents have more experience or regularly share their data openly. Position wise, mostly PhD students are aware of open data but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open data. 
-From question 5.4 (The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their data open are the following: 
-There could be issues related to privacy.
-There could be issues related to intellectual property.
-Other researchers could use my data for another study that I intended to conduct in the future.
-This is true for both schools, as for position, for tenured faculty members, the top 3 concern is that they might lose control over how their data is being used. 
+From the question "In your opinion, how important for your field is it that data from published research are openly available?" we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only a bit more than 5% think is not at all important. 
+
 
 ```{r cluster-4-data}
 
@@ -426,17 +421,33 @@ knitr::include_graphics(here("img", "donut_cluster4_question1.png"))
 
 ```
 
+From the question "What is your experience with using open data?" we see that both schools are aware and have some experience with using open data. More than 21% of respondents regularly use open data and there is only a very small percentage of respondents (less than 3%) that have never heard of open data before taking this survey.  
+
+
 ```{r cluster-4-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster4_question2.png"))
 
 ```
 
+From the question "What is your experience with sharing open data? we can see that almost 77% of respondents are aware of sharing open data and have some experience but do not share their data regularly, and almost 18% of respondents regularly share open data. 
+Comparing this question with the one before, we can see that researchers have more experience using open data, than sharing their data openly.
+
 ```{r cluster-4-question-3, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster4_question3.png"))
 
 ```
+
+From the question "The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you? the top 3 concerns for that researchers could have about making their data open are the following: 
+
+30.09% - There could be issues related to privacy.
+
+14.16% - There could be issues related to intellectual property.
+
+11.5% - There could be issues related to ethics. 
+
+But a considerable percentage of respondents (17.7%) do not share any of these concerns. 
 
 ```{r cluster-4-question-4, echo = FALSE, out.width = '100%'}
 
