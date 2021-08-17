@@ -793,9 +793,19 @@ The distribution per school and position follows the same distribution as the to
 #   rename(percentage = lab_perc) %>% 
 #   kable_custom()
 
+# Add images from 10_cluster9_figure.R
 ```
 
-# Add images from 10_cluster9_figure.R
+```{r cluster-9-question-1, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster9_question1.png"))
+
+```
+```{r cluster-9-question-2, echo = FALSE, out.width = '100%'}
+
+knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
+
+```
 
 ***
 ***
