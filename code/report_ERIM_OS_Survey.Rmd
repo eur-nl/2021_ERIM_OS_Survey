@@ -805,14 +805,8 @@ knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
 
 # Role of ERIM
 
-In question 8.5 (Do you expect that ERIM supports you in learning open science practices?) researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. When looking at the schools, more researchers from RSM want support form ERIM than ESE’s researchers. As for position, mostly PhD students and postdocs responded yes.
-From question 8.6 (Which of the following open science practices would you like ERIM to provide information or support for?), the top 5 Open Science practices that respondents would like to get information or support for are: 
-Open Access publishing
-Open data
-Open materials and/or code
-Preregistration 
-Open access archiving in a repository
-The distribution per school and position follows the same distribution as the total one. 
+In the question "Do you expect that ERIM supports you in learning open science practice?" researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. 
+
 
 ```{r cluster-9-data}
 
@@ -855,11 +849,24 @@ knitr::include_graphics(here("img", "donut_cluster9_question1.png"))
 
 ```
 
+From the question "Which of the following open science practices would you like ERIM to provide information or support for?", the top 3 Open Science practices that respondents would like to get information or support for are:
+
+50% - Preregistration
+
+18.42% - Open materials and/or code
+
+14.47% - Open access publishing
+
 ```{r cluster-9-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
 
 ```
+
+
+# ERIM Open Science Strategy
+
+
 
 ***
 ***
