@@ -693,7 +693,10 @@ knitr::include_graphics(here("img", "donut_cluster7_question1.png"))
 
 # Awareness of available tools
 
-From question 8.1 (Please indicate your awareness of each of the open science resources listed below.) we asked researchers their awareness of the following Open Science resources. The counts go from 0 (unaware) to 10 (often used). 
+We asked researchers to indicate their awareness of each of the following open science resources listed below.    
+
+
+Open Science Framework (OSF), a bit more than 83% of the respondents do not use it, it is only a bit less than 17% of researchers that use OSF. 
 
 ```{r cluster-8-data}
 
@@ -736,11 +739,15 @@ knitr::include_graphics(here("img", "donut_cluster8_question1.png"))
 
 ```
 
+GitHub, there are a bit more than 70% of the respondents that do not use it and almost 30% of the respondents use it. 
+
 ```{r cluster-8-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question2.png"))
 
 ```
+
+For the EUR data repository (FigShare), a bit less than 75% of the respondents do not use it and only 15% of them use it. 
 
 ```{r cluster-8-question-3, echo = FALSE, out.width = '100%'}
 
@@ -748,11 +755,15 @@ knitr::include_graphics(here("img", "donut_cluster8_question3.png"))
 
 ```
 
+As for the 4TU Center for Reseach Data, all reseachers responded that they do not use it, and only a bit more than 7% have heard of it. 
+
 ```{r cluster-8-question-4, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question4.png"))
 
 ```
+
+EUR SurfDrive, a bit less than 20% of the respondent do not know about it, but a bit more than 42% of the respondent use it already.
 
 ```{r cluster-8-question-5, echo = FALSE, out.width = '100%'}
 
@@ -760,11 +771,15 @@ knitr::include_graphics(here("img", "donut_cluster8_question5.png"))
 
 ```
 
+For EUR Dropbox, almost 50% of the respondents do not use it and the other 50% do use it. 
+
 ```{r cluster-8-question-6, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question6.png"))
 
 ```
+
+As for the FAIR principles, more than 75% of the researchers do not use them and only a bit less than 15% use them.
 
 ```{r cluster-8-question-7, echo = FALSE, out.width = '100%'}
 
@@ -772,11 +787,15 @@ knitr::include_graphics(here("img", "donut_cluster8_question7.png"))
 
 ```
 
+EUR RePub, it is now depicted, and PURE is the new repository for publications, but at the time the survey was done, only a bit more then 33% of the respondents used it and the rest did not use it. 
+
 ```{r cluster-8-question-8, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster8_question8.png"))
 
 ```
+
+As for Zenodo, less than 1% of the respondents use it, and most researchers are totally unaware of it.
 
 ```{r cluster-8-question-9, echo = FALSE, out.width = '100%'}
 
