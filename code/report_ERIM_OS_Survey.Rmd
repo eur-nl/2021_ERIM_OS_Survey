@@ -866,6 +866,11 @@ knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
 
 # ERIM Open Science Strategy
 
+ERIM is committed to Open Science. The main reason why we conducted this survey is that we needed to know where the gaps are. 
+
+In order to provide enough support to our researchers ERIM is planning several interventions. 
+1) A 3 year campaign (2021 - 2024) on different aspects of Open Science.
+-In March 2021, ERIM conducted the ORCiD Madness Month, 
 
 
 ***
