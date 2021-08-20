@@ -53,40 +53,30 @@ kable_custom <- function(data) {
 
 # Introduction
 
-The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted using the Swinburne Open Science Survey.
+<!-- Why did we administer the survey? Who asked us? -->
 
-The survey aimed at examining how researchers perceive and use "open science" practices, including sharing data, preregistering research plans, and publishing in open access journals. Whether or not you are experienced in using open science practices, or fully understand what might be possible in your discipline.
+The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted from the [Swinburne Open Science Survey](https://osf.io/vpwf7/).
 
-The survey covered 8 main topics: 
+The survey explored how researchers perceive and use "open science" practices. Eight main topics were covered:
 
 1. Preregistration
-
 2. Open materials/code
-
 3. Open data
-
 4. Pre-publication archiving
-
 5. Open access
-
 6. General experience with open science practices
+7. Awareness of available tools
+8. Role of ERIM
 
-7. Awareness of available tools 
+This report has all the total responses (combined ESE and RSM)[^1].
 
-8. Role of ERIM 
-
-This report has all the total responses (combined ESE and RSM).
-The percentages presented in the survey responses represent the percentage of the respondents, not the total percentage of researchers. 
-
-Any comments or question, please contact Dr. Lizette Guzman-Ramirez, ERIM Research Data Steward and/or Dr. Antonio Schettino, ERS Open Science Coordinator
-
+For any comments or questions, please contact [Dr. Lizette Guzman-Ramirez](mailto:guzmanramirez@rsm.nl) (ERIM Research Data Steward) or [Dr. Antonio Schettino](mailto:schettino@eur.nl) (ERS Open Science Coordinator).
 
 ```{r load-preproc-data, message = FALSE}
 
 ERIM_OS_clean <-
   read_csv(
     here('data', 'preproc', 'CLEAN_20210608_ERIM_OS_Survey.csv') 
-    #show_col_types = FALSE
     ) %>% 
   # convert all columns to factors
   mutate(
@@ -97,6 +87,8 @@ ERIM_OS_clean <-
   )
 
 ```
+
+# Respondents
 
 ```{r complete-questionnaires-data}
 
@@ -114,6 +106,8 @@ ERIM_OS_clean_unfinished <-
 
 ```
 
+A total of `r ERIM_OS_clean_unfinished$n[1] + ERIM_OS_clean_unfinished$n[2]` respondents started the survey, and 
+
 ```{r complete-questionnaires-table}
 
 ERIM_OS_clean_unfinished %>% 
@@ -123,10 +117,8 @@ ERIM_OS_clean_unfinished %>%
 
 ```
 
-# Demographics
-
 We asked participants their school, department, and research institute affiliation together with their position. 
-Almost 60% of the respondents were from RSM, while a bit more than 40% are affiliated to ESE. 
+Almost 60% of the respondents were from RSM, while slightly more than 40% were affiliated to ESE. 
 
 ```{r response-rate-table}
     
@@ -870,3 +862,5 @@ knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
 
 ***
 ***
+
+[^1]: The percentages presented in the survey responses reflect the survey respondents, not the total number of researchers at each school.
