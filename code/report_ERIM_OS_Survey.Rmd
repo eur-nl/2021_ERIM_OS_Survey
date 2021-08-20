@@ -108,6 +108,8 @@ ERIM_OS_clean_unfinished <-
 
 A total of `r ERIM_OS_clean_unfinished$n[1] + ERIM_OS_clean_unfinished$n[2]` respondents started the survey, and 
 
+<!-- Hide the table, just report the result in text -->
+
 ```{r complete-questionnaires-table}
 
 ERIM_OS_clean_unfinished %>% 
@@ -164,6 +166,8 @@ Almost 60% of the respondents were from RSM, while slightly more than 40% were a
 
 ```
 
+<!-- Remove figure cluster0_question1 -->
+
 ```{r cluster-0-question-1, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
@@ -172,6 +176,7 @@ knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
 
 When dividing it into departments inside RSM, the department with higher response was the department of technology & operation management with almost 24% of the respondents, followed by the marketing management department with almost 20% respondents. The business-society management, strategic management & entrepeneurship, and then organization & personnel management departments got the exact same number of respondents (almost 15%) and lastly the departments of finance and accounting and control cover only 6% of the respondents. 
 
+<!-- Make a bar figure with both RSM and ESE department (joining cluster0_quesion2 and 3) -->
 
 ```{r cluster-0-question-2, echo = FALSE, out.width = '100%'}
 
@@ -189,6 +194,8 @@ knitr::include_graphics(here("img", "donut_cluster0_question3.png"))
 
 When further dividing into position, the majority of the respondents (a bit more than 52%) were tenured faculty members, followed by a bit more than 22% of the respondents in the PhD position. 
 
+<!-- Remove figure cluster0_question4 and add the table -->
+
 ```{r cluster-0-question-4, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster0_question4.png"))
@@ -196,6 +203,8 @@ knitr::include_graphics(here("img", "donut_cluster0_question4.png"))
 ```
 
 The majority of respondents were affiliated to ERIM (almost 66%), while almost 18% is affiliated to Tinbergen only. A bit more than 7% is affiliated to both ERIM and Tinbergen, and there is almost 10% of researchers that are not affiliated to any research institute. 
+
+<!-- Remove figure cluster0_question5 -->
 
 ```{r cluster-0-question-5, echo = FALSE, out.width = '100%'}
 
@@ -213,11 +222,13 @@ The total survey response rate was 22%, but depending on the research position, 
 |Tenured Faculty Member|27%|34%|30%|
 |Total|25%|19%|22%|
 
+<!-- Hardcode the total number of researchers and calculare the response rate -->
 
 # Preregistration
 
 From the question "In your opinion, how important for your field is it that researchers preregister their studies?" we can see that more than 50% of the respondents think preregistration is important (combining very and moderately important), but a bit more than 16% think that preregistration is not at all important.
 
+<!-- Make the figures bars and then one figure that compares cluster2_question1 and cluster2_question2 horizontally together -->
 
 ```{r cluster-2-data}
 
@@ -277,6 +288,7 @@ From the question "The following are possible concerns that researchers could ha
 
 19.47% - Preregistration prevents exploratory research.
 
+<!-- Make the figures as bars and with its percentage next to it, cluster2_question3 -->
 
 ```{r cluster-2-question-3, echo = FALSE, out.width = '100%'}
 
@@ -289,6 +301,7 @@ knitr::include_graphics(here("img", "donut_cluster2_question3.png"))
 
 From the question In your opinion, how important for your field is it that materials and/or code are openly available?" we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
 
+<!-- Make the figures bars and leave cluster3_question1 alone, then one figure that compares cluster3_question2 and cluster3_question3 horizontally together -->
 
 ```{r cluster-3-data}
 # 
@@ -348,6 +361,7 @@ Comparing this figure to the one above, we can assume that researchers at ESE an
 knitr::include_graphics(here("img", "donut_cluster3_question3.png"))
 
 ```
+<!-- Make the figures bars -->
 
 From the question "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?" the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
 
@@ -370,6 +384,8 @@ knitr::include_graphics(here("img", "donut_cluster3_question4.png"))
 # Open data
 
 From the question "In your opinion, how important for your field is it that data from published research are openly available?" we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only a bit more than 5% think is not at all important. 
+
+<!-- Make the figures bars and leave cluster4_question1 alone, then one figure that compares cluster4_question2 and cluster4_question3 horizontally together -->
 
 
 ```{r cluster-4-data}
@@ -441,6 +457,8 @@ From the question "The following are possible concerns that researchers could ha
 
 But a considerable percentage of respondents (17.7%) do not share any of these concerns. 
 
+<!-- Make the figures bars and sort it  -->
+
 ```{r cluster-4-question-4, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster4_question4.png"))
@@ -450,6 +468,8 @@ knitr::include_graphics(here("img", "donut_cluster4_question4.png"))
 # Pre-publication archiving
 
 From the question "In your opinion, how important is pre-publication archiving for your field?" we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
+
+<!-- Make the figures bars and then one figure that compares cluster5_question1 and cluster5_question2 horizontally together -->
 
 ```{r cluster-5-data}
 
@@ -510,6 +530,7 @@ From the question "The following are possible concerns that researchers could ha
 
 But the second most common response (26.55%) was that researchers do not share any of these concerns.  
 
+<!-- Make the figures bars  -->
 
 ```{r cluster-5-question-3, echo = FALSE, out.width = '100%'}
 
@@ -520,6 +541,8 @@ knitr::include_graphics(here("img", "donut_cluster5_question3.png"))
 # Open access
 
 From the question Approximately what proportion of your publications from the last 5 years are open access?" we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent have some of their publication open access, while almost 16% have most of their publication open access. However, 17.7% of the respondents have all or none (also 17.7%) of their publication open access. 
+
+<!-- Remove figure and leave the table -->
 
 ```{r cluster-6-data}
 
@@ -564,6 +587,8 @@ knitr::include_graphics(here("img", "donut_cluster6_question1.png"))
 
 From the question Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees? we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publisher, otherwise they responded that their open access publications did not involved fees. The 3rd mostly used resource was the Erasmus Open Access Fund.
 
+<!-- Remove figure and leave the table -->
+
 ```{r cluster-6-question-2, echo = FALSE, out.width = '100%'}
 
 knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
@@ -574,6 +599,7 @@ knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
 
 From the question "What is your experience with Open Science practices?" more than 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
 
+<!-- Make this a bar graph -->
 
 ```{r cluster-1-data}
 
@@ -618,6 +644,7 @@ knitr::include_graphics(here("img", "donut_cluster1_question1.png"))
 
 From the question "Are you sharing your knowledge about open science practices with others?" we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. 
 
+<!-- Remove figure and leave the text -->
 
 ```{r cluster-1-question-2, echo = FALSE, out.width = '100%'}
 
@@ -626,6 +653,8 @@ knitr::include_graphics(here("img", "donut_cluster1_question2.png"))
 ```
 
 From the question "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?", we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID.
+
+<!-- Remove figure and leave the text -->
 
 ```{r cluster-1-question-3, echo = FALSE, out.width = '100%'}
 
@@ -676,6 +705,7 @@ From the statement "The following are possible barriers to the uptake of open sc
 
 11.5% - Lack of credit in my institution for engaging in open science
 
+<!-- This should be bars and sorted -->
 
 ```{r cluster-7-question-1, echo = FALSE, out.width = '100%'}
 
@@ -795,10 +825,14 @@ knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
 
 ```
 
+
+<!-- This figure should be a collage of all the other figures -->
+
 # Role of ERIM
 
 In the question "Do you expect that ERIM supports you in learning open science practice?" researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. 
 
+<!-- Remove figure and leave the text -->
 
 ```{r cluster-9-data}
 
@@ -848,6 +882,8 @@ From the question "Which of the following open science practices would you like 
 18.42% - Open materials and/or code
 
 14.47% - Open access publishing
+
+<!-- Remove figure and make a table -->
 
 ```{r cluster-9-question-2, echo = FALSE, out.width = '100%'}
 
