@@ -177,6 +177,7 @@ knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
 When dividing it into departments inside RSM, the department with higher response was the department of technology & operation management with almost 24% of the respondents, followed by the marketing management department with almost 20% respondents. The business-society management, strategic management & entrepeneurship, and then organization & personnel management departments got the exact same number of respondents (almost 15%) and lastly the departments of finance and accounting and control cover only 6% of the respondents. 
 
 <!-- Make a bar figure with both RSM and ESE department (joining cluster0_question2 and 3) -->
+<!-- Figure 1 -->
 
 ```{r cluster-0-question-2, echo = FALSE, out.width = '100%'}
 
@@ -222,13 +223,14 @@ The total survey response rate was 22%, but depending on the research position, 
 |Tenured Faculty Member|27%|34%|30%|
 |Total|25%|19%|22%|
 
-<!-- Hardcode the total number of researchers and calculare the response rate -->
+<!-- Hardcode the total number of researchers and calculate the response rate -->
 
 # Preregistration
 
 From the question "In your opinion, how important for your field is it that researchers preregister their studies?" we can see that more than 50% of the respondents think preregistration is important (combining very and moderately important), but a bit more than 16% think that preregistration is not at all important.
 
 <!-- Make the figures bars and then one figure that compares cluster2_question1 and cluster2_question2 horizontally together -->
+<!-- Figure 2 -->
 
 ```{r cluster-2-data}
 
@@ -289,6 +291,7 @@ From the question "The following are possible concerns that researchers could ha
 19.47% - Preregistration prevents exploratory research.
 
 <!-- Make the figures as bars and with its percentage next to it, cluster2_question3 -->
+<!-- Figure 3 -->
 
 ```{r cluster-2-question-3, echo = FALSE, out.width = '100%'}
 
@@ -302,6 +305,7 @@ knitr::include_graphics(here("img", "donut_cluster2_question3.png"))
 From the question In your opinion, how important for your field is it that materials and/or code are openly available?" we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
 
 <!-- Make the figures bars and leave cluster3_question1 alone, then one figure that compares cluster3_question2 and cluster3_question3 horizontally together -->
+<!-- Figure 4 -->
 
 ```{r cluster-3-data}
 # 
@@ -361,7 +365,9 @@ Comparing this figure to the one above, we can assume that researchers at ESE an
 knitr::include_graphics(here("img", "donut_cluster3_question3.png"))
 
 ```
+
 <!-- Make the figures bars -->
+<!-- Figure 5 -->
 
 From the question "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?" the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
 
@@ -373,7 +379,7 @@ From the question "The following are possible concerns that researchers could ha
 
 It is important to mention that the most popular answer (27.43%) was that researchers do not share any of these concerns with sharing their materials and/or code openly. 
 
-
+<!-- Figure 6 -->
 
 ```{r cluster-3-question-4, echo = FALSE, out.width = '100%'}
 
@@ -386,7 +392,8 @@ knitr::include_graphics(here("img", "donut_cluster3_question4.png"))
 From the question "In your opinion, how important for your field is it that data from published research are openly available?" we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only a bit more than 5% think is not at all important. 
 
 <!-- Make the figures bars and leave cluster4_question1 alone, then one figure that compares cluster4_question2 and cluster4_question3 horizontally together -->
-
+<!-- Figure 7 -->
+<!-- Figure 8 -->
 
 ```{r cluster-4-data}
 
@@ -458,6 +465,7 @@ From the question "The following are possible concerns that researchers could ha
 But a considerable percentage of respondents (17.7%) do not share any of these concerns. 
 
 <!-- Make the figures bars and sort it  -->
+<!-- Figure 9 -->
 
 ```{r cluster-4-question-4, echo = FALSE, out.width = '100%'}
 
