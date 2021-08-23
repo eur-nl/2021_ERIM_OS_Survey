@@ -8,12 +8,14 @@ set.seed(seed_synth)
 
 # install.packages("here")
 # install.packages("tidyverse")
+# install.packages("ggrepel")
 # install.packages("patchwork")
 
 # Load packages --------------------------------------------------------
 
 library(here)
 library(tidyverse)
+library(ggrepel)
 library(patchwork)
 
 source(here("code", "theme_custom.R")) # custom ggplot2 theme
@@ -48,7 +50,7 @@ lollipop_cluster0_question2 <-
   ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
-  geom_label(aes(item, perc, label = lab_perc), colour = "#171C54", nudge_y = 4, size = 4) +
+  geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
     breaks = seq(0, 35, 5),
     limits = c(0, 35)
@@ -77,7 +79,7 @@ lollipop_cluster0_question3 <-
   ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
-  geom_label(aes(item, perc, label = lab_perc), colour = "#171C54", nudge_y = 4, size = 4) +
+  geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
     breaks = seq(0, 35, 5),
     limits = c(0, 35)
