@@ -28,7 +28,8 @@ cluster <-
   mutate(
     question = as_factor(question),
     item = as_factor(item)
-  )
+  ) %>% 
+  select(-c(prop, number_responses))
 
 # extract questions
 questions <- levels(cluster$question)
@@ -40,8 +41,7 @@ num_question <- 2
 data_cluster0_question2 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
-  droplevels() %>%
-  select(-c(prop, number_responses))
+  droplevels()
 
 lollipop_cluster0_question2 <-
   data_cluster0_question2 %>%
@@ -70,8 +70,7 @@ num_question <- 3
 data_cluster0_question3 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
-  droplevels() %>%
-  select(-number_responses)
+  droplevels()
 
 lollipop_cluster0_question3 <-
   data_cluster0_question3 %>%
