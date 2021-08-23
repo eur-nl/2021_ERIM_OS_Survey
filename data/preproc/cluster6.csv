@@ -1,16 +1,16 @@
-question,item,number_responses,prop,perc,lab_perc,ymax,ymin,lab_pos
-Approximately what proportion of your publications from the last 5 years are open access?,Some,22,0.19469026548672566,19.47,19.47%,0.19469026548672566,0,0.09734513274336283
-Approximately what proportion of your publications from the last 5 years are open access?,I don’t know/prefer not to answer,23,0.20353982300884957,20.35,20.35%,0.39823008849557523,0.19469026548672566,0.29646017699115046
-Approximately what proportion of your publications from the last 5 years are open access?,Most,18,0.1592920353982301,15.93,15.93%,0.5575221238938053,0.39823008849557523,0.47787610619469023
-Approximately what proportion of your publications from the last 5 years are open access?,Half,10,0.08849557522123894,8.85,8.85%,0.6460176991150443,0.5575221238938053,0.6017699115044248
-Approximately what proportion of your publications from the last 5 years are open access?,All,20,0.17699115044247787,17.7,17.7%,0.8230088495575221,0.6460176991150443,0.7345132743362832
-Approximately what proportion of your publications from the last 5 years are open access?,None,20,0.17699115044247787,17.7,17.7%,1,0.8230088495575221,0.911504424778761
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I don’t know/prefer not to answer,36,0.3185840707964602,31.86,31.86%,0.3185840707964602,0,0.1592920353982301
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,Other,5,0.04424778761061947,4.42,4.42%,0.36283185840707965,0.3185840707964602,0.3407079646017699
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,My open access publications did not involve fees,14,0.12389380530973451,12.39,12.39%,0.48672566371681414,0.36283185840707965,0.4247787610619469
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,"It was paid under the ""blanket agreement"" between VSNU and selected academic publishers",41,0.36283185840707965,36.28,36.28%,0.8495575221238938,0.48672566371681414,0.668141592920354
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I collaborated with others and other co-author paid the fees with their research funding,3,0.02654867256637168,2.65,2.65%,0.8761061946902655,0.8495575221238938,0.8628318584070797
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,It was paid using the Erasmus Open Access Fund,7,0.061946902654867256,6.19,6.19%,0.9380530973451328,0.8761061946902655,0.9070796460176991
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I paid the fees from my own research fund,2,0.017699115044247787,1.77,1.77%,0.9557522123893806,0.9380530973451328,0.9469026548672567
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I submit my research to journals that do not provide open access options,4,0.035398230088495575,3.54,3.54%,0.9911504424778761,0.9557522123893806,0.9734513274336283
-Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I received a fee waiver from the journal,1,0.008849557522123894,0.88,0.88%,1,0.9911504424778761,0.995575221238938
+question,item,number_responses,prop,perc,lab_perc
+Approximately what proportion of your publications from the last 5 years are open access?,Some,22,0.19469026548672566,19.47,19.47%
+Approximately what proportion of your publications from the last 5 years are open access?,I don’t know/prefer not to answer,23,0.20353982300884957,20.35,20.35%
+Approximately what proportion of your publications from the last 5 years are open access?,Most,18,0.1592920353982301,15.93,15.93%
+Approximately what proportion of your publications from the last 5 years are open access?,Half,10,0.08849557522123894,8.85,8.85%
+Approximately what proportion of your publications from the last 5 years are open access?,All,20,0.17699115044247787,17.7,17.7%
+Approximately what proportion of your publications from the last 5 years are open access?,None,20,0.17699115044247787,17.7,17.7%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I don’t know/prefer not to answer,36,0.3185840707964602,31.86,31.86%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,Other,5,0.04424778761061947,4.42,4.42%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,My open access publications did not involve fees,14,0.12389380530973451,12.39,12.39%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,"It was paid under the ""blanket agreement"" between VSNU and selected academic publishers",41,0.36283185840707965,36.28,36.28%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I collaborated with others and other co-author paid the fees with their research funding,3,0.02654867256637168,2.65,2.65%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,It was paid using the Erasmus Open Access Fund,7,0.061946902654867256,6.19,6.19%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I paid the fees from my own research fund,2,0.017699115044247787,1.77,1.77%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I submit my research to journals that do not provide open access options,4,0.035398230088495575,3.54,3.54%
+Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?,I received a fee waiver from the journal,1,0.008849557522123894,0.88,0.88%
