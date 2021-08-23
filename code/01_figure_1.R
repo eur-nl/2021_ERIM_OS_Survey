@@ -20,59 +20,14 @@ source(here("code", "theme_custom.R")) # custom ggplot2 theme
 
 # Data ----------------------------------------------------------------
 
-num_cluster <- 0
-
 cluster <-
   read_csv(
-    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv"),
+    here("data", "preproc", "cluster0.csv"),
     show_col_types = FALSE
-  ) %>%
-  # convert all columns to factors
-  mutate(
-    across(
-      .cols = everything(),
-      .fns = ~ as_factor(.)
-    )
-  ) %>%
-  filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == num_cluster # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  select(-c(Finished, cluster)) %>% # drop unused columns
-  select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>%
-  mutate(question = factor(
-    question,
-    levels = c(
-      "Which faculty are you from?",
-      "Which department are you affiliated to? [RSM]",
-      "Which department are you affiliated to? [ESE]",
-      "What is your position?",
-      "Are you member of any research institute affiliated with RSM or ESE?"
-    ),
-    ordered = TRUE
-  )) %>%
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  ungroup() %>%
-  group_by(question) %>%
-  mutate(
-    prop = number_responses / sum(number_responses), # proportion
-    perc = round(prop * 100, 2), # percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
+  )
 
 # extract questions
 questions <- levels(cluster$question)
-
-# save for final report
-write_csv(
-  cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
-)
 
 # Question 2, lollipop graph ----------------------------------------------------------------
 
@@ -82,7 +37,7 @@ data_cluster0_question2 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
   droplevels() %>%
-  select(-number_responses)
+  select(-c(prop, number_responses))
 
 lollipop_cluster0_question2 <-
   data_cluster0_question2 %>%
