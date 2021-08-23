@@ -8,17 +8,15 @@ set.seed(seed_synth)
 
 # install.packages("here")
 # install.packages("tidyverse")
-# install.packages("viridis")
+# install.packages("patchwork")
 
 # Load packages --------------------------------------------------------
 
 library(here)
 library(tidyverse)
-library(viridis)
+library(patchwork)
 
 source(here("code", "theme_custom.R")) # custom ggplot2 theme
-
-# options(ggrepel.max.overlaps = Inf) # always show all labels, regardless of overlaps
 
 # Data ----------------------------------------------------------------
 
@@ -63,10 +61,7 @@ cluster <-
   mutate(
     prop = number_responses / sum(number_responses), # proportion
     perc = round(prop * 100, 2), # percentage
-    lab_perc = paste(perc, "%", sep = ""), # percentage as text (for labels)
-    ymax = cumsum(prop), # top of each label
-    ymin = c(0, head(ymax, n = -1)), # bottom of each label
-    lab_pos = (ymax + ymin) / 2 # label position
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
   ) %>%
   ungroup()
 
@@ -90,21 +85,26 @@ data_cluster0_question2 <-
   select(-number_responses)
 
 lollipop_cluster0_question2 <-
-  data_cluster0_question2 %>% 
-  ggplot(aes(x = reorder(item, perc), y = perc) ) +
+  data_cluster0_question2 %>%
+  ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
-  geom_label(aes(item, perc, label = lab_perc), colour = "#171C54", nudge_x = .4, nudge_y = -.4, size = 4)+
-  labs(title = "RSM",
-       x = "",
-       y = "%"
-       ) +
+  geom_label(aes(item, perc, label = lab_perc), colour = "#171C54", nudge_y = -3, size = 4) +
+  scale_y_continuous(
+    breaks = seq(0, 30, 5),
+    limits = c(0, 30)
+  ) +
+  labs(
+    title = "RSM",
+    x = "",
+    y = "%"
+  ) +
   coord_flip() +
   theme_custom
 
 lollipop_cluster0_question2
 
-# Question 3 ----------------------------------------------------------------
+# Question 3, lollipop graph ----------------------------------------------------------------
 
 num_question <- 3
 
@@ -115,14 +115,19 @@ data_cluster0_question3 <-
   select(-number_responses)
 
 lollipop_cluster0_question3 <-
-  data_cluster0_question3 %>% 
-  ggplot(aes(x = reorder(item, perc), y = perc) ) +
+  data_cluster0_question3 %>%
+  ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
-  geom_label(aes(item, perc, label = lab_perc), colour = "#171C54", nudge_x = .4, nudge_y = -.4, size = 4)+
-  labs(title = "ESE",
-       x = "",
-       y = "%"
+  geom_label(aes(item, perc, label = lab_perc), colour = "#171C54", nudge_y = -3, size = 4) +
+  scale_y_continuous(
+    breaks = seq(0, 30, 5),
+    limits = c(0, 30)
+  ) +
+  labs(
+    title = "ESE",
+    x = "",
+    y = "%"
   ) +
   coord_flip() +
   theme_custom
@@ -131,34 +136,19 @@ lollipop_cluster0_question3
 
 # Merge in one figure ----------------------------------------------------------------
 
+lollipop_cluster0 <-
+  lollipop_cluster0_question2 / lollipop_cluster0_question3 +
+  plot_annotation(
+    title = str_sub(questions[3], end = -7)
+  ) &
+  theme(plot.title = element_text(size = 26, hjust = .5))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+lollipop_cluster0
 
 # save to file
 ggsave(
-  filename = paste0("lollipop_cluster", num_cluster, "_question", num_question, ".png"),
-  plot = lollipop_cluster0_question2,
+  filename = paste0("lollipop_cluster", num_cluster, ".png"),
+  plot = lollipop_cluster0,
   device = "png",
   path = here("img"),
   scale = 3,
@@ -166,175 +156,6 @@ ggsave(
   height = 8,
   units = "cm",
   dpi = 600
-)
-
-
-
-
-
-
-
-
-
-
-
-# Question 2 ----------------------------------------------------------------
-
-num_question <- 2
-
-data_cluster0_question2 <-
-  cluster %>%
-  filter(question == questions[num_question]) %>%
-  droplevels() %>%
-  select(-number_responses)
-
-donut_cluster0_question2 <-
-  data_cluster0_question2 %>% 
-  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
-  geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
-  scale_fill_viridis_d(option = "plasma") +
-  coord_polar(theta = "y") +
-  xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[num_question], width = 40)) +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
-  theme_custom
-
-donut_cluster0_question2
-
-# save to file
-ggsave(
-  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
-  plot = donut_cluster0_question2,
-  device = "png",
-  path = here("img"),
-  scale = 3,
-  width = 8,
-  height = 8,
-  units = "cm",
-  dpi = 96
-)
-
-# Question 3 ----------------------------------------------------------------
-
-num_question <- 3
-
-data_cluster0_question3 <-
-  cluster %>%
-  filter(question == questions[num_question]) %>%
-  droplevels() %>%
-  select(-number_responses)
-
-donut_cluster0_question3 <-
-  data_cluster0_question3 %>% 
-  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
-  geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
-  scale_fill_viridis_d(option = "plasma") +
-  coord_polar(theta = "y") +
-  xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[num_question], width = 40)) +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
-  theme_custom
-
-donut_cluster0_question3
-
-# save to file
-ggsave(
-  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
-  plot = donut_cluster0_question3,
-  device = "png",
-  path = here("img"),
-  scale = 3,
-  width = 8,
-  height = 8,
-  units = "cm",
-  dpi = 96
-)
-
-# Question 4 ----------------------------------------------------------------
-
-num_question <- 4
-
-data_cluster0_question4 <-
-  cluster %>%
-  filter(question == questions[num_question]) %>%
-  droplevels() %>%
-  select(-number_responses)
-
-donut_cluster0_question4 <-
-  data_cluster0_question4 %>% 
-  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
-  geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
-  scale_fill_viridis_d(option = "plasma") +
-  coord_polar(theta = "y") +
-  xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[num_question], width = 40)) +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
-  theme_custom
-
-donut_cluster0_question4
-
-# save to file
-ggsave(
-  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
-  plot = donut_cluster0_question4,
-  device = "png",
-  path = here("img"),
-  scale = 3,
-  width = 8,
-  height = 8,
-  units = "cm",
-  dpi = 96
-)
-
-# Question 5 ----------------------------------------------------------------
-
-num_question <- 5
-
-data_cluster0_question5 <- 
-  cluster %>%
-  filter(question == questions[num_question]) %>%
-  droplevels() %>%
-  select(-number_responses) %>% 
-  # reorder responses
-  mutate(item = factor(
-    item,
-    levels = c(
-      "ERIM",
-      "Tinbergen",
-      "ERIM,Tinbergen",
-      "Neither"
-    ),
-    ordered = TRUE
-  ))
-
-donut_cluster0_question5 <-
-  data_cluster0_question5 %>% 
-  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = item)) +
-  geom_rect() +
-  geom_label_repel(x = 3.5, aes(y = lab_pos, label = lab_perc, color = "white"), size = 6, fill = "white", color = "black", box.padding = 0.5) +
-  scale_fill_viridis_d(option = "plasma") +
-  coord_polar(theta = "y") +
-  xlim(c(2, 4)) +
-  ggtitle(str_wrap(questions[num_question], width = 40)) +
-  guides(fill = guide_legend(nrow = length(unique(filter(cluster, question == questions[num_question])$item)), byrow = TRUE)) +
-  theme_custom
-
-donut_cluster0_question5
-
-# save to file
-ggsave(
-  filename = paste0("donut_cluster", num_cluster, "_question", num_question, ".png"),
-  plot = donut_cluster0_question5,
-  device = "png",
-  path = here("img"),
-  scale = 3,
-  width = 8,
-  height = 8,
-  units = "cm",
-  dpi = 96
 )
 
 # END ----------------------------------------------------------------
