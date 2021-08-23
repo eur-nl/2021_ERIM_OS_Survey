@@ -176,7 +176,7 @@ knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
 
 When dividing it into departments inside RSM, the department with higher response was the department of technology & operation management with almost 24% of the respondents, followed by the marketing management department with almost 20% respondents. The business-society management, strategic management & entrepeneurship, and then organization & personnel management departments got the exact same number of respondents (almost 15%) and lastly the departments of finance and accounting and control cover only 6% of the respondents. 
 
-<!-- Make a bar figure with both RSM and ESE department (joining cluster0_quesion2 and 3) -->
+<!-- Make a bar figure with both RSM and ESE department (joining cluster0_question2 and 3) -->
 
 ```{r cluster-0-question-2, echo = FALSE, out.width = '100%'}
 
