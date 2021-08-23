@@ -97,7 +97,7 @@ lollipop_cluster0_question3
 lollipop_figure1 <-
   lollipop_cluster0_question2 / lollipop_cluster0_question3 +
   plot_annotation(
-    title = str_sub(questions[3], end = -7)
+    title = "Department affiliation"
   ) &
   theme(plot.title = element_text(size = 26, hjust = .5))
 
