@@ -24,6 +24,10 @@ cluster <-
   read_csv(
     here("data", "preproc", "cluster0.csv"),
     show_col_types = FALSE
+  ) %>% 
+  mutate(
+    question = as_factor(question),
+    item = as_factor(item)
   )
 
 # extract questions
