@@ -610,6 +610,7 @@ knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
 From the question "What is your experience with Open Science practices?" more than 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
 
 <!-- Make this a bar graph -->
+<!-- Figure 12 -->
 
 ```{r cluster-1-data}
 
