@@ -717,6 +717,7 @@ From the statement "The following are possible barriers to the uptake of open sc
 11.5% - Lack of credit in my institution for engaging in open science
 
 <!-- This should be bars and sorted -->
+<!-- Figure 13 -->
 
 ```{r cluster-7-question-1, echo = FALSE, out.width = '100%'}
 
