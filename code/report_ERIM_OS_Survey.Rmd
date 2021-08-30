@@ -478,6 +478,7 @@ knitr::include_graphics(here("img", "donut_cluster4_question4.png"))
 From the question "In your opinion, how important is pre-publication archiving for your field?" we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
 
 <!-- Make the figures bars and then one figure that compares cluster5_question1 and cluster5_question2 horizontally together -->
+<!-- Figure 10 -->
 
 ```{r cluster-5-data}
 
