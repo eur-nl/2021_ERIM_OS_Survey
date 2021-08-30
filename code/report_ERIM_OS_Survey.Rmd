@@ -839,6 +839,7 @@ knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
 
 
 <!-- This figure should be a collage of all the other figures -->
+<!-- Figure 14 -->
 
 # Role of ERIM
 
