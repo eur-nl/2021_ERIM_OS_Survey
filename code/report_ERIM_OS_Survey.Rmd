@@ -540,6 +540,7 @@ From the question "The following are possible concerns that researchers could ha
 But the second most common response (26.55%) was that researchers do not share any of these concerns.  
 
 <!-- Make the figures bars  -->
+<!-- Figure 11 -->
 
 ```{r cluster-5-question-3, echo = FALSE, out.width = '100%'}
 
