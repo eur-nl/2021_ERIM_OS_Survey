@@ -62,6 +62,8 @@ cluster <-
 # extract questions
 questions <- levels(cluster$question)
 
+donut_cluster8_question <- NULL # preallocate variable with all plots
+
 for(i_question in 1:length(questions)){
   
   data_cluster8_question <-
@@ -113,7 +115,7 @@ donut_figure14 <-
 
 # save to file
 ggsave(
-  filename = "donut_figure14.png",
+  filename = "figure14.png",
   plot = donut_figure14,
   device = "png",
   path = here("img"),
