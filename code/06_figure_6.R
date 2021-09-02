@@ -68,7 +68,7 @@ lollipop_figure6
 
 # save to file
 ggsave(
-  filename = "lollipop_figure6.png",
+  filename = "figure6.png",
   plot = lollipop_figure6,
   device = "png",
   path = here("img"),
