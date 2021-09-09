@@ -58,8 +58,7 @@ lollipop_cluster4_question2 <-
   ) +
   labs(
     title = "Your experience using them",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
@@ -88,8 +87,7 @@ lollipop_cluster4_question3 <-
   ) +
   labs(
     title = "Your experience sharing them",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
