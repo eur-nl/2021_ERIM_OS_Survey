@@ -58,8 +58,7 @@ lollipop_figure9 <-
   ) +
   labs(
     title = "Concerns about open data",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
