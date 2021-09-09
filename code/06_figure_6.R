@@ -58,8 +58,7 @@ lollipop_figure6 <-
   ) +
   labs(
     title = "Concerns about open materials and/or code",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
