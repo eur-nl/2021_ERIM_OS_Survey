@@ -52,13 +52,13 @@ lollipop_cluster0_question2 <-
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
-    breaks = seq(0, 35, 5),
-    limits = c(0, 35)
+    name = "%",
+    breaks = seq(0, 30, 5),
+    limits = c(0, 30)
   ) +
   labs(
     title = "RSM",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
@@ -81,13 +81,13 @@ lollipop_cluster0_question3 <-
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
+    name = "%",
     breaks = seq(0, 35, 5),
     limits = c(0, 35)
   ) +
   labs(
     title = "ESE",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
