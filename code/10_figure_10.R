@@ -58,8 +58,7 @@ lollipop_cluster5_question1 <-
   ) +
   labs(
     title = "Importance for your field",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
@@ -88,8 +87,7 @@ lollipop_cluster5_question2 <-
   ) +
   labs(
     title = "Your experience",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
