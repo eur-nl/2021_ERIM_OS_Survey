@@ -58,8 +58,7 @@ lollipop_cluster3_question2 <-
   ) +
   labs(
     title = "Your experience using them",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
@@ -83,13 +82,12 @@ lollipop_cluster3_question3 <-
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
-    breaks = seq(0, 50, 5),
-    limits = c(0, 50)
+    breaks = seq(0, 40, 5),
+    limits = c(0, 40)
   ) +
   labs(
     title = "Your experience sharing them",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
