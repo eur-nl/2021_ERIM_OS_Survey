@@ -112,10 +112,10 @@ A total of `r ERIM_OS_clean_unfinished$n[1] + ERIM_OS_clean_unfinished$n[2]` res
 
 ```{r complete-questionnaires-table}
 
-ERIM_OS_clean_unfinished %>% 
-  dplyr::select(-perc) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+# ERIM_OS_clean_unfinished %>% 
+#   dplyr::select(-perc) %>% 
+#   rename(percentage = lab_perc) %>% 
+#   kable_custom()
 
 ```
 
@@ -135,34 +135,29 @@ Almost 60% of the respondents were from RSM, while slightly more than 40% were a
 
 ```{r cluster-0-data}
 
-#cluster0 <-
-#  read_csv(
-#    here("data", "preproc", "cluster0.csv")
-  #  show_col_types = FALSE
-#  ) %>% 
-  # convert all columns to factors
-#  mutate(
-#    across(
-#      .cols = everything(),
-#      .fns = ~ as_factor(.)
-#    )
-#  )
+cluster0 <-
+ read_csv(
+   here("data", "preproc", "cluster0.csv")
+# show_col_types = FALSE
+ ) %>%
+#convert all columns to factors
+ mutate(
+   across(
+     .cols = everything(),
+     .fns = ~ as_factor(.)
+   )
+ )
 
 ```
 
 ```{r cluster-0-table}
 
-#cluster0 %>% 
-#  dplyr::select(-c(number_responses, perc)) %>% 
-#  rename(percentage = lab_perc) %>% 
-#  kable_custom()
+ # cluster0 %>%
+ #   dplyr::select(question, item, lab_perc) %>%
+ #   rename(percentage = lab_perc) %>%
+ #   kable_custom()
 
-# cluster0 %>% 
-#   dplyr::select(question, item, lab_perc) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
-
-# Add images from 01_cluster0_figure.R 
+# Add images from 01_cluster0_figure.R
 
 ```
 
@@ -170,7 +165,7 @@ Almost 60% of the respondents were from RSM, while slightly more than 40% were a
 
 ```{r cluster-0-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
+#knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
 
 ```
 
@@ -181,7 +176,8 @@ When dividing it into departments inside RSM, the department with higher respons
 
 ```{r cluster-0-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster0_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster0_question2.png"))
+knitr::include_graphics(here("img", "figure1.png"))
 
 ```
 
@@ -189,7 +185,7 @@ As for ESE, the departmental distribution is almost exactly the same, except for
 
 ```{r cluster-0-question-3, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster0_question3.png"))
+#knitr::include_graphics(here("img", "donut_cluster0_question3.png"))
 
 ```
 
@@ -199,7 +195,7 @@ When further dividing into position, the majority of the respondents (a bit more
 
 ```{r cluster-0-question-4, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster0_question4.png"))
+#knitr::include_graphics(here("img", "donut_cluster0_question4.png"))
 
 ```
 
@@ -209,7 +205,7 @@ The majority of respondents were affiliated to ERIM (almost 66%), while almost 1
 
 ```{r cluster-0-question-5, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster0_question5.png"))
+#knitr::include_graphics(here("img", "donut_cluster0_question5.png"))
 
 ```
 
@@ -269,7 +265,8 @@ From the question "In your opinion, how important for your field is it that rese
 
 ```{r cluster-2-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster2_question1.png"))
+#knitr::include_graphics(here("img", "donut_cluster2_question1.png"))
+knitr::include_graphics(here("img", "figure2.png"))
 
 ```
  
@@ -278,7 +275,7 @@ And a similar percentange (almost 8%) has never heard of preregistration before 
 
 ```{r cluster-2-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster2_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster2_question2.png"))
 
 ```
 
@@ -345,15 +342,15 @@ From the question In your opinion, how important for your field is it that mater
 
 ```{r cluster-3-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster3_question1.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster3_question1.png"))
+knitr::include_graphics(here("img", "figure4.png"))
 ```
 
 From the question "What is your experience with using open materials and/or code?" we see that both schools are aware and have some experience with using open materials and/or code. There is a considerable amount (21%) of researchers that regularly use and/or create open materials and/or code and it is only a bit more than 7% of the respondents that have not heard of open materials and/or code before answering this survey. 
 
 ```{r cluster-3-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster3_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster3_question2.png"))
 
 ```
 
@@ -363,8 +360,8 @@ Comparing this figure to the one above, we can assume that researchers at ESE an
 
 ```{r cluster-3-question-3, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster3_question3.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster3_question3.png"))
+knitr::include_graphics(here("img", "figure5.png"))
 ```
 
 <!-- Make the figures bars -->
@@ -384,8 +381,8 @@ It is important to mention that the most popular answer (27.43%) was that resear
 
 ```{r cluster-3-question-4, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster3_question4.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster3_question4.png"))
+knitr::include_graphics(here("img", "figure6.png"))
 ```
 
 # Open data
@@ -433,8 +430,9 @@ From the question "In your opinion, how important for your field is it that data
 
 ```{r cluster-4-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster4_question1.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster4_question1.png"))
+knitr::include_graphics(here("img", "figure7.png"))
+knitr::include_graphics(here("img", "figure8.png"))
 ```
 
 From the question "What is your experience with using open data?" we see that both schools are aware and have some experience with using open data. More than 21% of respondents regularly use open data and there is only a very small percentage of respondents (less than 3%) that have never heard of open data before taking this survey.  
@@ -442,7 +440,7 @@ From the question "What is your experience with using open data?" we see that bo
 
 ```{r cluster-4-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster4_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster4_question2.png"))
 
 ```
 
@@ -451,7 +449,7 @@ Comparing this question with the one before, we can see that researchers have mo
 
 ```{r cluster-4-question-3, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster4_question3.png"))
+#knitr::include_graphics(here("img", "donut_cluster4_question3.png"))
 
 ```
 
@@ -470,8 +468,8 @@ But a considerable percentage of respondents (17.7%) do not share any of these c
 
 ```{r cluster-4-question-4, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster4_question4.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster4_question4.png"))
+knitr::include_graphics(here("img", "figure9.png"))
 ```
 
 # Pre-publication archiving
@@ -518,15 +516,15 @@ From the question "In your opinion, how important is pre-publication archiving f
 
 ```{r cluster-5-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster5_question1.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster5_question1.png"))
+knitr::include_graphics(here("img", "figure10.png"))
 ```
 
 From the question "What is your experience with pre-publication archiving?" we see that both schools are aware and have some experience with pre-publications. However, there is a similar percentage of respondents with opposite experience, a bit more than 20% of respondents have extensive experience with preprint archiving, while almost 19% has never heard of pre-publication archiving before they took this survey. 
 
 ```{r cluster-5-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster5_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster5_question2.png"))
 
 ```
 
@@ -545,8 +543,8 @@ But the second most common response (26.55%) was that researchers do not share a
 
 ```{r cluster-5-question-3, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster5_question3.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster5_question3.png"))
+knitr::include_graphics(here("img", "figure11.png"))
 ```
 
 # Open access
@@ -558,41 +556,41 @@ From the question Approximately what proportion of your publications from the la
 ```{r cluster-6-data}
 
 # # summary of responses to cluster 6
-# cluster6 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "6" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+cluster6 <-
+  ERIM_OS_clean %>%
+  dplyr::filter(
+    Finished == "TRUE" & # keep only complete questionnaires
+      cluster == "6" # keep only questions of relevant cluster
+  ) %>%
+  droplevels() %>% # drop unused levels
+  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
+  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  # drop_na() %>% # drop rows with missing values
+  rename("item" = "value_1") %>%
+  group_by(question, item) %>%
+  summarize(number_responses = n()) %>%
+  group_by(question) %>%
+  mutate(
+    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>%
+  ungroup()
 
 ```
 
 ```{r cluster-6-table}
 
-# cluster6 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
+cluster6 %>%
+  dplyr::select(-c(number_responses, perc)) %>%
+  rename(percentage = lab_perc) %>%
+  kable_custom()
 
 # Add images from 07_cluster6_figure.R
 ```
 
 ```{r cluster-6-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster6_question1.png"))
+#knitr::include_graphics(here("img", "donut_cluster6_question1.png"))
 
 ```
 
@@ -602,7 +600,7 @@ From the question Many open access journals charge a fee for processing the arti
 
 ```{r cluster-6-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
 
 ```
 
@@ -650,8 +648,8 @@ From the question "What is your experience with Open Science practices?" more th
 
 ```{r cluster-1-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster1_question1.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster1_question1.png"))
+knitr::include_graphics(here("img", "figure12.png"))
 ```
 
 From the question "Are you sharing your knowledge about open science practices with others?" we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. 
@@ -660,7 +658,7 @@ From the question "Are you sharing your knowledge about open science practices w
 
 ```{r cluster-1-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster1_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster1_question2.png"))
 
 ```
 
@@ -670,7 +668,7 @@ From the question "During March 2021 ERIM launched an ORCID campaign. Did you pa
 
 ```{r cluster-1-question-3, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
+#knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
 
 ```
 
@@ -722,8 +720,8 @@ From the statement "The following are possible barriers to the uptake of open sc
 
 ```{r cluster-7-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster7_question1.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster7_question1.png"))
+knitr::include_graphics(here("img", "figure13.png"))
 ```
 
 # Awareness of available tools
@@ -770,7 +768,7 @@ Open Science Framework (OSF), a bit more than 83% of the respondents do not use 
 
 ```{r cluster-8-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question1.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question1.png"))
 
 ```
 
@@ -778,7 +776,7 @@ GitHub, there are a bit more than 70% of the respondents that do not use it and 
 
 ```{r cluster-8-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question2.png"))
 
 ```
 
@@ -786,7 +784,7 @@ For the EUR data repository (FigShare), a bit less than 75% of the respondents d
 
 ```{r cluster-8-question-3, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question3.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question3.png"))
 
 ```
 
@@ -794,7 +792,7 @@ As for the 4TU Center for Reseach Data, all reseachers responded that they do no
 
 ```{r cluster-8-question-4, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question4.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question4.png"))
 
 ```
 
@@ -802,7 +800,7 @@ EUR SurfDrive, a bit less than 20% of the respondent do not know about it, but a
 
 ```{r cluster-8-question-5, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question5.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question5.png"))
 
 ```
 
@@ -810,7 +808,7 @@ For EUR Dropbox, almost 50% of the respondents do not use it and the other 50% d
 
 ```{r cluster-8-question-6, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question6.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question6.png"))
 
 ```
 
@@ -818,7 +816,7 @@ As for the FAIR principles, more than 75% of the researchers do not use them and
 
 ```{r cluster-8-question-7, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question7.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question7.png"))
 
 ```
 
@@ -826,7 +824,7 @@ EUR RePub, it is now depicted, and PURE is the new repository for publications, 
 
 ```{r cluster-8-question-8, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question8.png"))
+#knitr::include_graphics(here("img", "donut_cluster8_question8.png"))
 
 ```
 
@@ -834,8 +832,8 @@ As for Zenodo, less than 1% of the respondents use it, and most researchers are 
 
 ```{r cluster-8-question-9, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
-
+#knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
+knitr::include_graphics(here("img", "figure14.png"))
 ```
 
 
@@ -885,7 +883,7 @@ In the question "Do you expect that ERIM supports you in learning open science p
 
 ```{r cluster-9-question-1, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster9_question1.png"))
+#knitr::include_graphics(here("img", "donut_cluster9_question1.png"))
 
 ```
 
@@ -901,7 +899,7 @@ From the question "Which of the following open science practices would you like 
 
 ```{r cluster-9-question-2, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
+#knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
 
 ```
 
