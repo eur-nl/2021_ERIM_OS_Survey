@@ -59,8 +59,7 @@ lollipop_figure4 <-
   labs(
     title = "Materials and/or code availability",
     subtitle = "Importance for your field",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
