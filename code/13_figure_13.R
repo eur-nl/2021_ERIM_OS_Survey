@@ -53,13 +53,12 @@ lollipop_figure13 <-
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
-    breaks = seq(0, 65, 5),
-    limits = c(0, 65)
+    breaks = seq(0, 40, 5),
+    limits = c(0, 40)
   ) +
   labs(
     title = "Barriers to open science",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
