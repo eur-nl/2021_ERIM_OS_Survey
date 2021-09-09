@@ -295,7 +295,8 @@ From the question "The following are possible concerns that researchers could ha
 
 ```{r cluster-2-question-3, echo = FALSE, out.width = '100%'}
 
-knitr::include_graphics(here("img", "donut_cluster2_question3.png"))
+#knitr::include_graphics(here("img", "donut_cluster2_question3.png"))
+knitr::include_graphics(here("img", "figure3.png"))
 
 ```
 
