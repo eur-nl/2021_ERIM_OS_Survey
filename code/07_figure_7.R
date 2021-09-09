@@ -53,14 +53,13 @@ lollipop_figure7 <-
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
-    breaks = seq(0, 40, 5),
-    limits = c(0, 40)
+    breaks = seq(0, 35, 5),
+    limits = c(0, 35)
   ) +
   labs(
     title = "Open data",
     subtitle = "Importance for your field",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
