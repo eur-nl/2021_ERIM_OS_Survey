@@ -58,8 +58,7 @@ lollipop_figure3 <-
   ) +
   labs(
     title = "Concerns about preregistration",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
