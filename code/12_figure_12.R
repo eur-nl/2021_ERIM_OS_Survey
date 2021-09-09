@@ -53,13 +53,12 @@ lollipop_figure12 <-
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
-    breaks = seq(0, 65, 5),
-    limits = c(0, 65)
+    breaks = seq(0, 60, 5),
+    limits = c(0, 60)
   ) +
   labs(
     title = "Experience with open science practices",
-    x = "",
-    y = "%"
+    x = ""
   ) +
   coord_flip() +
   theme_custom
