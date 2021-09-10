@@ -3,12 +3,20 @@ title: "Report of the 2021 ERIM Open Science Survey"
 author: '[Dr. Lizette Guzman-Ramirez](https://www.linkedin.com/in/drlizguzman/), [Dr. Antonio Schettino](https://antonio-schettino.com/)'
 date: '`r Sys.Date()`'
 output:
-  html_document:
+  bookdown::html_document2:
+    # # appearance
     theme: united
     highlight: tango
-    code_folding: hide
+    # # table of content
     toc: true
-    toc_float: true
+    toc_float: true  
+    number_sections: false
+    # # code
+    # code_folding: true
+    # # figures
+    fig_width: 8
+    fig_height: 8
+    fig_caption: true
 editor_options: 
   chunk_output_type: console
 ---
@@ -20,12 +28,14 @@ seed_synth <- 135249315
 set.seed(seed_synth)
 
 ### install packages
+# install.packages("bookdown")
 # install.packages("knitr")
 # install.packages("kableExtra")
 # install.packages("here")
 # install.packages("tidyverse")
 
 ### load packages
+library(bookdown)
 library(knitr)
 library(kableExtra)
 library(here)
@@ -34,16 +44,15 @@ library(tidyverse)
 # RMarkdown
 options(digits = 2) # number of decimal digits
 opts_chunk$set(
-  echo = TRUE, # show code
+  echo = FALSE, # do not show code
   warning = FALSE, # no package warnings
-  message = FALSE, # no package messages
-  fig.dim = c(8, 8) # figure width & height
+  message = FALSE # no package messages
 )
 
-# custom kable
-kable_custom <- function(data) {
-  knitr::kable(data, digits = getOption("digits")) %>%
-    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+# custom function for tables
+kable_custom <- function(data, caption) {
+  knitr::kable(data, digits = getOption("digits"), caption = caption) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 }
 
 ```
@@ -73,7 +82,7 @@ This report has all the total responses (combined ESE and RSM)[^1].
 
 For any comments or questions, please contact [Dr. Lizette Guzman-Ramirez](mailto:guzmanramirez@rsm.nl) (ERIM Research Data Steward) or [Dr. Antonio Schettino](mailto:schettino@eur.nl) (ERS Open Science Coordinator).
 
-```{r load-preproc-data, message = FALSE}
+```{r load-preprocessed-data}
 
 ERIM_OS_clean <-
   read_csv(
@@ -109,108 +118,100 @@ ERIM_OS_clean_unfinished <-
 
 A total of `r ERIM_OS_clean_unfinished$n[1] + ERIM_OS_clean_unfinished$n[2]` respondents started the survey, but only `r ERIM_OS_clean_unfinished$n[2]` finished it. 
 
-<!-- Hide the table, just report the result in text -->
+```{r affiliation-data}
 
-```{r complete-questionnaires-table}
+ERIM_OS_affiliation <-
+  read_csv(
+    here('data', 'preproc', 'cluster0.csv')
+  )
 
-# ERIM_OS_clean_unfinished %>% 
-#   dplyr::select(-perc) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
-
-```
-
-We asked participants their school, department, and research institute affiliation together with their position. 
-Almost 60% of the respondents were from RSM, while slightly more than 40% were affiliated to ESE. 
-
-```{r response-rate-table}
-    
-#ERIM_OS_clean %>% 
-#  dplyr::select(-perc) %>% 
-#  mutate(perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels))
-#  rename(percentage = lab_perc) %>% 
-#  kable_custom()
+# RSM
+ERIM_OS_affiliation_RSM <- 
+  ERIM_OS_affiliation %>% 
+  filter(question == "Which department are you affiliated to? [RSM]") %>% 
+  arrange(desc(perc))
+  
+# ESE
+ERIM_OS_affiliation_ESE <- 
+  ERIM_OS_affiliation %>% 
+  filter(question == "Which department are you affiliated to? [ESE]") %>% 
+  arrange(desc(perc))
 
 ```
 
-```{r cluster-0-data}
+We asked participants their school, department, and research institute affiliation together with their position. A total of `r ERIM_OS_affiliation$lab_perc[1]` of the respondents were from RSM, while `r ERIM_OS_affiliation$lab_perc[2]` were affiliated to ESE. For the percentages separately for each department, see Figure \@ref(fig:figure1).
 
-cluster0 <-
- read_csv(
-   here("data", "preproc", "cluster0.csv")
-# show_col_types = FALSE
- ) %>%
-#convert all columns to factors
- mutate(
-   across(
-     .cols = everything(),
-     .fns = ~ as_factor(.)
-   )
- )
+```{r figure1, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
 
-```
-
-```{r cluster-0-table}
-
- # cluster0 %>%
- #   dplyr::select(question, item, lab_perc) %>%
- #   rename(percentage = lab_perc) %>%
- #   kable_custom()
-
-# Add images from 01_cluster0_figure.R
-
-```
-
-<!-- Remove figure cluster0_question1 -->
-
-```{r cluster-0-question-1, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster0_question1.png"))
-
-```
-
-When dividing it into departments inside RSM, the department with higher response was the department of technology & operation management with almost 24% of the respondents, followed by the marketing management department with almost 20% respondents. The business-society management, strategic management & entrepeneurship, and then organization & personnel management departments got the exact same number of respondents (almost 15%) and lastly the departments of finance and accounting and control cover only 6% of the respondents. 
-
-<!-- Make a bar figure with both RSM and ESE department (joining cluster0_question2 and 3) -->
-<!-- Figure 1 -->
-
-```{r cluster-0-question-2, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster0_question2.png"))
 knitr::include_graphics(here("img", "figure1.png"))
 
 ```
 
-As for ESE, the departmental distribution is almost exactly the same, except for the applied economics department, that covers a bit more than 28%, all the other 3 departments, economics, econometrics, and business economics respondents cover the exact same ratio, almost 24% each. 
+```{r position-data}
 
-```{r cluster-0-question-3, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster0_question3.png"))
-
-```
-
-When further dividing into position, the majority of the respondents (a bit more than 52%) were tenured faculty members, followed by a bit more than 22% of the respondents in the PhD position. 
-
-<!-- Remove figure cluster0_question4 and add the table -->
-
-```{r cluster-0-question-4, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster0_question4.png"))
+ERIM_OS_position <- 
+  ERIM_OS_affiliation %>% 
+  filter(question == "What is your position?") %>% 
+  arrange(desc(perc))
 
 ```
 
-The majority of respondents were affiliated to ERIM (almost 66%), while almost 18% is affiliated to Tinbergen only. A bit more than 7% is affiliated to both ERIM and Tinbergen, and there is almost 10% of researchers that are not affiliated to any research institute. 
+When further dividing into position, the majority of the respondents (`r ERIM_OS_position$lab_perc[1]`) were `r ERIM_OS_position$item[1]`, followed by `r ERIM_OS_position$item[2]` (`r ERIM_OS_position$lab_perc[2]`), `r ERIM_OS_position$item[3]` (`r ERIM_OS_position$lab_perc[3]`), and `r ERIM_OS_position$item[4]` (`r ERIM_OS_position$lab_perc[4]`). 
 
-<!-- Remove figure cluster0_question5 -->
+```{r institute-data}
 
-```{r cluster-0-question-5, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster0_question5.png"))
+ERIM_OS_institute <- 
+  ERIM_OS_affiliation %>% 
+  filter(question == "Are you member of any research institute affiliated with RSM or ESE?") %>% 
+  arrange(desc(perc))
 
 ```
 
-The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.
+The majority of respondents were affiliated to `r ERIM_OS_institute$item[1]` (`r ERIM_OS_institute$lab_perc[1]`), while `r ERIM_OS_institute$lab_perc[2]` were affiliated to `r ERIM_OS_institute$item[2]`. `r ERIM_OS_institute$lab_perc[3]` to `r ERIM_OS_institute$item[3]`, and `r ERIM_OS_institute$lab_perc[4]` to `r ERIM_OS_institute$item[4]`.
+
+```{r position-response-rate-data}
+
+# number of researchers as of May 2021
+total_researchers <- c(
+  197, # Tenured faculty member
+  154, # PhD student
+  155, # Tenure track
+  49 # Postdoc or researcher
+)
+
+ERIM_OS_position_response_rate <- 
+  ERIM_OS_position %>% 
+  select(item, number_responses) %>% 
+  mutate(
+    total_researchers = total_researchers,
+    prop = number_responses / total_researchers, # proportion
+    perc = round(prop * 100, 0), # percentage
+    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
+  ) %>% 
+  arrange(desc(perc))
+
+total_survey_response_rate <- 
+  (sum(ERIM_OS_position_response_rate$number_responses) / sum(ERIM_OS_position_response_rate$total_researchers) * 100) %>% 
+  round(., 0) %>% 
+  paste(., "%", sep = "")
+
+```
+
+The total survey response rate was `r total_survey_response_rate`, varying across research position (min. `r ERIM_OS_position_response_rate$lab_perc[4]`, max. `r ERIM_OS_position_response_rate$lab_perc[1]`). Table \@ref(tab:position-response-rate-table) presents the total response rate per research position.
+
+```{r position-response-rate-table}
+
+ERIM_OS_position_response_rate %>% 
+  select(position = item, respondents = lab_perc) %>% 
+  kable_custom(caption = "INSERT CAPTION HERE")
+
+```
+
+
+
+
+
+
 
 |Position|RSM|ESE|Total|
 |-----------|----|-----|-----|
