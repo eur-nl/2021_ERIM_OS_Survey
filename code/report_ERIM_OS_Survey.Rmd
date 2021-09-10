@@ -82,19 +82,12 @@ This report has all the total responses (combined ESE and RSM)[^1].
 
 For any comments or questions, please contact [Dr. Lizette Guzman-Ramirez](mailto:guzmanramirez@rsm.nl) (ERIM Research Data Steward) or [Dr. Antonio Schettino](mailto:schettino@eur.nl) (ERS Open Science Coordinator).
 
-```{r load-preprocessed-data}
+```{r load-clean-data}
 
 ERIM_OS_clean <-
   read_csv(
-    here('data', 'preproc', 'CLEAN_20210608_ERIM_OS_Survey.csv') 
-    ) %>% 
-  # convert all columns to factors
-  mutate(
-    across(
-      .cols = everything(),
-      .fns = ~ as_factor(.)
+    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv") 
     )
-  )
 
 ```
 
@@ -116,30 +109,23 @@ ERIM_OS_clean_unfinished <-
 
 ```
 
-A total of `r ERIM_OS_clean_unfinished$n[1] + ERIM_OS_clean_unfinished$n[2]` respondents started the survey, but only `r ERIM_OS_clean_unfinished$n[2]` finished it. 
+A total of `r sum(ERIM_OS_clean_unfinished$n)` respondents started the survey, but only `r pull(filter(ERIM_OS_clean_unfinished, survey == "complete"), n)` finished it.
 
 ```{r affiliation-data}
 
-ERIM_OS_affiliation <-
+ERIM_OS_demographics <-
   read_csv(
-    here('data', 'preproc', 'cluster0.csv')
+    here("data", "preproc", "cluster0.csv")
   )
-
-# RSM
-ERIM_OS_affiliation_RSM <- 
-  ERIM_OS_affiliation %>% 
-  filter(question == "Which department are you affiliated to? [RSM]") %>% 
-  arrange(desc(perc))
-  
-# ESE
-ERIM_OS_affiliation_ESE <- 
-  ERIM_OS_affiliation %>% 
-  filter(question == "Which department are you affiliated to? [ESE]") %>% 
-  arrange(desc(perc))
 
 ```
 
-We asked participants their school, department, and research institute affiliation together with their position. A total of `r ERIM_OS_affiliation$lab_perc[1]` of the respondents were from RSM, while `r ERIM_OS_affiliation$lab_perc[2]` were affiliated to ESE. For the percentages separately for each department, see Figure \@ref(fig:figure1).
+We asked participants their school, department, and research institute affiliation, together with their position. 
+
+<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
+### School & Department
+
+`r pull(filter(ERIM_OS_demographics, item == "Rotterdam School of Management (RSM)"), lab_perc)` of the respondents were from RSM, while `r pull(filter(ERIM_OS_demographics, item == "Erasmus School of Economics (ESE)"), lab_perc)` were affiliated to ESE. For the percentages separately for each department, see Figure \@ref(fig:figure1).
 
 ```{r figure1, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
 
@@ -147,79 +133,122 @@ knitr::include_graphics(here("img", "figure1.png"))
 
 ```
 
-```{r position-data}
+<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
+### Institute
 
-ERIM_OS_position <- 
-  ERIM_OS_affiliation %>% 
-  filter(question == "What is your position?") %>% 
-  arrange(desc(perc))
+The majority of respondents (`r pull(filter(ERIM_OS_demographics, item == "ERIM"), lab_perc)`) were affiliated to ERIM, while `r pull(filter(ERIM_OS_demographics, item == "Tinbergen"), lab_perc)` were affiliated to Tinbergen, `r pull(filter(ERIM_OS_demographics, item == "Neither"), lab_perc)` to neither institute, and `r pull(filter(ERIM_OS_demographics, item == "ERIM,Tinbergen"), lab_perc)` to both.
 
-```
+<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
+### Position
 
-When further dividing into position, the majority of the respondents (`r ERIM_OS_position$lab_perc[1]`) were `r ERIM_OS_position$item[1]`, followed by `r ERIM_OS_position$item[2]` (`r ERIM_OS_position$lab_perc[2]`), `r ERIM_OS_position$item[3]` (`r ERIM_OS_position$lab_perc[3]`), and `r ERIM_OS_position$item[4]` (`r ERIM_OS_position$lab_perc[4]`). 
+When further dividing into position, the majority of the respondents (`r pull(filter(ERIM_OS_demographics, item == "Tenured faculty member"), lab_perc)`) were tenured faculty members, followed by PhD candidates (`r pull(filter(ERIM_OS_demographics, item == "PhD student"), lab_perc)`), tenure track professors (`r pull(filter(ERIM_OS_demographics, item == "Tenure track"), lab_perc)`), and postdocs/researchers (`r pull(filter(ERIM_OS_demographics, item == "Postdoc or researcher"), lab_perc)`).
 
-```{r institute-data}
+<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
+### Respondents vs. total number of researchers
 
-ERIM_OS_institute <- 
-  ERIM_OS_affiliation %>% 
-  filter(question == "Are you member of any research institute affiliated with RSM or ESE?") %>% 
-  arrange(desc(perc))
+```{r school-position-response-rate-data}
 
-```
+# # total number of researchers as of May 2021
+# total_researchers_no_school <- c(
+#   197, # Tenured faculty member
+#   154, # PhD student
+#   155, # Tenure track
+#   49 # Postdoc or researcher
+# )
 
-The majority of respondents were affiliated to `r ERIM_OS_institute$item[1]` (`r ERIM_OS_institute$lab_perc[1]`), while `r ERIM_OS_institute$lab_perc[2]` were affiliated to `r ERIM_OS_institute$item[2]`. `r ERIM_OS_institute$lab_perc[3]` to `r ERIM_OS_institute$item[3]`, and `r ERIM_OS_institute$lab_perc[4]` to `r ERIM_OS_institute$item[4]`.
+# number of researchers separately for ESE and RSM as of May 2021
+# ATTENTION! Now everything is set to 100 for testing purposes, but Liz will include the actual data
+total_researchers <- 
+  tibble(
+    position = rep(
+      c(
+      "PhD student",
+      "Postdoc or researcher",
+      "Tenure track",
+      "Tenured faculty member"
+    ),
+    2
+    ),
+    school = rep(c("RSM", "ESE"), times = 1, each = 4),
+    total_researchers = c(
+      100, # ESE: PhD student
+      100, # ESE: Postdoc or researcher
+      100, # ESE: Tenure track
+      100, # ESE: Tenured faculty member
+      100, # RSM: PhD student
+      100, # RSM: Postdoc or researcher
+      100, # RSM: Tenure track
+      100  # RSM: Tenured faculty member
+    )
+  )
 
-```{r position-response-rate-data}
-
-# number of researchers as of May 2021
-total_researchers <- c(
-  197, # Tenured faculty member
-  154, # PhD student
-  155, # Tenure track
-  49 # Postdoc or researcher
-)
-
-ERIM_OS_position_response_rate <- 
-  ERIM_OS_position %>% 
-  select(item, number_responses) %>% 
+ERIM_OS_school_position_response_rate <- 
+  ERIM_OS_clean %>% 
+  filter(
+    Finished == TRUE &
+      question %in% c(
+        "Which faculty are you from?", 
+        "What is your position?"
+      )
+  ) %>% 
+  select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  drop_na() %>% # drop rows with missing values
+  pivot_wider(
+    id_cols = participant,
+    names_from = question,
+    values_from = value_1
+  ) %>% 
   mutate(
-    total_researchers = total_researchers,
+    school = ifelse(`Which faculty are you from?` == "Rotterdam School of Management (RSM)", "RSM", "ESE"),
+    position = `What is your position?`
+  ) %>% 
+  select(participant, school, position) %>% 
+  group_by(school, position) %>% 
+  summarize(number_responses = n()) %>%
+  ungroup() %>% 
+  left_join(
+    .,
+    total_researchers,
+    by = c("school", "position")
+  ) %>% 
+  mutate(
     prop = number_responses / total_researchers, # proportion
     perc = round(prop * 100, 0), # percentage
     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>% 
-  arrange(desc(perc))
-
-total_survey_response_rate <- 
-  (sum(ERIM_OS_position_response_rate$number_responses) / sum(ERIM_OS_position_response_rate$total_researchers) * 100) %>% 
-  round(., 0) %>% 
+  ) %>%
+  arrange(school, desc(perc))
+  
+total_survey_response_rate <-
+  (sum(ERIM_OS_school_position_response_rate$number_responses) / sum(ERIM_OS_school_position_response_rate$total_researchers) * 100) %>%
+  round(., 0) %>%
   paste(., "%", sep = "")
 
 ```
 
-The total survey response rate was `r total_survey_response_rate`, varying across research position (min. `r ERIM_OS_position_response_rate$lab_perc[4]`, max. `r ERIM_OS_position_response_rate$lab_perc[1]`). Table \@ref(tab:position-response-rate-table) presents the total response rate per research position.
+The total survey response rate was `r total_survey_response_rate`, varying across research position (min. `r min(ERIM_OS_school_position_response_rate$perc)`%, max. `r max(ERIM_OS_school_position_response_rate$perc)`%). Table \@ref(tab:school-position-response-rate-table) presents the total response rate per research position and school.
 
-```{r position-response-rate-table}
+```{r school-position-response-rate-table}
 
-ERIM_OS_position_response_rate %>% 
-  select(position = item, respondents = lab_perc) %>% 
+ERIM_OS_school_position_response_rate %>% 
+  select(school, position, percentage = lab_perc) %>% 
+    pivot_wider(
+    id_cols = position,
+    names_from = school,
+    values_from = percentage
+  ) %>%
+  arrange(desc(position)) %>% 
   kable_custom(caption = "INSERT CAPTION HERE")
 
 ```
 
-
-
-
-
-
-
-|Position|RSM|ESE|Total|
-|-----------|----|-----|-----|
-|PhD student|20%|16%|18%|
-|Postdoc or researcher|23%|17%|20%|
-|Tenured Track|27%|6%|16%|
-|Tenured Faculty Member|27%|34%|30%|
-|Total|25%|19%|22%|
+<!-- Here is your previous (hard-coded) table. We can delete it now. -->
+<!-- |Position|RSM|ESE|Total| -->
+<!-- |-----------|----|-----|-----| -->
+<!-- |PhD student|20%|16%|18%| -->
+<!-- |Postdoc or researcher|23%|17%|20%| -->
+<!-- |Tenured Track|27%|6%|16%| -->
+<!-- |Tenured Faculty Member|27%|34%|30%| -->
+<!-- |Total|25%|19%|22%| -->
 
 <!-- Hardcode the total number of researchers and calculate the response rate -->
 
@@ -585,7 +614,7 @@ cluster6 <-
 cluster6 %>%
   dplyr::select(-c(number_responses, perc)) %>%
   rename(percentage = lab_perc) %>%
-  kable_custom()
+  kable_custom(caption = "INSERT CAPTION HERE")
 
 # Add images from 07_cluster6_figure.R
 ```
