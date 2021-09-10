@@ -54,6 +54,7 @@ kable_custom <- function(data) {
 # Introduction
 
 <!-- Why did we administer the survey? Who asked us? -->
+The Erasmus Research Institute of Management (ERIM) is committed to Open Science, one way of knowing 
 
 The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted from the [Swinburne Open Science Survey](https://osf.io/vpwf7/).
 
@@ -106,7 +107,7 @@ ERIM_OS_clean_unfinished <-
 
 ```
 
-A total of `r ERIM_OS_clean_unfinished$n[1] + ERIM_OS_clean_unfinished$n[2]` respondents started the survey, and 
+A total of `r ERIM_OS_clean_unfinished$n[1] + ERIM_OS_clean_unfinished$n[2]` respondents started the survey, but only `r ERIM_OS_clean_unfinished$n[2]` finished it. 
 
 <!-- Hide the table, just report the result in text -->
 
