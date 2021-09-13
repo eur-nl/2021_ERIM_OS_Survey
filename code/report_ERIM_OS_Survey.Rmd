@@ -24,7 +24,7 @@ editor_options:
 ```{r doc-setup, include = FALSE}
 
 # RNG
-seed_synth <- 135249315 
+seed_synth <- 135249315
 set.seed(seed_synth)
 
 ### install packages
@@ -148,16 +148,7 @@ When further dividing into position, the majority of the respondents (`r pull(fi
 
 ```{r school-position-response-rate-data}
 
-# # total number of researchers as of May 2021
-# total_researchers_no_school <- c(
-#   197, # Tenured faculty member
-#   154, # PhD student
-#   155, # Tenure track
-#   49 # Postdoc or researcher
-# )
-
 # number of researchers separately for ESE and RSM as of May 2021
-# ATTENTION! Now everything is set to 100 for testing purposes, but Liz will include the actual data
 total_researchers <- 
   tibble(
     position = rep(
@@ -171,14 +162,14 @@ total_researchers <-
     ),
     school = rep(c("RSM", "ESE"), times = 1, each = 4),
     total_researchers = c(
-      100, # ESE: PhD student
-      100, # ESE: Postdoc or researcher
-      100, # ESE: Tenure track
-      100, # ESE: Tenured faculty member
-      100, # RSM: PhD student
-      100, # RSM: Postdoc or researcher
-      100, # RSM: Tenure track
-      100  # RSM: Tenured faculty member
+      64, # ESE: PhD student
+      18, # ESE: Postdoc or researcher
+      81, # ESE: Tenure track
+      91, # ESE: Tenured faculty member
+      90, # RSM: PhD student
+      31, # RSM: Postdoc or researcher
+      74, # RSM: Tenure track
+      106  # RSM: Tenured faculty member
     )
   )
 
@@ -241,7 +232,10 @@ ERIM_OS_school_position_response_rate %>%
 
 ```
 
-<!-- Here is your previous (hard-coded) table. We can delete it now. -->
+<!-- Here is your previous (hard-coded) table. The numbers below are different from what is calculated from the data -->
+<!-- I guess it's because, in the calculations below, you also added incomplete surveys -->
+<!-- Could you please verify that it all makes sense? -->
+
 <!-- |Position|RSM|ESE|Total| -->
 <!-- |-----------|----|-----|-----| -->
 <!-- |PhD student|20%|16%|18%| -->
@@ -249,8 +243,6 @@ ERIM_OS_school_position_response_rate %>%
 <!-- |Tenured Track|27%|6%|16%| -->
 <!-- |Tenured Faculty Member|27%|34%|30%| -->
 <!-- |Total|25%|19%|22%| -->
-
-<!-- Hardcode the total number of researchers and calculate the response rate -->
 
 # Preregistration
 
