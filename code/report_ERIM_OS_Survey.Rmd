@@ -727,6 +727,7 @@ The ORCiD Madness Month brough to light the importance of having a unique identi
 The Open Science Spring Survey was then conducted to gather a baseline on the Open Science practices our researchers are already engaging on, and to understand which practices they want to learn more about.
 
 The lessons learned from the survey and how will the be tackled are the following: 
+
 **Preregistration**; researchers think is important but only a few are regularly preregistrating their research, so we will have a module about it in the Open Science MOOC on which we will tackle the concerns researchers rose.
 
 **Open materials and/or code and data**; researchers find this very important, this is why we decided to use the whole month of October dedicated to open data. The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). One of the events of the DataFest will tackle the top 5 concerns researchers have on open materials and/or code and data.
