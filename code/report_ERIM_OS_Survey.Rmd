@@ -122,9 +122,6 @@ ERIM_OS_demographics <-
 
 We asked participants their school, department, and research institute affiliation, together with their position. 
 
-<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
-### School & Department
-
 `r pull(filter(ERIM_OS_demographics, item == "Rotterdam School of Management (RSM)"), lab_perc)` of the respondents were from RSM, while `r pull(filter(ERIM_OS_demographics, item == "Erasmus School of Economics (ESE)"), lab_perc)` were affiliated to ESE. For the percentages separately for each department, see Figure \@ref(fig:figure1).
 
 ```{r figure1, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
@@ -133,18 +130,7 @@ knitr::include_graphics(here("img", "figure1.png"))
 
 ```
 
-<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
-### Institute
-
 The majority of respondents (`r pull(filter(ERIM_OS_demographics, item == "ERIM"), lab_perc)`) were affiliated to ERIM, while `r pull(filter(ERIM_OS_demographics, item == "Tinbergen"), lab_perc)` were affiliated to Tinbergen, `r pull(filter(ERIM_OS_demographics, item == "Neither"), lab_perc)` to neither institute, and `r pull(filter(ERIM_OS_demographics, item == "ERIM,Tinbergen"), lab_perc)` to both.
-
-<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
-### Position
-
-When further dividing into position, the majority of the respondents (`r pull(filter(ERIM_OS_demographics, item == "Tenured faculty member"), lab_perc)`) were tenured faculty members, followed by PhD candidates (`r pull(filter(ERIM_OS_demographics, item == "PhD student"), lab_perc)`), tenure track professors (`r pull(filter(ERIM_OS_demographics, item == "Tenure track"), lab_perc)`), and postdocs/researchers (`r pull(filter(ERIM_OS_demographics, item == "Postdoc or researcher"), lab_perc)`).
-
-<!-- subtitle to delete, now useful to make sure that I don't forget anything -->
-### Respondents vs. total number of researchers
 
 ```{r school-position-response-rate-data}
 
@@ -173,7 +159,7 @@ total_researchers <-
     )
   )
 
-ERIM_OS_school_position_response_rate <- 
+ERIM_OS_school_position_response_rate <-
   ERIM_OS_clean %>% 
   filter(
     Finished == TRUE &
@@ -201,33 +187,40 @@ ERIM_OS_school_position_response_rate <-
     .,
     total_researchers,
     by = c("school", "position")
-  ) %>% 
-  mutate(
-    prop = number_responses / total_researchers, # proportion
-    perc = round(prop * 100, 0), # percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
   ) %>%
-  arrange(school, desc(perc))
-  
+  pivot_wider(
+    id_cols = position,
+    names_from = school,
+    values_from = c(number_responses, total_researchers)
+  ) %>% 
+  add_row(position = "Total", number_responses_ESE = sum(.$number_responses_ESE), number_responses_RSM = sum(.$number_responses_RSM), total_researchers_ESE = sum(.$total_researchers_ESE), total_researchers_RSM = sum(.$total_researchers_RSM)) %>% 
+  group_by(position) %>% 
+  summarize(
+    ESE = number_responses_ESE / total_researchers_ESE * 100,
+    RSM = number_responses_RSM / total_researchers_RSM * 100,
+    Total = sum(number_responses_ESE, number_responses_RSM) / sum(total_researchers_ESE, total_researchers_RSM) * 100
+  ) %>% 
+  ungroup() 
+
 total_survey_response_rate <-
-  (sum(ERIM_OS_school_position_response_rate$number_responses) / sum(ERIM_OS_school_position_response_rate$total_researchers) * 100) %>%
+  ERIM_OS_school_position_response_rate %>% 
+  filter(position == "Total") %>% 
+  pull(Total) %>% 
   round(., 0) %>%
   paste(., "%", sep = "")
 
 ```
 
-The total survey response rate was `r total_survey_response_rate`, varying across research position (min. `r min(ERIM_OS_school_position_response_rate$perc)`%, max. `r max(ERIM_OS_school_position_response_rate$perc)`%). Table \@ref(tab:school-position-response-rate-table) presents the total response rate per research position and school.
+The total survey response rate was `r total_survey_response_rate`. Table \@ref(tab:school-position-response-rate-table) presents the total response rate per research position and school.
 
 ```{r school-position-response-rate-table}
 
-ERIM_OS_school_position_response_rate %>% 
-  select(school, position, percentage = lab_perc) %>% 
-    pivot_wider(
-    id_cols = position,
-    names_from = school,
-    values_from = percentage
-  ) %>%
-  arrange(desc(position)) %>% 
+ERIM_OS_school_position_response_rate %>%
+  mutate(
+    ESE = paste0(format(ESE, digits = 0), "%"),
+    RSM = paste0(format(RSM, digits = 0), "%"),
+    Total = paste0(format(Total, digits = 0), "%")
+  ) %>% 
   kable_custom(caption = "INSERT CAPTION HERE")
 
 ```
