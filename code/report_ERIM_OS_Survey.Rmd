@@ -256,7 +256,7 @@ ERIM_OS_preregistration_importance <-
 
 ```
 
-The answers to the question *`r ERIM_OS_preregistration$question[1]`* reveals that respondents consider preregistration *`r ERIM_OS_preregistration_importance$item[1]`* or *`r ERIM_OS_preregistration_importance$item[2]`* (`r paste0(sum(ERIM_OS_preregistration_importance[1, "perc"], ERIM_OS_preregistration_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), "perc"), "%")` believe that preregistration is *`r pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), item)`*.
+The answers to the question *`r ERIM_OS_preregistration_importance$question[1]`* reveal that respondents consider preregistration *`r ERIM_OS_preregistration_importance$item[1]`* or *`r ERIM_OS_preregistration_importance$item[2]`* (`r paste0(sum(ERIM_OS_preregistration_importance[1, "perc"], ERIM_OS_preregistration_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), "perc"), "%")` believe that preregistration is *`r pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), item)`*.
 
 ```{r preregistration-experience-data}
 
@@ -302,96 +302,82 @@ knitr::include_graphics(here("img", "figure3.png"))
 
 ```
 
-
-
-
-
-
 # Open materials/code
 
-From the question In your opinion, how important for your field is it that materials and/or code are openly available?" we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
+```{r materials-data}
 
-<!-- Make the figures bars and leave cluster3_question1 alone, then one figure that compares cluster3_question2 and cluster3_question3 horizontally together -->
-<!-- Figure 4 -->
-
-```{r cluster-3-data}
-# 
-#  # summary of responses to cluster 3
-#  cluster3 <-
-#    ERIM_OS_clean %>% 
-#    dplyr::filter(
-#      Finished == "TRUE" & # keep only complete questionnaires
-#        cluster == "3" # keep only questions of relevant cluster
-#    ) %>%
-#    droplevels() %>% # drop unused levels
-#    dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#    dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#    # drop_na() %>% # drop rows with missing values
-#    rename("item" = "value_1") %>% 
-#    group_by(question, item) %>%
-#    summarize(number_responses = n()) %>%
-#    group_by(question) %>%
-#    mutate(
-#      perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#      lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#    ) %>%
-#    ungroup()
+ERIM_OS_materials <-
+  read_csv(
+    here("data", "preproc", "cluster3.csv")
+  )
 
 ```
 
-```{r cluster-3-table}
-# 
-#  cluster3 %>% 
-#    dplyr::select(-c(number_responses, perc)) %>% 
-#    rename(percentage = lab_perc) %>% 
-#    kable_custom()
+```{r materials-importance-data}
 
-# Add images from 04_cluster3_figure.R
+ERIM_OS_materials_importance <-
+  ERIM_OS_materials %>% 
+  filter(question == "In your opinion, how important for your field is it that materials and/or code are openly available?")
+
 ```
 
-```{r cluster-3-question-1, echo = FALSE, out.width = '100%'}
+From the question *`r ERIM_OS_materials_importance$question[1]`*, we can see that `r paste0(format(sum(ERIM_OS_materials_importance[1, "perc"], ERIM_OS_materials_importance[2, "perc"], ERIM_OS_materials_importance[3, "perc"]), digits = 0), "%")` of respondents think that using open materials and/or code is *`r ERIM_OS_materials_importance$item[1]`*, *`r ERIM_OS_materials_importance$item[2]`*, or *`r ERIM_OS_materials_importance$item[3]`*, whereas `r paste0(pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), "perc"), "%")` think it is *`r pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), item)`* (see Figure \@ref(fig:figure4).)
 
-#knitr::include_graphics(here("img", "donut_cluster3_question1.png"))
+```{r figure4, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+
 knitr::include_graphics(here("img", "figure4.png"))
-```
-
-From the question "What is your experience with using open materials and/or code?" we see that both schools are aware and have some experience with using open materials and/or code. There is a considerable amount (21%) of researchers that regularly use and/or create open materials and/or code and it is only a bit more than 7% of the respondents that have not heard of open materials and/or code before answering this survey. 
-
-```{r cluster-3-question-2, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster3_question2.png"))
 
 ```
 
-From the question "What is your experience with sharing open materials and/or code?" we can see that a bit more than 30% of respondents are aware of sharing materials and/or code, about 30% have some experience sharing materials and/or code, and similarly almost 30% of respondents regularly share open materials and/or code. 
-Comparing this figure to the one above, we can assume that researchers at ESE and RSM share their materials and/or code more than what they re-use.
+```{r materials-use-data}
 
+ERIM_OS_materials_use <-
+  ERIM_OS_materials %>% 
+  filter(question == "What is your experience with using open materials and/or code?")
 
-```{r cluster-3-question-3, echo = FALSE, out.width = '100%'}
+```
 
-#knitr::include_graphics(here("img", "donut_cluster3_question3.png"))
+The answers to the question *`r ERIM_OS_materials_use$question[1]`* reveal that `r paste0(format(sum(filter(ERIM_OS_materials_use, item == "I am aware of open materials and/or code, but have not used it in my research")$perc, filter(ERIM_OS_materials_use, item == "I have some experience with open materials and/or code, but do not use them regularly")$perc), digits = 0), "%")` of respondents are aware of (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I am aware of open materials and/or code, but have not used it in my research"), "perc"), "%")`) and have some experience (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I have some experience with open materials and/or code, but do not use them regularly"), "perc"), "%")`) using open materials and/or code. A considerable amount of researchers (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I regularly use and/or create open materials and/or code"), "perc"), "%")`) regularly use open materials and/or code, while only a small fraction of respondents (`r paste0(pull(filter(ERIM_OS_materials_use, item == "Until now, I hadn't heard of open materials and/or code"), "perc"), "%")`) had not heard of open materials and/or code before answering this survey. 
+
+```{r materials-sharing-data}
+
+ERIM_OS_materials_sharing <-
+  ERIM_OS_materials %>% 
+  filter(question == "What is your experience with sharing open materials and/or code?")
+
+```
+
+From the question *`r ERIM_OS_materials_sharing$question[1]`* we can see that `r paste0(pull(filter(ERIM_OS_materials_sharing, item == "I am aware of open materials and/or code, but have not shared my own"), "perc"), "%")` of respondents are aware of sharing materials and/or code, `r paste0(pull(filter(ERIM_OS_materials_sharing, item == "I have some experience with open materials and/or code, but do not share mine regularly"), "perc"), "%")` have some experience, and `r paste0(pull(filter(ERIM_OS_materials_sharing, item == "I regularly share open materials and/or code"), "perc"), "%")` regularly share open materials and/or code.
+
+Based on these results, we observe that researchers at ESE and RSM share their materials and/or code more than what they re-use. More details can be found in Figure \@ref(fig:figure5).
+
+```{r figure5, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+
 knitr::include_graphics(here("img", "figure5.png"))
+
 ```
 
-<!-- Make the figures bars -->
-<!-- Figure 5 -->
+```{r materials-concerns-data}
 
-From the question "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?" the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
+ERIM_OS_materials_concerns <-
+  ERIM_OS_materials %>% 
+  filter(question == "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
 
-19.47% - Others might find it difficult to understand my materials and/or code.
+```
 
-15.04% - I might lose control over how my materials and/or code are being used.
+Among the possible concerns that researchers could have about making their materials and/or code openly available, the top 3 are: 
 
-8.85% - Other researchers might criticise my materials and/or code
+* *`r ERIM_OS_materials_concerns$item[2]`* (`r ERIM_OS_materials_concerns[2, "lab_perc"]`)
+* *`r ERIM_OS_materials_concerns$item[3]`* (`r ERIM_OS_materials_concerns[3, "lab_perc"]`)
+* *`r ERIM_OS_materials_concerns$item[4]`* (`r ERIM_OS_materials_concerns[4, "lab_perc"]`)
 
-It is important to mention that the most popular answer (27.43%) was that researchers do not share any of these concerns with sharing their materials and/or code openly. 
+Notably, however, the majority of respondents (`r paste0(pull(filter(ERIM_OS_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure6)).
 
-<!-- Figure 6 -->
+```{r figure6, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
 
-```{r cluster-3-question-4, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster3_question4.png"))
 knitr::include_graphics(here("img", "figure6.png"))
+
 ```
 
 # Open data
