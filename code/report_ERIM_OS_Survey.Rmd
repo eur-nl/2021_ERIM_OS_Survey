@@ -710,9 +710,9 @@ ERIM_OS_support_practice %>%
 
 ```
 
-# Strategy towards an Open Science culture at ERIM
+# Strategy towards an open science culture at ERIM
 
-ERIM is committed to make Open Science (OS) practices the norm withing its researchers. 
+ERIM is committed to make Open Science practices the norm withing its researchers. 
 
 Open Science increases transparency throughout the research cycle – from hypothesis, methodology, observation, data collection, to analysis and publication – resulting in increased research efficiency and enhanced research quality, visibility, and engagement. Open Science also enables the creation of new research questions and promotes collaborations and community building.
 
@@ -726,7 +726,18 @@ The ORCiD Madness Month brough to light the importance of having a unique identi
 
 The Open Science Spring Survey was then conducted to gather a baseline on the Open Science practices our researchers are already engaging on, and to understand which practices they want to learn more about.
 
-The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). The DataFest will also be used to tackle the top 5 concerns researchers have on open data, these concerns come from their answers to this Open Science Spring Survey.
+The lessons learned from the survey and how will the be tackled are the following: 
+**Preregistration**; researchers think is important but only a few are regularly preregistrating their research, so we will have a module about it in the Open Science MOOC on which we will tackle the concerns researchers rose.
+
+**Open materials and/or code and data**; researchers find this very important, this is why we decided to use the whole month of October dedicated to open data. The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). One of the events of the DataFest will tackle the top 5 concerns researchers have on open materials and/or code and data.
+
+**Pre-publication**; researchers think is very important to pre-publication their results but only around 20% of them are using pre-prints, and a large percentage of respondents was not aware of it. To tackle this, we will add a module on pre-publication archiving in the Open Science MOOC on which we will explain its benefits and we will tackle the concerns rose by the respondents. 
+
+**Open Access**; less than 20% of the respondents have all their publication open access, fortunately for ERIM and the EUR, this percentage will change in the coming months/years, since EUR's researchers have agreed to follow the taverne amendment, on which any publication that is not already open access will be made open (by law) after 6 months of its publication. To go into more details on this we will include a module on open access in our Open Science MOOC.
+
+**Open Science practices**; the most relevant barrier to open science (excluding open access, because of the taverne amendment) is the lack of recognition in the field and lack of credit by the institution. There is a lot of effort on this front, ERIM is redesigning its member chart, to include open science to it, funding agencies now require you to follow and stick to open science practices and EUR has a whole has a task force that is also redesigning rewards and recognition for its researchers. 
+
+All in all, ERIM has started the year 2021 with a new strategy in place: to make open science the norm within its researchers. 
 
 ***
 ***
