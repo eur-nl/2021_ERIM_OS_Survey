@@ -460,133 +460,110 @@ knitr::include_graphics(here("img", "figure9.png"))
 
 # Pre-publication archiving
 
-From the question "In your opinion, how important is pre-publication archiving for your field?" we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
+```{r archiving-data}
 
-<!-- Make the figures bars and then one figure that compares cluster5_question1 and cluster5_question2 horizontally together -->
-<!-- Figure 10 -->
-
-```{r cluster-5-data}
-
-# # summary of responses to cluster 5
-# cluster5 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "5" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+ERIM_OS_archiving <-
+  read_csv(
+    here("data", "preproc", "cluster5.csv")
+  )
 
 ```
 
-```{r cluster-5-table}
+```{r archiving-importance-data}
 
-# cluster5 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
+ERIM_OS_archiving_importance <-
+  ERIM_OS_archiving %>% 
+  filter(question == "In your opinion, how important is pre-publication archiving for your field?")
 
-# Add images from 06_cluster5_figure.R
 ```
 
-```{r cluster-5-question-1, echo = FALSE, out.width = '100%'}
+The answers to the question *`r ERIM_OS_archiving_importance$question[1]`* reveal that respondents consider pre-publication archiving *`r ERIM_OS_archiving_importance$item[1]`* or *`r ERIM_OS_archiving_importance$item[2]`* (`r paste0(sum(ERIM_OS_archiving_importance[1, "perc"], ERIM_OS_archiving_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ERIM_OS_archiving_importance, item == "Not at all important"), "perc"), "%")` believe that pre-publication archiving is *`r pull(filter(ERIM_OS_archiving_importance, item == "Not at all important"), item)`*.
 
-#knitr::include_graphics(here("img", "donut_cluster5_question1.png"))
+```{r archiving-experience-data}
+
+ERIM_OS_archiving_experience <-
+  ERIM_OS_archiving %>% 
+  filter(question == "What is your experience with pre-publication archiving?")
+
+```
+
+From the question *`r ERIM_OS_archiving_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_archiving_experience, item == "I am aware of pre-publication archiving but have not used it"), lab_perc)`) are aware of pre-publication archiving but have not used it in their own projects. `r pull(filter(ERIM_OS_archiving_experience, item == "I have extensive experience with preprint archiving"), lab_perc)` of respondents have extensive experience with preprint archiving, while `r pull(filter(ERIM_OS_archiving_experience, item == "Until now, I was unaware of \"pre-publication archiving\""), lab_perc)` had never heard of pre-publication archiving before answering this survey. More details can be found in Figure \@ref(fig:figure10).
+
+```{r figure10, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+
 knitr::include_graphics(here("img", "figure10.png"))
-```
-
-From the question "What is your experience with pre-publication archiving?" we see that both schools are aware and have some experience with pre-publications. However, there is a similar percentage of respondents with opposite experience, a bit more than 20% of respondents have extensive experience with preprint archiving, while almost 19% has never heard of pre-publication archiving before they took this survey. 
-
-```{r cluster-5-question-2, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster5_question2.png"))
 
 ```
 
-From the question "The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?" the top 3 concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review are the following: 
+```{r archiving-concerns-data}
 
-38.05% - Some journals might not publish findings that are uploaded to a pre-publication archive.
+ERIM_OS_archiving_concerns <-
+  ERIM_OS_archiving %>% 
+  filter(question == "The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
 
-14.16% - Other people might copy my research and publish it before I do.
+```
 
-10.62% - Non-peer-reviewed findings might add noise to the literature.
+Among the possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review, the top 3 are: 
 
-But the second most common response (26.55%) was that researchers do not share any of these concerns.  
+* *`r ERIM_OS_archiving_concerns$item[1]`* (`r ERIM_OS_archiving_concerns[1, "lab_perc"]`)
+* *`r ERIM_OS_archiving_concerns$item[3]`* (`r ERIM_OS_archiving_concerns[3, "lab_perc"]`)
+* *`r ERIM_OS_archiving_concerns$item[4]`* (`r ERIM_OS_archiving_concerns[4, "lab_perc"]`)
 
-<!-- Make the figures bars  -->
-<!-- Figure 11 -->
+Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_archiving_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure11)).
 
-```{r cluster-5-question-3, echo = FALSE, out.width = '100%'}
+```{r figure11, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
 
-#knitr::include_graphics(here("img", "donut_cluster5_question3.png"))
 knitr::include_graphics(here("img", "figure11.png"))
+
 ```
 
 # Open access
 
-From the question Approximately what proportion of your publications from the last 5 years are open access?" we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent have some of their publication open access, while almost 16% have most of their publication open access. However, 17.7% of the respondents have all or none (also 17.7%) of their publication open access. 
+```{r oa-data}
 
-<!-- Remove figure and leave the table -->
-
-```{r cluster-6-data}
-
-# # summary of responses to cluster 6
-cluster6 <-
-  ERIM_OS_clean %>%
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "6" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>%
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
+ERIM_OS_oa <-
+  read_csv(
+    here("data", "preproc", "cluster6.csv")
+  )
 
 ```
 
-```{r cluster-6-table}
+```{r oa-pubs-proportion-data}
 
-cluster6 %>%
-  dplyr::select(-c(number_responses, perc)) %>%
-  rename(percentage = lab_perc) %>%
-  kable_custom(caption = "INSERT CAPTION HERE")
-
-# Add images from 07_cluster6_figure.R
-```
-
-```{r cluster-6-question-1, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster6_question1.png"))
+ERIM_OS_oa_pubs <-
+  ERIM_OS_oa %>% 
+  filter(question == "Approximately what proportion of your publications from the last 5 years are open access?")
 
 ```
 
-From the question Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees? we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publisher, otherwise they responded that their open access publications did not involved fees. The 3rd mostly used resource was the Erasmus Open Access Fund.
+When asked *`r ERIM_OS_oa_pubs$question[1]`*, `r paste0(pull(filter(ERIM_OS_oa_pubs, item == "All"), "perc"), "%")` of respondents declared to have published all their papers open access, whereas `r paste0(pull(filter(ERIM_OS_oa_pubs, item == "None"), "perc"), "%")` have none of their publications open access (see details in Table \@ref(tab:oa-pubs-proportion-table)).
 
-<!-- Remove figure and leave the table -->
+```{r oa-pubs-proportion-table}
 
-```{r cluster-6-question-2, echo = FALSE, out.width = '100%'}
+ERIM_OS_oa_pubs %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ERIM_OS_oa_pubs$question[1])
 
-#knitr::include_graphics(here("img", "donut_cluster6_question2.png"))
+```
+
+```{r oa-pubs-apc-data}
+
+ERIM_OS_oa_apc <-
+  ERIM_OS_oa %>% 
+  filter(question == "Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?")
+
+```
+
+When asked how they paid article processing charges (APCs) for open access publications, `r pull(filter(ERIM_OS_oa_apc, item == "It was paid under the \"blanket agreement\" between VSNU and selected academic publishers"), lab_perc)` of respondents declared that APCs were covered by the "blanket agreement" between VSNU and selected academic publishers. More details can be found in Table \@ref(tab:oa-pubs-apc-table).
+
+```{r oa-pubs-apc-table}
+
+ERIM_OS_oa_apc %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ERIM_OS_oa_apc$question[1])
 
 ```
 
