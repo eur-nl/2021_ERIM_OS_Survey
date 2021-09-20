@@ -732,7 +732,7 @@ The lessons learned from the survey and how will the be tackled are the followin
 
 **Open materials and/or code and data**; researchers find this very important, this is why we decided to use the whole month of October dedicated to open data. The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). One of the events of the DataFest will tackle the top 5 concerns researchers have on open materials and/or code and data.
 
-**Pre-publication**; researchers think is very important to pre-publication their results but only around 20% of them are using pre-prints, and a large percentage of respondents was not aware of it. To tackle this, we will add a module on pre-publication archiving in the Open Science MOOC on which we will explain its benefits and we will tackle the concerns rose by the respondents. 
+**Pre-publication**; researchers think is very important to pre-publication their results but only around 20% of them are using pre-prints, and a large percentage of respondents were not aware of it. To tackle this, we will add a module on pre-publication archiving in the Open Science MOOC on which we will explain its benefits and we will tackle the concerns rose by the respondents. 
 
 **Open Access**; less than 20% of the respondents have all their publication open access, fortunately for ERIM and the EUR, this percentage will change in the coming months/years, since EUR's researchers have agreed to follow the taverne amendment, on which any publication that is not already open access will be made open (by law) after 6 months of its publication. To go into more details on this we will include a module on open access in our Open Science MOOC.
 
