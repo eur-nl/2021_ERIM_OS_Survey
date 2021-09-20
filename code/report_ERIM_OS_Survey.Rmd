@@ -663,67 +663,49 @@ knitr::include_graphics(here("img", "figure14.png"))
 
 # Role of ERIM
 
-In the question "Do you expect that ERIM supports you in learning open science practice?" researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. 
+```{r support-data}
 
-<!-- Remove figure and leave the text -->
-
-```{r cluster-9-data}
-
-# # summary of responses to cluster 9
-# cluster9 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "9" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+ERIM_OS_support <-
+  read_csv(
+    here("data", "preproc", "cluster9.csv")
+  )
 
 ```
 
-```{r cluster-9-table}
-# 
-# cluster9 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
+```{r support-expectations-data}
 
-# Add images from 10_cluster9_figure.R
-```
-
-```{r cluster-9-question-1, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster9_question1.png"))
+ERIM_OS_support_expectations <-
+  ERIM_OS_support %>% 
+  filter(question == "Do you expect that ERIM supports you in learning open science practices?")
 
 ```
 
-From the question "Which of the following open science practices would you like ERIM to provide information or support for?", the top 3 Open Science practices that respondents would like to get information or support for are:
+Finally, researchers were asked *`r ERIM_OS_support_expectations$question[1]`*. `r pull(filter(ERIM_OS_support_expectations, item == "Yes"), lab_perc)` of respondents said *`r pull(filter(ERIM_OS_support_expectations, item == "Yes"), item)`* whereas `r pull(filter(ERIM_OS_support_expectations, item == "No"), lab_perc)` said *`r pull(filter(ERIM_OS_support_expectations, item == "No"), item)`*.
 
-50% - Preregistration
+```{r support-practice-data}
 
-18.42% - Open materials and/or code
-
-14.47% - Open access publishing
-
-<!-- Remove figure and make a table -->
-
-```{r cluster-9-question-2, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster9_question2.png"))
+ERIM_OS_support_practice <-
+  ERIM_OS_support %>% 
+  filter(question == "Which of the following open science practices would you like ERIM to provide information or support for?") %>% 
+  arrange(desc(perc))
 
 ```
 
+When specifically asked *`r ERIM_OS_support_practice$question[1]`*, the top 3 are:
+
+* *`r ERIM_OS_support_practice$item[1]`* (`r ERIM_OS_support_practice[1, "lab_perc"]`)
+* *`r ERIM_OS_support_practice$item[2]`* (`r ERIM_OS_support_practice[2, "lab_perc"]`)
+* *`r ERIM_OS_support_practice$item[3]`* (`r ERIM_OS_support_practice[3, "lab_perc"]`)
+
+For an overview, see Table \@ref(tab:support-practice-table).
+
+```{r support-practice-table}
+
+ERIM_OS_support_practice %>% 
+ select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ERIM_OS_support_practice$question[1])
+
+```
 
 # ERIM Open Science Strategy
 
