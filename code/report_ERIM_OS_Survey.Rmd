@@ -641,125 +641,25 @@ knitr::include_graphics(here("img", "figure13.png"))
 
 ```
 
-
-
-
-
 # Awareness of available tools
 
-We asked researchers to indicate their awareness of each of the following open science resources listed below.    
+```{r tools-data}
 
-
-Open Science Framework (OSF), a bit more than 83% of the respondents do not use it, it is only a bit less than 17% of researchers that use OSF. 
-
-```{r cluster-8-data}
-
-# # summary of responses to cluster 8
-# cluster8 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "8" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+ERIM_OS_tools <-
+  read_csv(
+    here("data", "preproc", "cluster8.csv")
+  ) %>% 
+  arrange(desc(item), desc(perc))
 
 ```
 
-```{r cluster-8-table}
+We asked researchers to indicate their awareness of some popular open science resources. Notably, services hosted or approved by EUR are frequently in use, for example Dropbox for Business (`r pull(filter(ERIM_OS_tools, question == "EUR Dropbox (not personal)" & item == "I use this"), lab_perc)`), SurfDrive (`r pull(filter(ERIM_OS_tools, question == "EUR SurfDrive" & item == "I use this"), lab_perc)`), and RePub (`r pull(filter(ERIM_OS_tools, question == "EUR RePub" & item == "I use this"), lab_perc)`). An overview of all responses can be found in Figure \@ref(fig:figure14). 
 
-# cluster8 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
+```{r figure14, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
 
-# Add images from 09_cluster8_figure.R
-``` 
-
-```{r cluster-8-question-1, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question1.png"))
-
-```
-
-GitHub, there are a bit more than 70% of the respondents that do not use it and almost 30% of the respondents use it. 
-
-```{r cluster-8-question-2, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question2.png"))
-
-```
-
-For the EUR data repository (FigShare), a bit less than 75% of the respondents do not use it and only 15% of them use it. 
-
-```{r cluster-8-question-3, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question3.png"))
-
-```
-
-As for the 4TU Center for Reseach Data, all reseachers responded that they do not use it, and only a bit more than 7% have heard of it. 
-
-```{r cluster-8-question-4, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question4.png"))
-
-```
-
-EUR SurfDrive, a bit less than 20% of the respondent do not know about it, but a bit more than 42% of the respondent use it already.
-
-```{r cluster-8-question-5, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question5.png"))
-
-```
-
-For EUR Dropbox, almost 50% of the respondents do not use it and the other 50% do use it. 
-
-```{r cluster-8-question-6, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question6.png"))
-
-```
-
-As for the FAIR principles, more than 75% of the researchers do not use them and only a bit less than 15% use them.
-
-```{r cluster-8-question-7, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question7.png"))
-
-```
-
-EUR RePub, it is now depicted, and PURE is the new repository for publications, but at the time the survey was done, only a bit more then 33% of the respondents used it and the rest did not use it. 
-
-```{r cluster-8-question-8, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question8.png"))
-
-```
-
-As for Zenodo, less than 1% of the respondents use it, and most researchers are totally unaware of it.
-
-```{r cluster-8-question-9, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster8_question9.png"))
 knitr::include_graphics(here("img", "figure14.png"))
+
 ```
-
-
-<!-- This figure should be a collage of all the other figures -->
-<!-- Figure 14 -->
 
 # Role of ERIM
 
