@@ -271,7 +271,7 @@ ERIM_OS_preregistration_experience <-
 
 From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(ERIM_OS_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(ERIM_OS_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:figure2).
 
-```{r figure2, fig.cap = "Preregistration:Importance vs Experience", out.width = '100%'}
+```{r figure2, fig.cap = "Preregistration:importance vs experience", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure2.png"))
 
@@ -326,7 +326,7 @@ ERIM_OS_materials_importance <-
 
 From the question *`r ERIM_OS_materials_importance$question[1]`*, we can see that `r paste0(format(sum(ERIM_OS_materials_importance[1, "perc"], ERIM_OS_materials_importance[2, "perc"], ERIM_OS_materials_importance[3, "perc"]), digits = 0), "%")` of respondents think that using open materials and/or code is *`r ERIM_OS_materials_importance$item[1]`*, *`r ERIM_OS_materials_importance$item[2]`*, or *`r ERIM_OS_materials_importance$item[3]`*, whereas `r paste0(pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), "perc"), "%")` think it is *`r pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), item)`* (see Figure \@ref(fig:figure4).)
 
-```{r figure4, fig.cap = "Open materials and/or code: Importance", out.width = '100%'}
+```{r figure4, fig.cap = "Open materials and/or code: importance", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure4.png"))
 
@@ -404,7 +404,7 @@ ERIM_OS_data_importance <-
 
 From the question *`r ERIM_OS_data_importance$question[1]`*, `r paste0(format(sum(ERIM_OS_data_importance[1, "perc"], ERIM_OS_data_importance[2, "perc"], ERIM_OS_data_importance[3, "perc"]), digits = 0), "%")` of respondents think that using open materials and/or code is *`r ERIM_OS_data_importance$item[1]`*, *`r ERIM_OS_data_importance$item[2]`*, or *`r ERIM_OS_data_importance$item[3]`*, whereas `r paste0(pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), "perc"), "%")` think it is *`r pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), item)`* (see Figure \@ref(fig:figure7)).
 
-```{r figure7, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure7, fig.cap = "Open data: importance", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure7.png"))
 
@@ -418,7 +418,7 @@ ERIM_OS_data_use <-
 
 ```
 
-The answers to the question *`r ERIM_OS_data_use$question[1]`* reveal that `r paste0(format(sum(filter(ERIM_OS_data_use, item == "I am aware of open data, but have not used this in my research")$perc, filter(ERIM_OS_data_use, item == "I have some experience using open data, but do not use them regularly")$perc), digits = 0), "%")` of respondents are aware of (`r paste0(pull(filter(ERIM_OS_data_use, item == "I am aware of open data, but have not used this in my research"), "perc"), "%")`) and have some experience (`r paste0(pull(filter(ERIM_OS_data_use, item == "I have some experience using open data, but do not use them regularly"), "perc"), "%")`) using open data. `r paste0(pull(filter(ERIM_OS_data_use, item == "I regularly use open data"), "perc"), "%")` of researchers regularly use open data, while only a small fraction of respondents (`r paste0(pull(filter(ERIM_OS_data_use, item == "Until now, I was unaware of open data"), "perc"), "%")`) had not heard of open data before answering this survey.
+The answers to the question *`r ERIM_OS_data_use$question[1]`* reveal that (`r paste0(pull(filter(ERIM_OS_data_use, item == "I am aware of open data, but have not used this in my research"), "perc"), "%")`) of respondents are aware of open data but have nor used it,  and (`r paste0(pull(filter(ERIM_OS_data_use, item == "I have some experience using open data, but do not use them regularly"), "perc"), "%")`) have some experience using open data. `r paste0(pull(filter(ERIM_OS_data_use, item == "I regularly use open data"), "perc"), "%")` of researchers regularly use open data, while only a small fraction of respondents (`r paste0(pull(filter(ERIM_OS_data_use, item == "Until now, I was unaware of open data"), "perc"), "%")`) had not heard of open data before answering this survey.
 
 ```{r data-sharing-data}
 
@@ -432,7 +432,7 @@ From the question *`r ERIM_OS_data_sharing$question[1]`* we can see that `r past
 
 Based on these results, it seems that researchers at ESE and RSM have more experience using publicly available data rather than sharing their own data. More details can be found in Figure \@ref(fig:figure8).
 
-```{r figure8, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure8, fig.cap = "Open data: using vs sharing", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure8.png"))
 
@@ -455,7 +455,7 @@ Among the possible concerns that researchers could have about making their data 
 
 Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_data_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure9)).
 
-```{r figure9, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure9, fig.cap = "Open data: concerns", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure9.png"))
 
@@ -492,7 +492,7 @@ ERIM_OS_archiving_experience <-
 
 From the question *`r ERIM_OS_archiving_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_archiving_experience, item == "I am aware of pre-publication archiving but have not used it"), lab_perc)`) are aware of pre-publication archiving but have not used it in their own projects. `r pull(filter(ERIM_OS_archiving_experience, item == "I have extensive experience with preprint archiving"), lab_perc)` of respondents have extensive experience with preprint archiving, while `r pull(filter(ERIM_OS_archiving_experience, item == "Until now, I was unaware of \"pre-publication archiving\""), lab_perc)` had never heard of pre-publication archiving before answering this survey. More details can be found in Figure \@ref(fig:figure10).
 
-```{r figure10, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure10, fig.cap = "Pre-publication: importance vs experience", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure10.png"))
 
@@ -515,7 +515,7 @@ Among the possible concerns that researchers could have about uploading a manusc
 
 Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_archiving_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure11)).
 
-```{r figure11, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure11, fig.cap = "Pre-publication: concerns", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure11.png"))
 
@@ -591,7 +591,7 @@ ERIM_OS_general_experience <-
 
 When asked *`r ERIM_OS_general_experience$question[1]`*, `r pull(filter(ERIM_OS_general_experience, item == "I have some experience with open science practices"), lab_perc)` of respondents have some experience with open science practices, `r pull(filter(ERIM_OS_general_experience, item == "I have extensive experience with open science practices"), lab_perc)` have extensive experience, and `r pull(filter(ERIM_OS_general_experience, item == "I am aware, but have not used open science practices in my research"), lab_perc)` are aware but have not used any open science practices in their research (see Figure \@ref(fig:figure12)).
 
-```{r figure12, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure12, fig.cap = "Open science practices: experience", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure12.png"))
 
@@ -638,7 +638,7 @@ Among the perceived barriers to the uptake of open science practices, the top 3 
 
 For details, see Figure \@ref(fig:figure13).
 
-```{r figure13, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure13, fig.cap = "Open science: barriers", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure13.png"))
 
@@ -656,9 +656,9 @@ ERIM_OS_tools <-
 
 ```
 
-We asked researchers to indicate their awareness of some popular open science resources. Notably, services hosted or approved by EUR are frequently in use, for example Dropbox for Business (`r pull(filter(ERIM_OS_tools, question == "EUR Dropbox (not personal)" & item == "I use this"), lab_perc)`), SurfDrive (`r pull(filter(ERIM_OS_tools, question == "EUR SurfDrive" & item == "I use this"), lab_perc)`), and RePub (`r pull(filter(ERIM_OS_tools, question == "EUR RePub" & item == "I use this"), lab_perc)`). An overview of all responses can be found in Figure \@ref(fig:figure14). 
+We asked researchers to indicate their awareness of some popular open science resources. Notably, services hosted or approved by EUR are frequently in use, for example Dropbox for Business (`r pull(filter(ERIM_OS_tools, question == "EUR Dropbox (not personal)" & item == "I use this"), lab_perc)`), SurfDrive (`r pull(filter(ERIM_OS_tools, question == "EUR SurfDrive" & item == "I use this"), lab_perc)`), and EUR RePub (`r pull(filter(ERIM_OS_tools, question == "EUR RePub" & item == "I use this"), lab_perc)`). An overview of all responses can be found in Figure \@ref(fig:figure14). 
 
-```{r figure14, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure14, fig.cap = "Open science tools: awarness", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure14.png"))
 
@@ -710,14 +710,23 @@ ERIM_OS_support_practice %>%
 
 ```
 
-# ERIM Open Science Strategy
+# Strategy towards an Open Science culture at ERIM
 
-ERIM is committed to Open Science. The main reason why we conducted this survey is that we needed to know where the gaps are. 
+ERIM is committed to make Open Science (OS) practices the norm withing its researchers. 
 
-In order to provide enough support to our researchers ERIM is planning several interventions. 
-1) A 3 year campaign (2021 - 2024) on different aspects of Open Science.
--In March 2021, ERIM conducted the ORCiD Madness Month, 
+Open Science increases transparency throughout the research cycle – from hypothesis, methodology, observation, data collection, to analysis and publication – resulting in increased research efficiency and enhanced research quality, visibility, and engagement. Open Science also enables the creation of new research questions and promotes collaborations and community building.
 
+Between 2021 and 2023, ERIM will execute a three-year Open Science initiative, geared towards making our scientific routines more open and engaged with our scholarly and societal stakeholders. 
+
+This initiative will focus on researcher behaviour and on stimulating the active use of open science tools and infrastructure. 
+
+In 2021, ERIM kicked off in March with the ORCiD Madness Month, it then conducted the Open Science Spring Survey during the month of April. Later in the autum, ERIM will continue in October with the October DataFest, and ERIM also got awarded a Stepping Up Professional Services grant to create an Open Science Massive Online Open Course (MOOC).
+
+The ORCiD Madness Month brough to light the importance of having a unique identifier to your research profile, and as a result, we saw an increase of 72 new ORCiD accounts created between RSM and ESE researchers. 
+
+The Open Science Spring Survey was then conducted to gather a baseline on the Open Science practices our researchers are already engaging on, and to understand which practices they want to learn more about.
+
+The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). The DataFest will also be used to tackle the top 5 concerns researchers have on open data, these concerns come from their answers to this Open Science Spring Survey.
 
 ***
 ***
