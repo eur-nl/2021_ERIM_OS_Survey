@@ -569,123 +569,81 @@ ERIM_OS_oa_apc %>%
 
 # General experiences with open science practices 
 
-From the question "What is your experience with Open Science practices?" more than 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
+```{r general-data}
 
-<!-- Make this a bar graph -->
-<!-- Figure 12 -->
-
-```{r cluster-1-data}
-
-# # summary of responses to cluster 1
-# cluster1 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "1" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+ERIM_OS_general <-
+  read_csv(
+    here("data", "preproc", "cluster1.csv")
+  )
 
 ```
 
-```{r cluster-1-table}
+```{r general-experience-data}
 
-# cluster1 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
+ERIM_OS_general_experience <-
+  ERIM_OS_general %>% 
+  filter(question == "What is your experience with open science practices?")
 
-# Add images from 02_cluster1_figure.R
 ```
 
-```{r cluster-1-question-1, echo = FALSE, out.width = '100%'}
+When asked *`r ERIM_OS_general_experience$question[1]`*, `r pull(filter(ERIM_OS_general_experience, item == "I have some experience with open science practices"), lab_perc)` of respondents have some experience with open science practices, `r pull(filter(ERIM_OS_general_experience, item == "I have extensive experience with open science practices"), lab_perc)` have extensive experience, and `r pull(filter(ERIM_OS_general_experience, item == "I am aware, but have not used open science practices in my research"), lab_perc)` are aware but have not used any open science practices in their research (see Figure \@ref(fig:figure12)).
 
-#knitr::include_graphics(here("img", "donut_cluster1_question1.png"))
+```{r figure12, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+
 knitr::include_graphics(here("img", "figure12.png"))
-```
-
-From the question "Are you sharing your knowledge about open science practices with others?" we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. 
-
-<!-- Remove figure and leave the text -->
-
-```{r cluster-1-question-2, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster1_question2.png"))
 
 ```
 
-From the question "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?", we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID.
+```{r general-sharing-data}
 
-<!-- Remove figure and leave the text -->
-
-```{r cluster-1-question-3, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster1_question3.png"))
-
-```
-
-```{r cluster-7-data}
-
-# summary of responses to cluster 7
-# cluster7 <-
-#   ERIM_OS_clean %>%
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "7" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>%
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+ERIM_OS_general_sharing <-
+  ERIM_OS_general %>% 
+  filter(question == "Are you sharing your knowledge about open science practices with others?") %>% 
+  arrange(desc(perc))
 
 ```
 
-```{r cluster-7-table}
+When asked *`r ERIM_OS_general_sharing$question[1]`*, `r pull(filter(ERIM_OS_general_sharing, item == "I share my knowledge with my colleagues informally"), lab_perc)` of respondents share their knowledge informally with colleagues, `r pull(filter(ERIM_OS_general_sharing, item == "I share my knowledge with my colleagues by offering seminars and/or giving talks"), lab_perc)` give seminars and/or talks, and `r pull(filter(ERIM_OS_general_sharing, item == "I share my knowledge with my students or fellow research students"), lab_perc)` discuss open science with students or fellow research students. The remaining respondents use other means of sharing knowledge (`r pull(filter(ERIM_OS_general_sharing, item == "Other"), lab_perc)`), do not share their knowledge (`r pull(filter(ERIM_OS_general_sharing, item == "No"), lab_perc)`), or do not know/prefer not to answer (`r pull(filter(ERIM_OS_general_sharing, item == "I don’t know/prefer not to answer"), lab_perc)`).
 
-# cluster7 %>%
-#   dplyr::select(-c(number_responses, perc)) %>%
-#   rename(percentage = lab_perc) %>%
-#   kable_custom()
+```{r general-ORCID-data}
 
-# Add images from 08_cluster7_figure.R
+ERIM_OS_general_ORCID <-
+  ERIM_OS_general %>% 
+  filter(question == "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?") %>% 
+  arrange(desc(perc))
+
 ```
 
-From the statement "The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field" the top 3 barriers to the uptake of open science practices are:
+During March 2021 ERIM launched an ORCID campaign. When asked about participation and creation of an ORCID record,
+`r pull(filter(ERIM_OS_general_ORCID, item == "No, I did not participate since I already had an ORCID iD"), lab_perc)` of respondents declared not to have participated since they already had it, while `r pull(filter(ERIM_OS_general_ORCID, item == "Yes, I participated and got an ORCID iD"), lab_perc)` did participate and get an ORCID ID.
+                                                
+```{r general-concerns-data}
 
-37.74% - Lack of funding for open access publishing.
+ERIM_OS_general_concerns <-
+  read_csv(
+    here("data", "preproc", "cluster7.csv")
+  ) %>% 
+  arrange(desc(perc))
 
-13.27% - Lack of recognition in my field about the value of open science practices.
+```
 
-11.5% - Lack of credit in my institution for engaging in open science
+Among the perceived barriers to the uptake of open science practices, the top 3 are: 
 
-<!-- This should be bars and sorted -->
-<!-- Figure 13 -->
+* *`r ERIM_OS_general_concerns$item[1]`* (`r ERIM_OS_general_concerns[1, "lab_perc"]`)
+* *`r ERIM_OS_general_concerns$item[2]`* (`r ERIM_OS_general_concerns[2, "lab_perc"]`)
+* *`r ERIM_OS_general_concerns$item[3]`* (`r ERIM_OS_general_concerns[3, "lab_perc"]`)
 
-```{r cluster-7-question-1, echo = FALSE, out.width = '100%'}
+For details, see Figure \@ref(fig:figure13).
 
-#knitr::include_graphics(here("img", "donut_cluster7_question1.png"))
+```{r figure13, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+
 knitr::include_graphics(here("img", "figure13.png"))
+
 ```
+
+
+
+
 
 # Awareness of available tools
 
