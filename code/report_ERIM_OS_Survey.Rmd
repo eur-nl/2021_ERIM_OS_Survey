@@ -160,7 +160,7 @@ total_researchers <-
     ),
     2
     ),
-    school = rep(c("RSM", "ESE"), times = 1, each = 4),
+    school = rep(c("ESE", "RSM"), times = 1, each = 4),
     total_researchers = c(
       64, # ESE: PhD student
       18, # ESE: Postdoc or researcher
