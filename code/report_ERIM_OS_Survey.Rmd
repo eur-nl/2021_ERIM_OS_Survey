@@ -1,5 +1,5 @@
 ---
-title: "Report of the 2021 ERIM Open Science Survey"
+title: "Report of the 2021 ERIM Open Science Srping Survey"
 author: '[Dr. Lizette Guzman-Ramirez](https://www.linkedin.com/in/drlizguzman/), [Dr. Antonio Schettino](https://antonio-schettino.com/)'
 date: '`r Sys.Date()`'
 output:
@@ -63,14 +63,15 @@ kable_custom <- function(data, caption) {
 # Introduction
 
 <!-- Why did we administer the survey? Who asked us? -->
-The Erasmus Research Institute of Management (ERIM) is committed ERIM is committed to make Open Science (OS) practices the norm withing its researchers. 
+The Erasmus Research Institute of Management (ERIM) is committed ERIM is committed to make Open Science practices the norm withing its researchers.
+
 Open Science increases transparency throughout the research cycle – from hypothesis, methodology, observation, data collection, to analysis and publication – resulting in increased research efficiency and enhanced research quality, visibility, and engagement. Open Science also enables the creation of new research questions and promotes collaborations and community building.
 
-Because of these reasons, ERIM wanted to make a baseline on what and how much OS practices its researchers are already engaging with and which ones do they want to learn more about. This created the need to conduct a survey.
+Because of these reasons, ERIM wanted to have a baseline on what and how much open science practices its researchers are already engaging with and which ones do they want to learn more about. These questions created the need to conduct a survey.
 
-The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted from the [Swinburne Open Science Survey](https://osf.io/vpwf7/).
+The RSM & ESE Open Science Spring Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted from the [Swinburne Open Science Survey](https://osf.io/vpwf7/).
 
-The survey explored how researchers perceive and use "open science" practices. Eight main topics were covered:
+The survey explored how researchers perceive and use open science practices. Eight main topics were covered:
 
 1. Preregistration
 2. Open materials/code
