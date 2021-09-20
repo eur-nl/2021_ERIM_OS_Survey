@@ -737,7 +737,7 @@ The lessons learned from the survey and how will the be tackled are the followin
 
 **Open Access**; less than 20% of the respondents have all their publication open access, fortunately for ERIM and the EUR, this percentage will change in the coming months/years, since EUR's researchers have agreed to follow the taverne amendment, on which any publication that is not already open access will be made open (by law) after 6 months of its publication. To go into more details on this we will include a module on open access in our Open Science MOOC.
 
-**Open Science practices**; the most relevant barrier to open science (excluding open access, because of the taverne amendment) is the lack of recognition in the field and lack of credit by the institution. There is a lot of effort on this front, ERIM is redesigning its member chart, to include open science to it, funding agencies now require you to follow and stick to open science practices and EUR has a whole has a task force that is also redesigning rewards and recognition for its researchers. 
+**Open Science practices**; the most relevant barrier to open science (excluding open access, because of the taverne amendment) is the lack of recognition in the field and lack of credit by the institution. There is a lot of effort on this front, ERIM is redesigning its membership chart, to include open science to it, funding agencies now require you to follow and stick to open science practices, and EUR has a whole task force that is also redesigning rewards and recognition for its researchers. 
 
 All in all, ERIM has started the year 2021 with a new strategy in place: to make open science the norm within its researchers. 
 
