@@ -239,79 +239,72 @@ ERIM_OS_school_position_response_rate %>%
 
 # Preregistration
 
-From the question "In your opinion, how important for your field is it that researchers preregister their studies?" we can see that more than 50% of the respondents think preregistration is important (combining very and moderately important), but a bit more than 16% think that preregistration is not at all important.
+```{r preregistration-data}
 
-<!-- Make the figures bars and then one figure that compares cluster2_question1 and cluster2_question2 horizontally together -->
-<!-- Figure 2 -->
-
-```{r cluster-2-data}
-
-# # summary of responses to cluster 2
-# cluster2 <-
-#   ERIM_OS_clean %>% 
-#   dplyr::filter(
-#     Finished == "TRUE" & # keep only complete questionnaires
-#       cluster == "2" # keep only questions of relevant cluster
-#   ) %>%
-#   droplevels() %>% # drop unused levels
-#   dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-#   dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-#   # drop_na() %>% # drop rows with missing values
-#   rename("item" = "value_1") %>% 
-#   group_by(question, item) %>%
-#   summarize(number_responses = n()) %>%
-#   group_by(question) %>%
-#   mutate(
-#     perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-#     lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-#   ) %>%
-#   ungroup()
+ERIM_OS_preregistration <-
+  read_csv(
+    here("data", "preproc", "cluster2.csv")
+  )
 
 ```
 
-```{r cluster-2-table}
+```{r preregistration-importance-data}
 
-# cluster2 %>% 
-#   dplyr::select(-c(number_responses, perc)) %>% 
-#   rename(percentage = lab_perc) %>% 
-#   kable_custom()
+ERIM_OS_preregistration_importance <-
+  ERIM_OS_preregistration %>% 
+  filter(question == "In your opinion, how important for your field is it that researchers preregister their studies?")
 
-# Add images from 03_cluster2_figure.R
 ```
 
-```{r cluster-2-question-1, echo = FALSE, out.width = '100%'}
+The answers to the question *`r ERIM_OS_preregistration$question[1]`* reveals that respondents consider preregistration *`r ERIM_OS_preregistration_importance$item[1]`* or *`r ERIM_OS_preregistration_importance$item[2]`* (`r paste0(sum(ERIM_OS_preregistration_importance[1, "perc"], ERIM_OS_preregistration_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), "perc"), "%")` believe that preregistration is *`r pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), item)`*.
 
-#knitr::include_graphics(here("img", "donut_cluster2_question1.png"))
+```{r preregistration-experience-data}
+
+ERIM_OS_preregistration_experience <-
+  ERIM_OS_preregistration %>% 
+  filter(question == "What is your experience with study preregistration?")
+
+```
+
+From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(ERIM_OS_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(ERIM_OS_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:figure2).
+
+```{r figure2, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+
 knitr::include_graphics(here("img", "figure2.png"))
 
 ```
- 
-From the question "What is your experience with stud preregistration?" we see that both schools are aware of preregistration but mostly have not used it themselves. There is only a bit less than 9% of the respondents that regularly preregister their studies. 
-And a similar percentange (almost 8%) has never heard of preregistration before answering this survey.
 
-```{r cluster-2-question-2, echo = FALSE, out.width = '100%'}
+```{r preregistration-concerns-data}
 
-#knitr::include_graphics(here("img", "donut_cluster2_question2.png"))
+ERIM_OS_preregistration_concerns <-
+  ERIM_OS_preregistration %>% 
+  filter(question == "The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
 
 ```
 
-From the question "The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?" we can see that the top 3 concerns for that researchers could have about preregistration are the following:
+Among the possible concerns that researchers could have about preregistering their studies, the top 3 are: 
 
-25.66% - I need to look at my data before I can decide how to best analyze it.
+* *`r ERIM_OS_preregistration_concerns$item[1]`* (`r ERIM_OS_preregistration_concerns[1, "lab_perc"]`)
+* *`r ERIM_OS_preregistration_concerns$item[2]`* (`r ERIM_OS_preregistration_concerns[2, "lab_perc"]`)
+* *`r ERIM_OS_preregistration_concerns$item[3]`* (`r ERIM_OS_preregistration_concerns[3, "lab_perc"]`)
 
-20.35% - Preregistration might lead to other people taking my research idea and implementing my plan.
+<!-- These are your old top 3, which are different from mine because I am using complete surveys only -->
+<!-- Could you please verify that everything makes sense? -->
 
-19.47% - Preregistration prevents exploratory research.
+<!-- 25.66% - I need to look at my data before I can decide how to best analyze it. -->
+<!-- 20.35% - Preregistration might lead to other people taking my research idea and implementing my plan. -->
+<!-- 19.47% - Preregistration prevents exploratory research. -->
 
-<!-- Make the figures as bars and with its percentage next to it, cluster2_question3 -->
-<!-- Figure 3 -->
+```{r figure3, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
 
-```{r cluster-2-question-3, echo = FALSE, out.width = '100%'}
-
-#knitr::include_graphics(here("img", "donut_cluster2_question3.png"))
 knitr::include_graphics(here("img", "figure3.png"))
 
 ```
+
+
+
+
 
 
 # Open materials/code
