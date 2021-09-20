@@ -63,7 +63,10 @@ kable_custom <- function(data, caption) {
 # Introduction
 
 <!-- Why did we administer the survey? Who asked us? -->
-The Erasmus Research Institute of Management (ERIM) is committed to Open Science, one way of knowing 
+The Erasmus Research Institute of Management (ERIM) is committed ERIM is committed to make Open Science (OS) practices the norm withing its researchers. 
+Open Science increases transparency throughout the research cycle – from hypothesis, methodology, observation, data collection, to analysis and publication – resulting in increased research efficiency and enhanced research quality, visibility, and engagement. Open Science also enables the creation of new research questions and promotes collaborations and community building.
+
+Because of these reasons, ERIM wanted to make a baseline on what and how much OS practices its researchers are already engaging with and which ones do they want to learn more about. This created the need to conduct a survey.
 
 The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted from the [Swinburne Open Science Survey](https://osf.io/vpwf7/).
 
@@ -122,9 +125,9 @@ ERIM_OS_demographics <-
 
 We asked participants their school, department, and research institute affiliation, together with their position. 
 
-`r pull(filter(ERIM_OS_demographics, item == "Rotterdam School of Management (RSM)"), lab_perc)` of the respondents were from RSM, while `r pull(filter(ERIM_OS_demographics, item == "Erasmus School of Economics (ESE)"), lab_perc)` were affiliated to ESE. For the percentages separately for each department, see Figure \@ref(fig:figure1).
+`r pull(filter(ERIM_OS_demographics, item == "Rotterdam School of Management (RSM)"), lab_perc)` of the respondents were from RSM, while `r pull(filter(ERIM_OS_demographics, item == "Erasmus School of Economics (ESE)"), lab_perc)` were affiliated to ESE. For the percentages regarding the affiliation of respondents per department, see Figure \@ref(fig:figure1).
 
-```{r figure1, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure1, fig.cap = "Affilliation per department", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure1.png"))
 
@@ -221,7 +224,7 @@ ERIM_OS_school_position_response_rate %>%
     RSM = paste0(format(RSM, digits = 0), "%"),
     Total = paste0(format(Total, digits = 0), "%")
   ) %>% 
-  kable_custom(caption = "INSERT CAPTION HERE")
+  kable_custom(caption = "Response rate per school and position")
 
 ```
 
@@ -268,7 +271,7 @@ ERIM_OS_preregistration_experience <-
 
 From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(ERIM_OS_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(ERIM_OS_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:figure2).
 
-```{r figure2, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure2, fig.cap = "Preregistration:Importance vs Experience", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure2.png"))
 
@@ -296,7 +299,7 @@ Among the possible concerns that researchers could have about preregistering the
 <!-- 20.35% - Preregistration might lead to other people taking my research idea and implementing my plan. -->
 <!-- 19.47% - Preregistration prevents exploratory research. -->
 
-```{r figure3, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure3, fig.cap = "Preregistration: concenrns", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure3.png"))
 
@@ -323,7 +326,7 @@ ERIM_OS_materials_importance <-
 
 From the question *`r ERIM_OS_materials_importance$question[1]`*, we can see that `r paste0(format(sum(ERIM_OS_materials_importance[1, "perc"], ERIM_OS_materials_importance[2, "perc"], ERIM_OS_materials_importance[3, "perc"]), digits = 0), "%")` of respondents think that using open materials and/or code is *`r ERIM_OS_materials_importance$item[1]`*, *`r ERIM_OS_materials_importance$item[2]`*, or *`r ERIM_OS_materials_importance$item[3]`*, whereas `r paste0(pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), "perc"), "%")` think it is *`r pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), item)`* (see Figure \@ref(fig:figure4).)
 
-```{r figure4, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure4, fig.cap = "Open materials and/or code: Importance", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure4.png"))
 
@@ -337,7 +340,7 @@ ERIM_OS_materials_use <-
 
 ```
 
-The answers to the question *`r ERIM_OS_materials_use$question[1]`* reveal that `r paste0(format(sum(filter(ERIM_OS_materials_use, item == "I am aware of open materials and/or code, but have not used it in my research")$perc, filter(ERIM_OS_materials_use, item == "I have some experience with open materials and/or code, but do not use them regularly")$perc), digits = 0), "%")` of respondents are aware of (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I am aware of open materials and/or code, but have not used it in my research"), "perc"), "%")`) and have some experience (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I have some experience with open materials and/or code, but do not use them regularly"), "perc"), "%")`) using open materials and/or code. A considerable amount of researchers (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I regularly use and/or create open materials and/or code"), "perc"), "%")`) regularly use open materials and/or code, while only a small fraction of respondents (`r paste0(pull(filter(ERIM_OS_materials_use, item == "Until now, I hadn't heard of open materials and/or code"), "perc"), "%")`) had not heard of open materials and/or code before answering this survey. 
+The answers to the question *`r ERIM_OS_materials_use$question[1]`* reveal that (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I am aware of open materials and/or code, but have not used it in my research"), "perc"), "%")`) of respondents are aware of open materials but do not use them,  and that (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I have some experience with open materials and/or code, but do not use them regularly"), "perc"), "%")`) have some experience using open materials and/or code. A considerable amount of researchers (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I regularly use and/or create open materials and/or code"), "perc"), "%")`) regularly use open materials and/or code, while only a small fraction of respondents (`r paste0(pull(filter(ERIM_OS_materials_use, item == "Until now, I hadn't heard of open materials and/or code"), "perc"), "%")`) had not heard of open materials and/or code before answering this survey. 
 
 ```{r materials-sharing-data}
 
@@ -351,7 +354,7 @@ From the question *`r ERIM_OS_materials_sharing$question[1]`* we can see that `r
 
 Based on these results, we observe that researchers at ESE and RSM share their materials and/or code more than what they re-use. More details can be found in Figure \@ref(fig:figure5).
 
-```{r figure5, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure5, fig.cap = "Open materials and/or code: using vs sharing", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure5.png"))
 
@@ -374,7 +377,7 @@ Among the possible concerns that researchers could have about making their mater
 
 Notably, however, the majority of respondents (`r paste0(pull(filter(ERIM_OS_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure6)).
 
-```{r figure6, fig.cap = "INSERT FIGURE CAPTION HERE", out.width = '100%'}
+```{r figure6, fig.cap = "Open materials and/or code: concerns", out.width = '100%'}
 
 knitr::include_graphics(here("img", "figure6.png"))
 
