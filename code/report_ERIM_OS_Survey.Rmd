@@ -713,9 +713,7 @@ ERIM_OS_support_practice %>%
 
 # Strategy towards an open science culture at ERIM
 
-ERIM is committed to making Open Science practices the norm within its researchers. 
-
-Open Science increases transparency throughout the research cycle -- from hypothesis, methodology, observation, data collection, to analysis and publication -- resulting in increased research efficiency and enhanced research quality, visibility, and engagement. Open Science also enables the creation of new research questions and promotes collaborations and community building.
+Open Science increases transparency throughout the research cycle, resulting in increased research efficiency and enhanced research quality, visibility, and engagement.
 
 Between 2021 and 2023, ERIM will execute a three-year Open Science initiative, geared towards making our scientific routines more open and engaged with our scholarly and societal stakeholders. 
 
