@@ -1,14 +1,22 @@
 ---
-title: "Report of the 2021 ERIM Open Science Survey"
+title: "Report of the 2021 ERIM Open Science Spring Survey"
 author: '[Dr. Lizette Guzman-Ramirez](https://www.linkedin.com/in/drlizguzman/), [Dr. Antonio Schettino](https://antonio-schettino.com/)'
-date: '`r Sys.Date()`'
+date: 2021-09-24
 output:
-  html_document:
+  bookdown::html_document2:
+    # # appearance
     theme: united
     highlight: tango
-    code_folding: hide
+    # # table of content
     toc: true
-    toc_float: true
+    toc_float: true  
+    number_sections: false
+    # # code
+    # code_folding: true
+    # # figures
+    fig_width: 8
+    fig_height: 8
+    fig_caption: true
 editor_options: 
   chunk_output_type: console
 ---
@@ -16,95 +24,77 @@ editor_options:
 ```{r doc-setup, include = FALSE}
 
 # RNG
-seed_synth <- 135249315 
+seed_synth <- 135249315
 set.seed(seed_synth)
 
-# ### install packages
+### install packages
+# install.packages("bookdown")
 # install.packages("knitr")
 # install.packages("kableExtra")
 # install.packages("here")
 # install.packages("tidyverse")
-# install.packages("ggpubr")
-# install.packages("viridisLite")
 
 ### load packages
+library(bookdown)
 library(knitr)
 library(kableExtra)
 library(here)
 library(tidyverse)
-library(ggpubr)
-library(viridisLite)
 
 # RMarkdown
 options(digits = 2) # number of decimal digits
 opts_chunk$set(
-  echo = TRUE, # show code
+  echo = FALSE, # do not show code
   warning = FALSE, # no package warnings
-  message = FALSE, # no package messages
-  fig.dim = c(8, 8) # figure width & height
+  message = FALSE # no package messages
 )
 
-# custom kable
-kable_custom <- function(data) {
-  knitr::kable(data, digits = getOption("digits")) %>%
-    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+# custom function for tables
+kable_custom <- function(data, caption) {
+  knitr::kable(data, digits = getOption("digits"), caption = caption) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 }
-
-# custom ggplot theme
-theme_custom <-
-  theme_pubr(base_size = 12) + # base theme from package 'ggpubr'
-  theme(
-    strip.text = element_text(
-      hjust = .5,
-      size = 20
-    ),
-    plot.title = element_text(size = 22, hjust = .5),
-    legend.box.background = element_rect(color = "transparent"),
-    legend.title = element_blank(),
-    legend.position = "bottom"
-  )
 
 ```
 
 ***
 ***
 
-*Introduction*
-The RSM & ESE Open Science Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted using the Swinburne Open Science Survey.
+# Introduction
 
-The survey aimed at examining how researchers perceive and use "open science" practices, including sharing data, preregistering research plans, and publishing in open access journals. Whether or not you are experienced in using open science practices, or fully understand what might be possible in your discipline.
+The Erasmus Research Institute of Management (ERIM) is committed to making Open Science practices the norm among its researchers.
 
-The survey covered 6 main topics: 
-1. Experience with Open Science practices
-2. Preregistration
-3. Open Code
-4. Open Data
-5. Open Access
-6. Awareness & Expectations
+Open Science increases transparency throughout the research cycle -- from hypothesis, methodology, observation, data collection, to analysis and publication --, resulting in increased research efficiency and enhanced research quality, visibility, and engagement. Open Science also enables the creation of new research questions and promotes collaborations and community building.
 
-We present the responses in three reports, the first report has all the results (ESE & RSM), and all the answers are separated into school and position for comparison. The second report Appendix ESE contains the responses only from ESE and they are split into departments and position, and the third report, Appendix RSM presents the responses only from RSM spitted into departments and position as well. 
+For these reasons, ERIM wanted to have a baseline on what and how much open science practices its researchers are already engaging with and which ones they want to learn more about. These questions created the need to conduct a survey.
 
-The percentages presented in the survey responses represent the percentage of the respondents, not the total percentage of researchers. 
+The ESE and RSM Open Science Spring Survey was open to all researchers from the 6th of April to the 6th of May 2021. Questions were adapted from the [Swinburne Open Science Survey](https://osf.io/vpwf7/).
 
-Any comments or question, please contact Dr. Lizette Guzman-Ramirez, ERIM Research Data Steward and/or Dr. Antonio Schettino, ERS Open Science Coordinator
+The survey explored how researchers perceive and use open science practices. Eight main topics were covered:
 
+1. Preregistration
+2. Open materials/code
+3. Open data
+4. Pre-publication archiving
+5. Open access
+6. General experience with open science practices
+7. Awareness of available tools
+8. Role of ERIM
 
+This report has all the total responses (combined ESE and RSM)[^1].
 
-```{r load-preproc-data, message = FALSE}
+This is a living document that will be updated with new information and insights. For any comments or questions, please contact [Dr. Lizette Guzman-Ramirez](mailto:guzmanramirez@rsm.nl) (ERIM Research Data Steward) or [Dr. Antonio Schettino](mailto:schettino@eur.nl) (ERS Open Science Coordinator).
+
+```{r load-clean-data}
 
 ERIM_OS_clean <-
   read_csv(
-    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
-  ) %>% 
-  # convert all columns to factors
-  mutate(
-    across(
-      .cols = everything(),
-      .fns = ~ as_factor(.)
+    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv") 
     )
-  )
 
 ```
+
+# Respondents
 
 ```{r complete-questionnaires-data}
 
@@ -122,972 +112,620 @@ ERIM_OS_clean_unfinished <-
 
 ```
 
-```{r complete-questionnaires-table}
+A total of `r sum(ERIM_OS_clean_unfinished$n)` respondents started the survey, and `r pull(filter(ERIM_OS_clean_unfinished, survey == "complete"), n)` completed it.
 
-ERIM_OS_clean_unfinished %>% 
-  dplyr::select(-perc) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+```{r affiliation-data}
+
+ERIM_OS_demographics <-
+  read_csv(
+    here("data", "preproc", "cluster0.csv")
+  )
 
 ```
 
-# Cluster 0: Demographics
+We asked participants their school, department, and research institute affiliation, together with their position.
 
-*Demographics*
-The total survey response rate was 22%, but depending on the research position, the response rate varied up to 34%. The table below presents the total response rate per research position as well as per school.
+`r pull(filter(ERIM_OS_demographics, item == "Rotterdam School of Management (RSM)"), lab_perc)` of the respondents were from RSM, while `r pull(filter(ERIM_OS_demographics, item == "Erasmus School of Economics (ESE)"), lab_perc)` were affiliated to ESE. For the percentages regarding the affiliation of respondents per department, see Figure \@ref(fig:figure1).
 
+```{r figure1, fig.cap = "Affilliation per department.", out.width = '100%'}
 
-|Position|RSM|ESE|Total|
-|-----------|----|-----|-----|
-|PhD student|20%|16%|18%|
-|Postdoc or researcher|23%|17%|20%|
-|Tenured Track|27%|6%|16%|
-|Tenured Faculty Member|27%|34%|30%|
-|Total|25%|19%|22%|
+knitr::include_graphics(here("img", "figure1.png"))
 
+```
 
-```{r cluster-0-data}
+Regarding institute affiliation, the majority of respondents (`r pull(filter(ERIM_OS_demographics, item == "ERIM"), lab_perc)`) were affiliated to ERIM, while `r pull(filter(ERIM_OS_demographics, item == "Tinbergen"), lab_perc)` were affiliated to Tinbergen, `r pull(filter(ERIM_OS_demographics, item == "Neither"), lab_perc)` to neither institute, and `r pull(filter(ERIM_OS_demographics, item == "ERIM,Tinbergen"), lab_perc)` to both.
 
-# summary of responses to cluster 0
-cluster0 <-
+```{r school-position-response-rate-data}
+
+# number of researchers separately for ESE and RSM as of May 2021
+total_researchers <- 
+  tibble(
+    position = rep(
+      c(
+      "PhD student",
+      "Postdoc or researcher",
+      "Tenure track",
+      "Tenured faculty member"
+    ),
+    2
+    ),
+    school = rep(c("ESE", "RSM"), times = 1, each = 4),
+    total_researchers = c(
+      64, # ESE: PhD student
+      18, # ESE: Postdoc or researcher
+      81, # ESE: Tenure track
+      91, # ESE: Tenured faculty member
+      90, # RSM: PhD student
+      31, # RSM: Postdoc or researcher
+      74, # RSM: Tenure track
+      106  # RSM: Tenured faculty member
+    )
+  )
+
+ERIM_OS_school_position_response_rate <-
   ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "0" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
+  filter(
+    Finished == TRUE &
+      question %in% c(
+        "Which faculty are you from?", 
+        "What is your position?"
+      )
+  ) %>% 
+  select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
   drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
+  pivot_wider(
+    id_cols = participant,
+    names_from = question,
+    values_from = value_1
+  ) %>% 
   mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
-
-```
-
-```{r cluster-0-table}
-
-cluster0 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
-
-```
-
-```{r cluster-0-plot}
-
-# questions as plot titles
-donuts_title_cluster0 <- levels(cluster0$question)
-
-# preallocate object with all plots
-donuts_cluster0 <- NULL
-
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster0)) {
-  
-  # subset data
-  temp_cluster0 <-
-    cluster0 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster0[[i_donut]] <-
-    temp_cluster0 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-#      lab.font = c(8, "plain", "black"),
-      lab.font = c(4, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = plasma(length(unique(temp_cluster0$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster0[i_donut]) 
-
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster0_question", i_donut, ".png"),
-    plot = donuts_cluster0[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
-  )
-  
-}
-
-```
-
-# Cluster 1: OS, general 
-
-*Experience with Open Science practices*
-From question 2.1 (What is your experience with Open Science practices?) almost 50% of the respondents have some experience with Open Science practices, a bit more than 10% have extensive experience, and a bit more than 35% are aware, but have not used any Open Science practices in their research.
-When comparing schools, ESE seems to be less aware and using less Open Science practices than RSM. And when comparing position, tenured faculty members have the most experience, while PhD seem to be the ones that use Open Science practices the least.  
-
-
-```{r cluster-1-data}
-
-# summary of responses to cluster 1
-cluster1 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "1" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
+    school = ifelse(`Which faculty are you from?` == "Rotterdam School of Management (RSM)", "RSM", "ESE"),
+    position = `What is your position?`
+  ) %>% 
+  select(participant, school, position) %>% 
+  group_by(school, position) %>% 
   summarize(number_responses = n()) %>%
-  group_by(question) %>%
+  ungroup() %>% 
+  left_join(
+    .,
+    total_researchers,
+    by = c("school", "position")
+  ) %>%
+  pivot_wider(
+    id_cols = position,
+    names_from = school,
+    values_from = c(number_responses, total_researchers)
+  ) %>% 
+  add_row(position = "Total", number_responses_ESE = sum(.$number_responses_ESE), number_responses_RSM = sum(.$number_responses_RSM), total_researchers_ESE = sum(.$total_researchers_ESE), total_researchers_RSM = sum(.$total_researchers_RSM)) %>% 
+  group_by(position) %>% 
+  summarize(
+    ESE = number_responses_ESE / total_researchers_ESE * 100,
+    RSM = number_responses_RSM / total_researchers_RSM * 100,
+    Total = sum(number_responses_ESE, number_responses_RSM) / sum(total_researchers_ESE, total_researchers_RSM) * 100
+  ) %>% 
+  ungroup() 
+
+total_survey_response_rate <-
+  ERIM_OS_school_position_response_rate %>% 
+  filter(position == "Total") %>% 
+  pull(Total) %>% 
+  round(., 0) %>%
+  paste(., "%", sep = "")
+
+```
+
+The total survey response rate was `r total_survey_response_rate`. Table \@ref(tab:school-position-response-rate-table) presents the total response rate per research position and school.
+
+```{r school-position-response-rate-table}
+
+ERIM_OS_school_position_response_rate %>%
   mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
+    ESE = paste0(format(ESE, digits = 0), "%"),
+    RSM = paste0(format(RSM, digits = 0), "%"),
+    Total = paste0(format(Total, digits = 0), "%")
+  ) %>% 
+  kable_custom(caption = "Response rate per school and position.")
 
 ```
 
-```{r cluster-1-table}
+# Preregistration
 
-cluster1 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+```{r preregistration-data}
 
-```
-
-```{r cluster-1-plot}
-
-# questions as plot titles
-donuts_title_cluster1 <- levels(cluster1$question)
-
-# preallocate object with all plots
-donuts_cluster1 <- NULL
-
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster1)) {
-  
-  # subset data
-  temp_cluster1 <-
-    cluster1 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster1[[i_donut]] <-
-    temp_cluster1 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster1$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster1[i_donut]) 
-
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster1_question", i_donut, ".png"),
-    plot = donuts_cluster1[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
+ERIM_OS_preregistration <-
+  read_csv(
+    here("data", "preproc", "cluster2.csv")
   )
-  
-}
 
 ```
 
-# Cluster 2: preregistration
+```{r preregistration-importance-data}
 
-*Preregistration*
-From question 3.1 (In your opinion, how important for your field is it that researchers preregister their studies?) we can see that more than 50% of the respondents think preregistration is important (combining very and moderately important), but a bit more than 16% think that preregistration is not at all important. 
-When comparing schools, RSM’s respondents think preregistration is more important than ESE’s respondents. And when looking at the different position, most PhD students think preregistration is important (extremely, very, and moderately), while tenured faculty members be dived into important (extremely, very, and moderately) and slightly or not at all important.  
-From question 3.2 (What is your experience with stud preregistration?) we see that both schools are aware of preregistration but mostly have not used it themselves, for both schools the distribution is similar but RSM seem to have a bit more experience with preregistration than ESE, and it is mostly tenured faculty members that have experience with preregistration. For experienced researchers the number of preregistrations goes from 2 all the way to 57.
-From question 3.3 (The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?) we can see that the top 5 concerns for that researchers could have about preregistration are the following: 
-Preregistration prevents exploratory research.
-I need to look at my data before I can decide how to best analyze it.
-Preregistration stifles research creativity or flexibility.
-Preregistration might lead to other people taking my research idea and implementing my plan
-It might delay data collection
-This is true for both schools and position. 
-
-
-```{r cluster-2-data}
-
-# summary of responses to cluster 2
-cluster2 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "2" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
+ERIM_OS_preregistration_importance <-
+  ERIM_OS_preregistration %>% 
+  filter(question == "In your opinion, how important for your field is it that researchers preregister their studies?")
 
 ```
 
-```{r cluster-2-table}
+The answers to the question *`r ERIM_OS_preregistration_importance$question[1]`* reveal that respondents consider preregistration *`r ERIM_OS_preregistration_importance$item[1]`* or *`r ERIM_OS_preregistration_importance$item[2]`* (`r paste0(sum(ERIM_OS_preregistration_importance[1, "perc"], ERIM_OS_preregistration_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), "perc"), "%")` believe that preregistration is *`r pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), item)`*.
 
-cluster2 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+```{r preregistration-experience-data}
+
+ERIM_OS_preregistration_experience <-
+  ERIM_OS_preregistration %>% 
+  filter(question == "What is your experience with study preregistration?")
 
 ```
-```{r cluster-2-plot}
 
-# questions as plot titles
-donuts_title_cluster2 <- levels(cluster2$question)
+From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(ERIM_OS_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(ERIM_OS_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:figure2).
 
-# preallocate object with all plots
-donuts_cluster2 <- NULL
+```{r figure2, fig.cap = "Preregistration: importance vs. experience.", out.width = '100%'}
 
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster2)) {
-  
-  # subset data
-  temp_cluster2 <-
-    cluster2 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster2[[i_donut]] <-
-    temp_cluster2 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster2$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster2[i_donut]) 
+knitr::include_graphics(here("img", "figure2.png"))
 
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster2_question", i_donut, ".png"),
-    plot = donuts_cluster2[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
+```
+
+```{r preregistration-concerns-data}
+
+ERIM_OS_preregistration_concerns <-
+  ERIM_OS_preregistration %>% 
+  filter(question == "The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
+
+```
+
+Among the possible concerns that researchers could have about preregistering their studies, the top 3 were: 
+
+* *`r ERIM_OS_preregistration_concerns$item[1]`* (`r ERIM_OS_preregistration_concerns[1, "lab_perc"]`)
+* *`r ERIM_OS_preregistration_concerns$item[2]`* (`r ERIM_OS_preregistration_concerns[2, "lab_perc"]`)
+* *`r ERIM_OS_preregistration_concerns$item[3]`* (`r ERIM_OS_preregistration_concerns[3, "lab_perc"]`)
+
+<!-- These are your old top 3, which are different from mine because I am using complete surveys only -->
+<!-- Could you please verify that everything makes sense? -->
+
+<!-- 25.66% - I need to look at my data before I can decide how to best analyze it. -->
+<!-- 20.35% - Preregistration might lead to other people taking my research idea and implementing my plan. -->
+<!-- 19.47% - Preregistration prevents exploratory research. -->
+
+```{r figure3, fig.cap = "Preregistration: concerns.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure3.png"))
+
+```
+
+# Open materials/code
+
+```{r materials-data}
+
+ERIM_OS_materials <-
+  read_csv(
+    here("data", "preproc", "cluster3.csv")
   )
-  
-}
 
 ```
 
-# Cluster 3: open materials/code
+```{r materials-importance-data}
 
-*Open materials and/or code*
-From question 4.1 (In your opinion, how important for your field is it that materials and/or code are openly available?) we can see that more than 85% of the respondents think that using open materials and/or code is important (combining extremely, very, and moderately important), and only 2.6% think is not at all important. 
-When comparing schools, ESE’s respondents think that using open materials and/or code is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open materials and/or code is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
-From question 4.2 (What is your experience with using open materials and/or code?) we see that both schools are aware and have some experience with using open materials and/or code, for both schools the distribution is similar, but ESE seems to have a more experience using open materials and/or code than RSM, and it is mostly tenured faculty members that have experience using open materials and/or code. 
-From question 4.3 (What is your experience with sharing open materials and/or code?) we can see that 30% of respondents are aware of sharing materials and/or code, about 30% have some experience sharing materials and/or code, and similarly about 30% of respondents regularly share open materials and/or code. And the distribution per school is the same as 4.2, ESE’s respondents have more experience or regularly share their materials and/or code openly. Position wise, mostly PhD students are aware of open materials and/or code but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open materials and/or code. 
-From question 4.4 (The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their materials and/or code open are the following: 
-I might lose control over how my materials and/or code are being used.
-I might not receive appropriate credit for developing the materials and/or code if I make them openly available.
-There could be issues related to intellectual property.
-This is true for both schools and position, but there is also a considerable amount (13%) of respondents that do not share any of these concerns with sharing their materials and/or code openly. 
-
-
-```{r cluster-3-data}
-
-# summary of responses to cluster 3
-cluster3 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "3" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
+ERIM_OS_materials_importance <-
+  ERIM_OS_materials %>% 
+  filter(question == "In your opinion, how important for your field is it that materials and/or code are openly available?")
 
 ```
 
-```{r cluster-3-table}
+From the question *`r ERIM_OS_materials_importance$question[1]`*, we can see that `r paste0(format(sum(ERIM_OS_materials_importance[1, "perc"], ERIM_OS_materials_importance[2, "perc"], ERIM_OS_materials_importance[3, "perc"]), digits = 0), "%")` of respondents think that using open materials and/or code is *`r ERIM_OS_materials_importance$item[1]`*, *`r ERIM_OS_materials_importance$item[2]`*, or *`r ERIM_OS_materials_importance$item[3]`*, whereas `r paste0(pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), "perc"), "%")` think it is *`r pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), item)`* (see Figure \@ref(fig:figure4).)
 
-cluster3 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+```{r figure4, fig.cap = "Open materials and/or code: importance.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure4.png"))
 
 ```
 
-```{r cluster-3-plot}
+```{r materials-use-data}
 
-# questions as plot titles
-donuts_title_cluster3 <- levels(cluster3$question)
+ERIM_OS_materials_use <-
+  ERIM_OS_materials %>% 
+  filter(question == "What is your experience with using open materials and/or code?")
 
-# preallocate object with all plots
-donuts_cluster3 <- NULL
+```
 
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster3)) {
-  
-  # subset data
-  temp_cluster3 <-
-    cluster3 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster3[[i_donut]] <-
-    temp_cluster3 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster3$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster3[i_donut]) 
+The answers to the question *`r ERIM_OS_materials_use$question[1]`* reveal that (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I am aware of open materials and/or code, but have not used it in my research"), "perc"), "%")`) of respondents are aware of open materials but do not use them, and that (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I have some experience with open materials and/or code, but do not use them regularly"), "perc"), "%")`) have some experience using open materials and/or code. A considerable amount of researchers (`r paste0(pull(filter(ERIM_OS_materials_use, item == "I regularly use and/or create open materials and/or code"), "perc"), "%")`) regularly use open materials and/or code, while only a small fraction of respondents (`r paste0(pull(filter(ERIM_OS_materials_use, item == "Until now, I hadn't heard of open materials and/or code"), "perc"), "%")`) had not heard of open materials and/or code before answering this survey. 
 
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster3_question", i_donut, ".png"),
-    plot = donuts_cluster3[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
+```{r materials-sharing-data}
+
+ERIM_OS_materials_sharing <-
+  ERIM_OS_materials %>% 
+  filter(question == "What is your experience with sharing open materials and/or code?")
+
+```
+
+From the question *`r ERIM_OS_materials_sharing$question[1]`* we can see that `r paste0(pull(filter(ERIM_OS_materials_sharing, item == "I am aware of open materials and/or code, but have not shared my own"), "perc"), "%")` of respondents are aware of sharing materials and/or code, `r paste0(pull(filter(ERIM_OS_materials_sharing, item == "I have some experience with open materials and/or code, but do not share mine regularly"), "perc"), "%")` have some experience, and `r paste0(pull(filter(ERIM_OS_materials_sharing, item == "I regularly share open materials and/or code"), "perc"), "%")` regularly share open materials and/or code.
+
+Based on these results, we observe that researchers at ESE and RSM share their materials and/or code more than what they re-use. More details can be found in Figure \@ref(fig:figure5).
+
+```{r figure5, fig.cap = "Open materials and/or code: using vs. sharing.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure5.png"))
+
+```
+
+```{r materials-concerns-data}
+
+ERIM_OS_materials_concerns <-
+  ERIM_OS_materials %>% 
+  filter(question == "The following are possible concerns that researchers could have about making their materials and/or code openly available. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
+
+```
+
+Among the possible concerns that researchers could have about making their materials and/or code openly available, the top 3 were: 
+
+* *`r ERIM_OS_materials_concerns$item[2]`* (`r ERIM_OS_materials_concerns[2, "lab_perc"]`)
+* *`r ERIM_OS_materials_concerns$item[3]`* (`r ERIM_OS_materials_concerns[3, "lab_perc"]`)
+* *`r ERIM_OS_materials_concerns$item[4]`* (`r ERIM_OS_materials_concerns[4, "lab_perc"]`)
+
+Notably, however, the majority of respondents (`r paste0(pull(filter(ERIM_OS_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure6)).
+
+```{r figure6, fig.cap = "Open materials and/or code: concerns.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure6.png"))
+
+```
+
+# Open data
+
+```{r data-data}
+
+ERIM_OS_data <-
+  read_csv(
+    here("data", "preproc", "cluster4.csv")
   )
-  
-}
 
 ```
 
-# Cluster 4: open data
+```{r data-importance-data}
 
-*Open data*
-From question 5.1 (In your opinion, how important for your field is it that data from published research are openly available?) we can see that more than 80% of the respondents think that using open data is important (combining extremely, very, and moderately important), and only 5.6% think is not at all important. 
-When comparing schools, ESE’s respondents think that using open data is more important than RSM’s respondents, although the distribution is similar. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that using open data is important (extremely, very, and moderately), while only very few tenure track and tenured faculty members think is not at all important.  
-From question 5.2 (What is your experience with using open data?) we see that both schools are aware and have some experience with using open data, for both schools the distribution is similar, but ESE seems to have more experience regularly using open data than RSM, and it is mostly tenured faculty members that have experience using open data. 
-From question 5.3 (What is your experience with sharing open data?) we can see that almost 50% of respondents are aware of sharing open data and about 17% of respondents regularly share open data. The distribution per school is the same as 5.2, ESE’s respondents have more experience or regularly share their data openly. Position wise, mostly PhD students are aware of open data but have not shared their own, and it is mostly tenured faculty members that have the most experience sharing open data. 
-From question 5.4 (The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?) the top 3 concerns for that researchers could have about making their data open are the following: 
-There could be issues related to privacy.
-There could be issues related to intellectual property.
-Other researchers could use my data for another study that I intended to conduct in the future.
-This is true for both schools, as for position, for tenured faculty members, the top 3 concern is that they might lose control over how their data is being used. 
-
-
-```{r cluster-4-data}
-
-# summary of responses to cluster 4
-cluster4 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "4" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
+ERIM_OS_data_importance <-
+  ERIM_OS_data %>% 
+  filter(question == "In your opinion, how important for your field is it that data from published research are openly available?")
 
 ```
 
-```{r cluster-4-table}
+From the question *`r ERIM_OS_data_importance$question[1]`*, `r paste0(format(sum(ERIM_OS_data_importance[1, "perc"], ERIM_OS_data_importance[2, "perc"], ERIM_OS_data_importance[3, "perc"]), digits = 0), "%")` of respondents think that using open materials and/or code is *`r ERIM_OS_data_importance$item[1]`*, *`r ERIM_OS_data_importance$item[2]`*, or *`r ERIM_OS_data_importance$item[3]`*, whereas `r paste0(pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), "perc"), "%")` think it is *`r pull(filter(ERIM_OS_materials_importance, item == "Not at all important"), item)`* (see Figure \@ref(fig:figure7)).
 
-cluster4 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+```{r figure7, fig.cap = "Open data: importance.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure7.png"))
 
 ```
-```{r cluster-4-plot}
 
-# questions as plot titles
-donuts_title_cluster4 <- levels(cluster4$question)
+```{r data-use-data}
 
-# preallocate object with all plots
-donuts_cluster4 <- NULL
+ERIM_OS_data_use <-
+  ERIM_OS_data %>% 
+  filter(question == "What is your experience with using open data?")
 
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster4)) {
-  
-  # subset data
-  temp_cluster4 <-
-    cluster4 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster4[[i_donut]] <-
-    temp_cluster4 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster3$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster4[i_donut]) 
+```
 
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster4_question", i_donut, ".png"),
-    plot = donuts_cluster4[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
+The answers to the question *`r ERIM_OS_data_use$question[1]`* reveal that (`r paste0(pull(filter(ERIM_OS_data_use, item == "I am aware of open data, but have not used this in my research"), "perc"), "%")`) of respondents are aware of open data but have nor used it, and (`r paste0(pull(filter(ERIM_OS_data_use, item == "I have some experience using open data, but do not use them regularly"), "perc"), "%")`) have some experience using open data. `r paste0(pull(filter(ERIM_OS_data_use, item == "I regularly use open data"), "perc"), "%")` of researchers regularly use open data, while only a small fraction of respondents (`r paste0(pull(filter(ERIM_OS_data_use, item == "Until now, I was unaware of open data"), "perc"), "%")`) had not heard of open data before answering this survey.
+
+```{r data-sharing-data}
+
+ERIM_OS_data_sharing <-
+  ERIM_OS_data %>% 
+  filter(question == "What is your experience with sharing open data?")
+
+```
+
+From the question *`r ERIM_OS_data_sharing$question[1]`* we can see that `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I am aware of open data, but have not shared my data"), "perc"), "%")` of respondents are aware of sharing data, `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I have some experience sharing open data, but not regularly"), "perc"), "%")` have some experience, and `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I regularly share open data"), "perc"), "%")` regularly share open data.
+
+Based on these results, it seems that researchers at ESE and RSM have more experience using publicly available data rather than sharing their own data. More details can be found in Figure \@ref(fig:figure8).
+
+```{r figure8, fig.cap = "Open data: using vs. sharing.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure8.png"))
+
+```
+
+```{r data-concerns-data}
+
+ERIM_OS_data_concerns <-
+  ERIM_OS_data %>% 
+  filter(question == "The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
+
+```
+
+Among the possible concerns that researchers could have about making their data openly available, the top 3 were: 
+
+* *`r ERIM_OS_data_concerns$item[1]`* (`r ERIM_OS_data_concerns[1, "lab_perc"]`)
+* *`r ERIM_OS_data_concerns$item[3]`* (`r ERIM_OS_data_concerns[3, "lab_perc"]`)
+* *`r ERIM_OS_data_concerns$item[4]`* (`r ERIM_OS_data_concerns[4, "lab_perc"]`)
+
+Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_data_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure9)).
+
+```{r figure9, fig.cap = "Open data: concerns.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure9.png"))
+
+```
+
+# Pre-publication archiving
+
+```{r archiving-data}
+
+ERIM_OS_archiving <-
+  read_csv(
+    here("data", "preproc", "cluster5.csv")
   )
-  
-}
-```
-
-# Cluster 5: pre-publication archiving
-
-*Pre-publication archiving*
-From question 6.1 (In your opinion, how important is pre-publication archiving for your field?) we can see that around 55% of the respondents think that pre-publication is important (combining extremely, very, and moderately important), but almost 16% thinks it is not at all important. 
-When comparing schools, ESE’s respondents think that pre-publication is more important than RSM’s respondents. When looking at the different position, most PhD, postdocs, tenure track, and tenured faculty members think that pre-publication is moderately important.  
-From question 6.2 (What is your experience with pre-publication archiving?) we see that both schools are aware and have some experience with pre-publications, but ESE seems to have more experience with preprint archiving than RSM, and it is mostly tenured faculty members that have extensive experience with preprints. 
-From question 6.3 (The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?) the top 3 concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review are the following: 
-Some journals might not publish findings that are uploaded to a pre-publication archive.
-Non-peer-reviewed findings might add noise to the literature.
-Other people might copy my research and publish it before I do.
-This is true for both schools, except that for RSM, the 3rd top concern is that the availability of the pre-publication manuscript might highlight differences (e.g., errors in analysis; revisions to hypotheses) between the original conception of the research and the ultimately published work. As for position, for tenured faculty members, the top response is that they do not share any of these concerns.  
-
-
-```{r cluster-5-data}
-
-# summary of responses to cluster 5
-cluster5 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "5" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
 
 ```
 
-```{r cluster-5-table}
+```{r archiving-importance-data}
 
-cluster5 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+ERIM_OS_archiving_importance <-
+  ERIM_OS_archiving %>% 
+  filter(question == "In your opinion, how important is pre-publication archiving for your field?")
+
 ```
 
-```{r cluster-5-plot}
+The answers to the question *`r ERIM_OS_archiving_importance$question[1]`* reveal that respondents consider pre-publication archiving *`r ERIM_OS_archiving_importance$item[1]`* or *`r ERIM_OS_archiving_importance$item[2]`* (`r paste0(sum(ERIM_OS_archiving_importance[1, "perc"], ERIM_OS_archiving_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ERIM_OS_archiving_importance, item == "Not at all important"), "perc"), "%")` believe that pre-publication archiving is *`r pull(filter(ERIM_OS_archiving_importance, item == "Not at all important"), item)`*.
 
-# questions as plot titles
-donuts_title_cluster5 <- levels(cluster5$question)
+```{r archiving-experience-data}
 
-# preallocate object with all plots
-donuts_cluster5 <- NULL
+ERIM_OS_archiving_experience <-
+  ERIM_OS_archiving %>% 
+  filter(question == "What is your experience with pre-publication archiving?")
 
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster5)) {
-  
-  # subset data
-  temp_cluster5 <-
-    cluster5 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster5[[i_donut]] <-
-    temp_cluster5 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster5$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster3[i_donut]) 
+```
 
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster5_question", i_donut, ".png"),
-    plot = donuts_cluster5[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
+From the question *`r ERIM_OS_archiving_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_archiving_experience, item == "I am aware of pre-publication archiving but have not used it"), lab_perc)`) are aware of pre-publication archiving but have not used it in their own projects. `r pull(filter(ERIM_OS_archiving_experience, item == "I have extensive experience with preprint archiving"), lab_perc)` of respondents have extensive experience with pre-publication archiving, while `r pull(filter(ERIM_OS_archiving_experience, item == "Until now, I was unaware of \"pre-publication archiving\""), lab_perc)` had never heard of pre-publication archiving before answering this survey. More details can be found in Figure \@ref(fig:figure10).
+
+```{r figure10, fig.cap = "Pre-publication: importance vs. experience.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure10.png"))
+
+```
+
+```{r archiving-concerns-data}
+
+ERIM_OS_archiving_concerns <-
+  ERIM_OS_archiving %>% 
+  filter(question == "The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
+
+```
+
+Among the possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review, the top 3 were: 
+
+* *`r ERIM_OS_archiving_concerns$item[1]`* (`r ERIM_OS_archiving_concerns[1, "lab_perc"]`)
+* *`r ERIM_OS_archiving_concerns$item[3]`* (`r ERIM_OS_archiving_concerns[3, "lab_perc"]`)
+* *`r ERIM_OS_archiving_concerns$item[4]`* (`r ERIM_OS_archiving_concerns[4, "lab_perc"]`)
+
+Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_archiving_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure11)).
+
+```{r figure11, fig.cap = "Pre-publication: concerns.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure11.png"))
+
+```
+
+# Open access
+
+```{r oa-data}
+
+ERIM_OS_oa <-
+  read_csv(
+    here("data", "preproc", "cluster6.csv")
   )
-  
-}
-
-```
-# Cluster 6: open access
-
-*Open Access*
-From question 7.1 (Approximately what proportion of your publications from the last 5 years are open access) that asks the percentage of open access publication in the last 5 years, we can see that 20% of the respondents don’t know or prefer not to answer. Almost 20% of the respondent has some of their publication open access and 17% of the respondents have all or none (also 17%) of the publication open access. 
-When comparing schools, their distributions are similar, although more respondents from RSM answered don’t know or prefer not to answer than ESE’s respondents. When looking at the different position, most PhD were the ones to respond that they don’t know or prefer not to answer, and in the comments, they wrote that they do not have publication yet.  
-From question 7.2 (Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?) we see that most Open Access fees were paid using the “blanket agreement” between VSNU and selected academic publishers, and by using the Erasmus Open Access Fund. Both schools have a similar distribution, and it is mostly tenured faculty members that have used the funds to pay for Open Access publications. 
-
-
-```{r cluster-6-data}
-
-# summary of responses to cluster 6
-cluster6 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "6" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
 
 ```
 
-```{r cluster-6-table}
+```{r oa-pubs-proportion-data}
 
-cluster6 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+ERIM_OS_oa_pubs <-
+  ERIM_OS_oa %>% 
+  filter(question == "Approximately what proportion of your publications from the last 5 years are open access?")
 
 ```
-```{r cluster-6-plot}
 
-# questions as plot titles
-donuts_title_cluster6 <- levels(cluster6$question)
+When asked *`r ERIM_OS_oa_pubs$question[1]`*, `r paste0(pull(filter(ERIM_OS_oa_pubs, item == "All"), "perc"), "%")` of respondents declared to have published all their papers open access, whereas `r paste0(pull(filter(ERIM_OS_oa_pubs, item == "None"), "perc"), "%")` have none of their publications open access (see details in Table \@ref(tab:oa-pubs-proportion-table)).
 
-# preallocate object with all plots
-donuts_cluster6 <- NULL
+```{r oa-pubs-proportion-table}
 
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster6)) {
-  
-  # subset data
-  temp_cluster6 <-
-    cluster6 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster6[[i_donut]] <-
-    temp_cluster6 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster6$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster6[i_donut]) 
+ERIM_OS_oa_pubs %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ERIM_OS_oa_pubs$question[1])
 
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster6_question", i_donut, ".png"),
-    plot = donuts_cluster6[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
+```
+
+```{r oa-pubs-apc-data}
+
+ERIM_OS_oa_apc <-
+  ERIM_OS_oa %>% 
+  filter(question == "Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?")
+
+```
+
+When asked how they paid article processing charges (APCs) for open access publications, `r pull(filter(ERIM_OS_oa_apc, item == "It was paid under the \"blanket agreement\" between VSNU and selected academic publishers"), lab_perc)` of respondents declared that APCs were covered by the "blanket agreement" between VSNU and selected academic publishers. More details can be found in Table \@ref(tab:oa-pubs-apc-table).
+
+```{r oa-pubs-apc-table}
+
+ERIM_OS_oa_apc %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ERIM_OS_oa_apc$question[1])
+
+```
+
+# General experiences with open science practices 
+
+```{r general-data}
+
+ERIM_OS_general <-
+  read_csv(
+    here("data", "preproc", "cluster1.csv")
   )
-  
-}
-```
-
-# Cluster 7: OS adoption/barriers
-
-*Open Science Resources*
-
-From question 8.2 (During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?), we asked researchers about their participation in the ORCiD campaign organized by ERIM, from the responses, we can see that almost 65% of respondents did not participated since they already had an ORCiD ID, but 23% of the respondents did participate and got an ORCiD ID.
-From question 8.3 (The following are possible barriers to the uptake of open science practices. Please place a tick beside any statement that you agree is a barrier in your field.) the top 3 barriers to the uptake of open science practices are:  
-Lack of recognition in my field about the value of open science practices.
-Lack of time to learn Open Science practices.
-Lack of time to engage in Open Science practices.
-This is true for both schools, except that for ESE, the top concern is lack of funding for Open Access publishing. As for position, for PhD students, the 2nd top concern is the lack of information about open science practices. 
-From question 8.4 (Are you sharing your knowledge about open science practices with others?) we can see that more than 56% of researchers share their knowledge of Open Science informally, while 30% do not. Looking at the school’s distribution seems that ESE’s researchers share less Open Science practices than RSM researchers. The distribution of positions states the same results as mentioned.  
-
-
-```{r cluster-7-data}
-
-# summary of responses to cluster 7
-cluster7 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "7" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
 
 ```
 
-```{r cluster-7-table}
+```{r general-experience-data}
 
-cluster7 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+ERIM_OS_general_experience <-
+  ERIM_OS_general %>% 
+  filter(question == "What is your experience with open science practices?")
+
 ```
 
-```{r cluster-7-plot}
+When asked *`r ERIM_OS_general_experience$question[1]`*, `r pull(filter(ERIM_OS_general_experience, item == "I have some experience with open science practices"), lab_perc)` of respondents have some experience with open science practices, `r pull(filter(ERIM_OS_general_experience, item == "I have extensive experience with open science practices"), lab_perc)` have extensive experience, and `r pull(filter(ERIM_OS_general_experience, item == "I am aware, but have not used open science practices in my research"), lab_perc)` are aware but have not used any open science practices in their research (see Figure \@ref(fig:figure12)).
 
-# questions as plot titles
-donuts_title_cluster7 <- levels(cluster7$question)
+```{r figure12, fig.cap = "Open science practices: experience.", out.width = '100%'}
 
-# preallocate object with all plots
-donuts_cluster7 <- NULL
+knitr::include_graphics(here("img", "figure12.png"))
 
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster7)) {
-  
-  # subset data
-  temp_cluster7 <-
-    cluster7 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster7[[i_donut]] <-
-    temp_cluster7 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster7$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster7[i_donut]) 
+```
 
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster7_question", i_donut, ".png"),
-    plot = donuts_cluster7[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
+```{r general-sharing-data}
+
+ERIM_OS_general_sharing <-
+  ERIM_OS_general %>% 
+  filter(question == "Are you sharing your knowledge about open science practices with others?") %>% 
+  arrange(desc(perc))
+
+```
+
+When asked *`r ERIM_OS_general_sharing$question[1]`*, `r pull(filter(ERIM_OS_general_sharing, item == "I share my knowledge with my colleagues informally"), lab_perc)` of respondents share their knowledge informally with colleagues, `r pull(filter(ERIM_OS_general_sharing, item == "I share my knowledge with my colleagues by offering seminars and/or giving talks"), lab_perc)` give seminars and/or talks, and `r pull(filter(ERIM_OS_general_sharing, item == "I share my knowledge with my students or fellow research students"), lab_perc)` discuss open science with students or fellow research students. The remaining respondents use other means of sharing knowledge (`r pull(filter(ERIM_OS_general_sharing, item == "Other"), lab_perc)`), do not share their knowledge (`r pull(filter(ERIM_OS_general_sharing, item == "No"), lab_perc)`), or do not know/prefer not to answer (`r pull(filter(ERIM_OS_general_sharing, item == "I don’t know/prefer not to answer"), lab_perc)`).
+
+```{r general-ORCID-data}
+
+ERIM_OS_general_ORCID <-
+  ERIM_OS_general %>% 
+  filter(question == "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?") %>% 
+  arrange(desc(perc))
+
+```
+
+During March 2021 ERIM launched an ORCID campaign. When asked about participation and creation of an ORCID record,
+`r pull(filter(ERIM_OS_general_ORCID, item == "No, I did not participate since I already had an ORCID iD"), lab_perc)` of respondents declared not to have participated since they already had it, while `r pull(filter(ERIM_OS_general_ORCID, item == "Yes, I participated and got an ORCID iD"), lab_perc)` did participate and get an ORCID ID.
+                                                
+```{r general-concerns-data}
+
+ERIM_OS_general_concerns <-
+  read_csv(
+    here("data", "preproc", "cluster7.csv")
+  ) %>% 
+  arrange(desc(perc))
+
+```
+
+Among the perceived barriers to the uptake of open science practices, the top 3 were: 
+
+* *`r ERIM_OS_general_concerns$item[1]`* (`r ERIM_OS_general_concerns[1, "lab_perc"]`)
+* *`r ERIM_OS_general_concerns$item[2]`* (`r ERIM_OS_general_concerns[2, "lab_perc"]`)
+* *`r ERIM_OS_general_concerns$item[3]`* (`r ERIM_OS_general_concerns[3, "lab_perc"]`)
+
+For details, see Figure \@ref(fig:figure13).
+
+```{r figure13, fig.cap = "Open science: barriers.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure13.png"))
+
+```
+
+# Awareness of available tools
+
+```{r tools-data}
+
+ERIM_OS_tools <-
+  read_csv(
+    here("data", "preproc", "cluster8.csv")
+  ) %>% 
+  arrange(desc(item), desc(perc))
+
+```
+
+We asked researchers to indicate their awareness of some popular open science resources. Notably, services hosted or approved by EUR are frequently in use, for example Dropbox for Business (`r pull(filter(ERIM_OS_tools, question == "EUR Dropbox (not personal)" & item == "I use this"), lab_perc)`), SurfDrive (`r pull(filter(ERIM_OS_tools, question == "EUR SurfDrive" & item == "I use this"), lab_perc)`), and EUR RePub (`r pull(filter(ERIM_OS_tools, question == "EUR RePub" & item == "I use this"), lab_perc)`). An overview of all responses can be found in Figure \@ref(fig:figure14). 
+
+```{r figure14, fig.cap = "Open science tools: awareness.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "figure14.png"))
+
+```
+
+# Role of ERIM
+
+```{r support-data}
+
+ERIM_OS_support <-
+  read_csv(
+    here("data", "preproc", "cluster9.csv")
   )
-  
-}
- 
-``` 
-# Cluster 8: tool awareness
-
-*Awareness of ERIM/EUR tools*
-From question 8.1 (Please indicate your awareness of each of the open science resources listed below.) we asked researchers their awareness of the following Open Science resources. The counts go from 0 (unaware) to 10 (often used). 
-
-```{r cluster-8-data}
-
-# summary of responses to cluster 8
-cluster8 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "8" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
 
 ```
 
-```{r cluster-8-table}
+```{r support-expectations-data}
 
-cluster8 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
-
-``` 
-
-```{r cluster-8-plot}
-
-# questions as plot titles
-donuts_title_cluster8 <- levels(cluster8$question)
-
-# preallocate object with all plots
-donuts_cluster8 <- NULL
-
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster8)) {
-  
-  # subset data
-  temp_cluster8 <-
-    cluster8 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster8[[i_donut]] <-
-    temp_cluster8 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster8$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster8[i_donut]) 
-
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster8_question", i_donut, ".png"),
-    plot = donuts_cluster8[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
-  )
-  
-}
-
-```
-# Cluster 9: role of ERIM
-
-*Role of ERIM*
-In question 8.5 (Do you expect that ERIM supports you in learning open science practices?) researchers were asked if they expected ERIM to support them in learning Open Science practices, almost 70% of respondents said yes while only 16% said no. When looking at the schools, more researchers from RSM want support form ERIM than ESE’s researchers. As for position, mostly PhD students and postdocs responded yes.
-From question 8.6 (Which of the following open science practices would you like ERIM to provide information or support for?), the top 5 Open Science practices that respondents would like to get information or support for are: 
-Open Access publishing
-Open data
-Open materials and/or code
-Preregistration 
-Open access archiving in a repository
-The distribution per school and position follows the same distribution as the total one. 
-
-
-```{r cluster-9-data}
-
-# summary of responses to cluster 9
-cluster9 <-
-  ERIM_OS_clean %>% 
-  dplyr::filter(
-    Finished == "TRUE" & # keep only complete questionnaires
-      cluster == "9" # keep only questions of relevant cluster
-  ) %>%
-  droplevels() %>% # drop unused levels
-  dplyr::select(-c(Finished, cluster)) %>% # drop unused columns
-  dplyr::select_if(~ sum(!is.na(.)) > 0) %>% # keep columns without NAs
-  # drop_na() %>% # drop rows with missing values
-  rename("item" = "value_1") %>% 
-  group_by(question, item) %>%
-  summarize(number_responses = n()) %>%
-  group_by(question) %>%
-  mutate(
-    perc = round(number_responses / sum(number_responses) * 100, 2), # calculate percentage
-    lab_perc = paste(perc, "%", sep = "") # percentage as text (for labels)
-  ) %>%
-  ungroup()
+ERIM_OS_support_expectations <-
+  ERIM_OS_support %>% 
+  filter(question == "Do you expect that ERIM supports you in learning open science practices?")
 
 ```
 
-```{r cluster-9-table}
+Finally, researchers were asked *`r ERIM_OS_support_expectations$question[1]`*. `r pull(filter(ERIM_OS_support_expectations, item == "Yes"), lab_perc)` of respondents said *`r pull(filter(ERIM_OS_support_expectations, item == "Yes"), item)`* whereas `r pull(filter(ERIM_OS_support_expectations, item == "No"), lab_perc)` said *`r pull(filter(ERIM_OS_support_expectations, item == "No"), item)`*.
 
-cluster9 %>% 
-  dplyr::select(-c(number_responses, perc)) %>% 
-  rename(percentage = lab_perc) %>% 
-  kable_custom()
+```{r support-practice-data}
+
+ERIM_OS_support_practice <-
+  ERIM_OS_support %>% 
+  filter(question == "Which of the following open science practices would you like ERIM to provide information or support for?") %>% 
+  arrange(desc(perc))
+
 ```
 
-```{r cluster-9-plot}
+When specifically asked *`r ERIM_OS_support_practice$question[1]`*, the top 3 were:
 
-# questions as plot titles
-donuts_title_cluster9 <- levels(cluster9$question)
+* *`r ERIM_OS_support_practice$item[1]`* (`r ERIM_OS_support_practice[1, "lab_perc"]`)
+* *`r ERIM_OS_support_practice$item[2]`* (`r ERIM_OS_support_practice[2, "lab_perc"]`)
+* *`r ERIM_OS_support_practice$item[3]`* (`r ERIM_OS_support_practice[3, "lab_perc"]`)
 
-# preallocate object with all plots
-donuts_cluster9 <- NULL
+For an overview, see Table \@ref(tab:support-practice-table).
 
-# loop through questions and make donut plots
-for (i_donut in 1:length(donuts_title_cluster9)) {
-  
-  # subset data
-  temp_cluster9 <-
-    cluster3 %>%
-    filter(question == levels(question)[i_donut]) %>%
-    droplevels() %>% 
-    dplyr::select(-number_responses)
-  
-  # donut graph
-  donuts_cluster9[[i_donut]] <-
-    temp_cluster9 %>%
-    ggdonutchart(
-      "perc",
-      label = "lab_perc",
-      lab.pos = "out",
-      color = "black",
-      fill = "item",
-      lab.font = c(20, "plain", "black"),
-#      palette = viridis(length(unique(temp_cluster0$item)), option = "cividis"),
-      palette = viridis(length(unique(temp_cluster9$item))),
-      ggtheme = theme_custom
-    ) +
-    ggtitle(donuts_title_cluster9[i_donut]) 
+```{r support-practice-table}
 
-  # save to file
-  ggsave(
-    filename = paste0("donut_cluster9_question", i_donut, ".png"),
-    plot = donuts_cluster9[[i_donut]],
-    device = "png",
-    path = here("img"),
-    scale = 1.5,
-    width = 8,
-    height = 8,
-    units = "in",
-    dpi = 600
-  )
-  
-}
+ERIM_OS_support_practice %>% 
+ select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ERIM_OS_support_practice$question[1])
+
 ```
+
+# Strategy towards an open science culture at ERIM
+
+Open Science increases transparency throughout the research cycle, resulting in increased research efficiency and enhanced research quality, visibility, and engagement. For these reasons, ERIM is committed to making Open Science practices the norm among its researchers.
+
+Between 2021 and 2023, ERIM will execute a three-year Open Science initiative, geared towards making our scientific routines more open and engaged with our scholarly and societal stakeholders. 
+
+This initiative will focus on researcher behaviour and on stimulating the active use of open science tools and infrastructure. 
+
+In March 2021, ERIM kicked off this initiative with the ORCiD Madness Month, followed by the Open Science Spring Survey during the month of April. Later in the autumn, ERIM will continue with the October DataFest and develop an Open Science Massive Online Open Course (MOOC) for researchers and support staff (funded by Stepping Up Professional Services).
+
+The ORCiD Madness Month brought to light the importance of having a unique identifier to your research profile and, as a result, we saw an increase of 72 new ORCiD accounts created between ESE and RSM researchers. 
+
+The Open Science Spring Survey was then conducted to gather a baseline on the Open Science practices our researchers are already engaging on, and to understand which practices they want to learn more about.
+
+The lessons learned from the survey and how will the be tackled are the following: 
+
+**Preregistration**: researchers think is important but only a few are regularly preregistering their research, so we will have a module about it in the Open Science MOOC where we will tackle researchers' concerns.
+
+**Open materials and/or code and data**: researchers find this very important, this is why we decided to use the whole month of October dedicated to open data. The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). One of the events of the DataFest will tackle the top 5 concerns on open materials, code, and data that were reported during the survey.
+
+**Pre-publication**: researchers think is very important to quickly disseminate their results, but only a small percentage of them are using pre-prints, and a large percentage of respondents were not aware of them. To tackle this, we will add a module on pre-publication archiving in the Open Science MOOC where we will explain its benefits and tackle respondents' concerns. 
+
+**Open Access**: a small percentage of respondents have all their publication open access. Fortunately for ERIM and the EUR, this percentage will change in the coming months/years, since EUR's researchers have agreed to follow the Taverne amendment, ensuring that any publication that is not already open access will be made open (by law) after 6 months of its publication. We will provide more detail in a dedicated module on open access in our Open Science MOOC.
+
+**Open Science practices**: the most relevant barrier to open science (excluding open access, because of the Taverne amendment) is the lack of recognition in the field and lack of credit by the institution. There is a lot of effort on this front: ERIM is redesigning its membership chart to include open science, funding agencies now require various forms of commitment to open science practices, and EUR has a whole task force that is also redesigning rewards and recognition for its researchers. 
+
+All in all, ERIM has started the year 2021 with a new strategy in place: to make open science the norm among its researchers.
 
 ***
-***
 
-
+[^1]: The percentages presented in the survey responses reflect the survey respondents, not the total number of researchers at each school.
