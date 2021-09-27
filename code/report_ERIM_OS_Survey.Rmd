@@ -5,7 +5,7 @@ date: 2021-09-24
 output:
   bookdown::html_document2:
     # # appearance
-    theme: united
+    theme: flatly
     highlight: tango
     # # table of content
     toc: true
