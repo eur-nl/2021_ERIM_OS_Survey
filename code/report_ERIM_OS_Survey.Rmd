@@ -714,11 +714,11 @@ The Open Science Spring Survey was then conducted to gather a baseline on the Op
 
 The lessons learned from the survey and how will the be tackled are the following: 
 
-**Preregistration**: researchers think is important but only a few are regularly preregistering their research, so we will have a module about it in the Open Science MOOC where we will tackle researchers' concerns.
+**Preregistration**: researchers think is important but only a few are regularly preregistering their research, so we will have a module about it in the Open Science MOOC where we will have examples on how to preregister and we will also tackle researchers' concerns.
 
-**Open materials and/or code and data**: researchers find this very important, this is why we decided to use the whole month of October dedicated to open data. The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). One of the events of the DataFest will tackle the top 5 concerns on open materials, code, and data that were reported during the survey.
+**Open materials and/or code and data**: researchers find this very important, this is why we decided to use the whole month of October dedicated to open data. The ERIM October DataFest is intended to bring awareness on open data and promote the use of the Erasmus Data Repository (EDR). One of the events of the DataFest will tackle the top 5 concerns on open materials, code, and data that were reported in this survey.
 
-**Pre-publication**: researchers think is very important to quickly disseminate their results, but only a small percentage of them are using pre-prints, and a large percentage of respondents were not aware of them. To tackle this, we will add a module on pre-publication archiving in the Open Science MOOC where we will explain its benefits and tackle respondents' concerns. 
+**Pre-publication**: researchers think is very important to quickly disseminate their results, but only a small percentage of them are using pre-prints, and a large percentage of respondents were not aware of them. To tackle this, we will add a module on pre-publication archiving in the Open Science MOOC where we will explain its benefits, how to do it, and we will also tackle respondents' concerns. 
 
 **Open Access**: a small percentage of respondents have all their publication open access. Fortunately for ERIM and the EUR, this percentage will change in the coming months/years, since EUR's researchers have agreed to follow the Taverne amendment, ensuring that any publication that is not already open access will be made open (by law) after 6 months of its publication. We will provide more detail in a dedicated module on open access in our Open Science MOOC.
 
