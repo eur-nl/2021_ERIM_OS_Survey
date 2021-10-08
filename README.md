@@ -2,11 +2,11 @@
  
 **Authors**: Schettino, A., Guzman-Ramirez, L.
  
-This repository contains raw data, _**R**_ scripts for data cleaning and figures, and a reproducible report describing the results of the first 2021 Open Science Survey conduncted by Erasmus Research Institute of Management (ERIM) for all Erasmus School of Economics (ESE) and Rotterdam School of Management (RSM) researchers (including PhD candidates).
+This repository contains raw data, _**R**_ scripts for data cleaning and figures, and a reproducible report describing the results of the 2021 Open Science Survey conduncted by Erasmus Research Institute of Management (ERIM) for all Erasmus School of Economics (ESE) and Rotterdam School of Management (RSM) researchers (including PhD candidates).
 
 ## Where are the results? 
 
-The aggreated (bth ESE and RSM) responses report can be found [here](https://eur-nl.github.io/2021_ERIM_OS_Survey/). 
+The aggreated (both ESE and RSM) responses report can be found [here](https://eur-nl.github.io/2021_ERIM_OS_Survey/). 
 
 ## How to use these materials
  
@@ -16,11 +16,6 @@ The aggreated (bth ESE and RSM) responses report can be found [here](https://eur
 * From the *Files* panel in [RStudio](https://www.rstudio.com/products/rstudio/download/), click on `report_ERIM_OS_Survey.Rmd` (in the `report` subfolder) to access the code
 * In the same subfolder you will also find the complete output (`report_ERIM_OS_Survey.html`), which is displayed in [here](https://eur-nl.github.io/2021_ERIM_OS_Survey/).
 
-
-
-
-
- 
 ## Project folder structure
  
     .
@@ -44,21 +39,40 @@ The aggreated (bth ESE and RSM) responses report can be found [here](https://eur
     │   ├── theme_custom.R
     ├── data
     │   ├── preproc
-    │   ├── manuscript
-    │   │   ├── manuscript.Rmd         # Papaja manuscript (source code)
-    │   │   ├── paper_papaja.Rmd
-    │   │   ├── r-references.bib       # BibTex references for manuscript (R packages)
-    │   │   ├── TOJ-invalid-refs.bib   # BibTex references for manuscript
-    │   ├── reports
-    │   │   ├── TOJ_summaryResults.Rmd
+    │   │   ├── CLEAN_20210608_ERIM_OS_Survey.csv
+    │   │   ├── cluster0.csv
+    │   │   ├── cluster1.csv
+    │   │   ├── cluster2.csv
+    │   │   ├── cluster3.csv
+    │   │   ├── cluster4.csv
+    │   │   ├── cluster5.csv
+    │   │   ├── cluster6.csv
+    │   │   ├── cluster7.csv
+    │   │   ├── cluster8.csv
+    │   │   ├── cluster9.csv
+    │   ├── PSEUDONYM_20210608_ERIM_OS_Survey.csv
+    │   ├── PSEUDONYM_manual_20210608_ERIM_OS_Survey.csv
     ├── img
-    │   ├── prepare_data_main.R
-    │   ├── prepare_data_pilot.R
+    │   ├── figure1.png
+    │   ├── figure10.png
+    │   ├── figure11.png
+    │   ├── figure12.png
+    │   ├── figure13.png
+    │   ├── figure14.png
+    │   ├── figure2.png
+    │   ├── figure3.png
+    │   ├── figure4.png
+    │   ├── figure5.png
+    │   ├── figure6.png
+    │   ├── figure7.png
+    │   ├── figure8.png
+    │   ├── figure9.png
     ├── materials
+    │   ├── RSM__ESE_Open_Science_Survey_2021_Questions.docx
+    │   ├── Swinburne_Open_Science_Report_2019.pdf
     ├── report
-    │   ├── .gitignore
-    │   ├── activate.R
-    │   ├── settings.dcf
+    │   ├── report_ERIM_OS_Survey.Rmd
+    │   ├── report_ERIM_OS_Survey.html
     ├── .gitignore
     ├── 2021_ERIM_OS_Survey.Rproj     
     ├── LICENSE                        # User permissions
