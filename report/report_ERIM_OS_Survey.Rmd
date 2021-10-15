@@ -228,7 +228,9 @@ ERIM_OS_school_position_response_rate %>%
 
 ```
 
-# Preregistration
+# Preregistration {.tabset .tabset-pills}
+
+## Total
 
 ```{r preregistration-data}
 
@@ -293,7 +295,52 @@ knitr::include_graphics(here("img", "figure03.png"))
 
 ```
 
-# Open materials/code
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
+
+
+
+
+
+
+
+# Open materials/code {.tabset .tabset-pills}
+
+## Total
 
 ```{r materials-data}
 
@@ -371,7 +418,50 @@ knitr::include_graphics(here("img", "figure06.png"))
 
 ```
 
-# Open data
+
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
+
+
+
+
+# Open data {.tabset .tabset-pills}
+
+## Total
 
 ```{r data-data}
 
@@ -449,7 +539,46 @@ knitr::include_graphics(here("img", "figure09.png"))
 
 ```
 
-# Pre-publication archiving
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
+
+# Pre-publication archiving {.tabset .tabset-pills}
+
+## Total
 
 ```{r archiving-data}
 
@@ -509,7 +638,46 @@ knitr::include_graphics(here("img", "figure11.png"))
 
 ```
 
-# Open access
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
+
+# Open access {.tabset .tabset-pills}
+
+## Total
 
 ```{r oa-data}
 
@@ -558,7 +726,46 @@ ERIM_OS_oa_apc %>%
 
 ```
 
-# General experiences with open science practices 
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
+
+# General experiences with open science practices  {.tabset .tabset-pills}
+
+## Total
 
 ```{r general-data}
 
@@ -632,7 +839,46 @@ knitr::include_graphics(here("img", "figure13.png"))
 
 ```
 
-# Awareness of available tools
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
+
+# Awareness of available tools {.tabset .tabset-pills}
+
+## Total
 
 ```{r tools-data}
 
@@ -652,7 +898,46 @@ knitr::include_graphics(here("img", "figure14.png"))
 
 ```
 
-# Role of ERIM
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
+
+# Role of ERIM {.tabset .tabset-pills}
+
+## Total
 
 ```{r support-data}
 
@@ -697,6 +982,43 @@ ERIM_OS_support_practice %>%
   kable_custom(caption = ERIM_OS_support_practice$question[1])
 
 ```
+
+
+## ESE
+
+Text.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## RSM
+
+Text.
+
+
+
+# {-}
 
 # Strategy towards an open science culture at ERIM
 
