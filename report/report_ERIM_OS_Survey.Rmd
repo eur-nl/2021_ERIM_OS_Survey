@@ -232,7 +232,7 @@ ERIM_OS_school_position_response_rate %>%
 
 ## Total
 
-```{r preregistration-data}
+```{r total-preregistration-data}
 
 ERIM_OS_preregistration <-
   read_csv(
@@ -241,17 +241,18 @@ ERIM_OS_preregistration <-
 
 ```
 
-```{r preregistration-importance-data}
+```{r total-preregistration-importance-data}
 
 ERIM_OS_preregistration_importance <-
   ERIM_OS_preregistration %>% 
-  filter(question == "In your opinion, how important for your field is it that researchers preregister their studies?")
+  filter(question == "In your opinion, how important for your field is it that researchers preregister their studies?") %>% 
+  arrange(desc(perc))
 
 ```
 
 The answers to the question *`r ERIM_OS_preregistration_importance$question[1]`* reveal that respondents consider preregistration *`r ERIM_OS_preregistration_importance$item[1]`* or *`r ERIM_OS_preregistration_importance$item[2]`* (`r paste0(sum(ERIM_OS_preregistration_importance[1, "perc"], ERIM_OS_preregistration_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), "perc"), "%")` believe that preregistration is *`r pull(filter(ERIM_OS_preregistration_importance, item == "Not at all important"), item)`*.
 
-```{r preregistration-experience-data}
+```{r total-preregistration-experience-data}
 
 ERIM_OS_preregistration_experience <-
   ERIM_OS_preregistration %>% 
@@ -259,15 +260,15 @@ ERIM_OS_preregistration_experience <-
 
 ```
 
-From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(ERIM_OS_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(ERIM_OS_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:figure2).
+From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(ERIM_OS_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(ERIM_OS_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(ERIM_OS_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:total-figure2).
 
-```{r figure2, fig.cap = "Preregistration: importance vs. experience.", out.width = '100%'}
+```{r total-figure2, fig.cap = "Preregistration: importance vs. experience.", out.width = '100%'}
 
 knitr::include_graphics(here("img", "Total", "figure02.png"))
 
 ```
 
-```{r preregistration-concerns-data}
+```{r total-preregistration-concerns-data}
 
 ERIM_OS_preregistration_concerns <-
   ERIM_OS_preregistration %>% 
@@ -282,61 +283,131 @@ Among the possible concerns that researchers could have about preregistering the
 * *`r ERIM_OS_preregistration_concerns$item[2]`* (`r ERIM_OS_preregistration_concerns[2, "lab_perc"]`)
 * *`r ERIM_OS_preregistration_concerns$item[3]`* (`r ERIM_OS_preregistration_concerns[3, "lab_perc"]`)
 
-<!-- These are your old top 3, which are different from mine because I am using complete surveys only -->
-<!-- Could you please verify that everything makes sense? -->
-
-<!-- 25.66% - I need to look at my data before I can decide how to best analyze it. -->
-<!-- 20.35% - Preregistration might lead to other people taking my research idea and implementing my plan. -->
-<!-- 19.47% - Preregistration prevents exploratory research. -->
-
-```{r figure3, fig.cap = "Preregistration: concerns.", out.width = '100%'}
+```{r total-figure3, fig.cap = "Preregistration: concerns.", out.width = '100%'}
 
 knitr::include_graphics(here("img", "Total", "figure03.png"))
 
 ```
 
-
 ## ESE
 
-Text.
+```{r ESE-preregistration-data}
 
+ESE_preregistration <-
+  read_csv(
+    here("data", "preproc", "ESE", "cluster2.csv")
+  )
 
+```
 
+```{r ESE-preregistration-importance-data}
 
+ESE_preregistration_importance <-
+  ESE_preregistration %>% 
+  filter(question == "In your opinion, how important for your field is it that researchers preregister their studies?") %>% 
+  arrange(desc(perc))
 
+```
 
+The answers to the question *`r ESE_preregistration_importance$question[1]`* reveal that respondents consider preregistration *`r ESE_preregistration_importance$item[1]`* or *`r ESE_preregistration_importance$item[2]`* (`r paste0(sum(ESE_preregistration_importance[1, "perc"], ESE_preregistration_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ESE_preregistration_importance, item == "Not at all important"), "perc"), "%")` believe that preregistration is *`r pull(filter(ESE_preregistration_importance, item == "Not at all important"), item)`*.
 
+```{r ESE-preregistration-experience-data}
 
+ESE_preregistration_experience <-
+  ESE_preregistration %>% 
+  filter(question == "What is your experience with study preregistration?")
 
+```
 
+From the question *`r ESE_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(ESE_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(ESE_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(ESE_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:ESE-figure2).
 
+```{r ESE-figure2, fig.cap = "Preregistration: importance vs. experience.", out.width = '100%'}
 
+knitr::include_graphics(here("img", "ESE", "figure02.png"))
 
+```
 
+```{r ESE-preregistration-concerns-data}
 
+ESE_preregistration_concerns <-
+  ESE_preregistration %>% 
+  filter(question == "The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
 
+```
 
+Among the possible concerns that researchers could have about preregistering their studies, the top 3 were: 
 
+* *`r ESE_preregistration_concerns$item[1]`* (`r ESE_preregistration_concerns[1, "lab_perc"]`)
+* *`r ESE_preregistration_concerns$item[2]`* (`r ESE_preregistration_concerns[2, "lab_perc"]`)
+* *`r ESE_preregistration_concerns$item[3]`* (`r ESE_preregistration_concerns[3, "lab_perc"]`)
 
+```{r ESE-figure3, fig.cap = "Preregistration: concerns.", out.width = '100%'}
 
+knitr::include_graphics(here("img", "ESE", "figure03.png"))
 
-
-
-
+```
 
 ## RSM
 
-Text.
+```{r RSM-preregistration-data}
 
+RSM_preregistration <-
+  read_csv(
+    here("data", "preproc", "RSM", "cluster2.csv")
+  )
 
+```
+
+```{r RSM-preregistration-importance-data}
+
+RSM_preregistration_importance <-
+  RSM_preregistration %>% 
+  filter(question == "In your opinion, how important for your field is it that researchers preregister their studies?") %>% 
+  arrange(desc(perc))
+
+```
+
+The answers to the question *`r RSM_preregistration_importance$question[1]`* reveal that respondents consider preregistration *`r RSM_preregistration_importance$item[1]`* or *`r RSM_preregistration_importance$item[2]`* (`r paste0(sum(RSM_preregistration_importance[1, "perc"], RSM_preregistration_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(RSM_preregistration_importance, item == "Not at all important"), "perc"), "%")` believe that preregistration is *`r pull(filter(RSM_preregistration_importance, item == "Not at all important"), item)`*.
+
+```{r RSM-preregistration-experience-data}
+
+RSM_preregistration_experience <-
+  RSM_preregistration %>% 
+  filter(question == "What is your experience with study preregistration?")
+
+```
+
+From the question *`r RSM_preregistration_experience$question[1]`*, we see that most respondents (`r pull(filter(RSM_preregistration_experience, item == "I am aware of study preregistration, but have not used it in my research"), lab_perc)`) are aware of preregistration but have not used it in their own projects. `r pull(filter(RSM_preregistration_experience, item == "I regularly preregister my studies"), lab_perc)` of the respondents regularly preregister their studies, while `r pull(filter(RSM_preregistration_experience, item == "Until now, I was unaware of study preregistration"), lab_perc)` had never heard of preregistration before answering this survey. More details can be found in Figure \@ref(fig:RSM-figure2).
+
+```{r RSM-figure2, fig.cap = "Preregistration: importance vs. experience.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "RSM", "figure02.png"))
+
+```
+
+```{r RSM-preregistration-concerns-data}
+
+RSM_preregistration_concerns <-
+  RSM_preregistration %>% 
+  filter(question == "The following are possible concerns that researchers could have about preregistering their studies. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
+
+```
+
+Among the possible concerns that researchers could have about preregistering their studies, the top 3 were: 
+
+* *`r RSM_preregistration_concerns$item[1]`* (`r RSM_preregistration_concerns[1, "lab_perc"]`)
+* *`r RSM_preregistration_concerns$item[2]`* (`r RSM_preregistration_concerns[2, "lab_perc"]`)
+* *`r RSM_preregistration_concerns$item[3]`* (`r RSM_preregistration_concerns[3, "lab_perc"]`)
+
+```{r RSM-figure3, fig.cap = "Preregistration: concerns.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "RSM", "figure03.png"))
+
+```
 
 # {-}
-
-
-
-
-
-
 
 # Open materials/code {.tabset .tabset-pills}
 
