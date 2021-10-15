@@ -29,7 +29,7 @@ EUR_palette <- c("#0C8066", # Erasmus Bright Green
 
 cluster <-
   read_csv(
-    here("data", "preproc", "cluster8.csv"),
+    here("data", "preproc", "Total", "cluster8.csv"),
     show_col_types = FALSE
   ) %>% 
   mutate(
@@ -118,7 +118,7 @@ ggsave(
   filename = "figure14.png",
   plot = donut_figure14,
   device = "png",
-  path = here("img"),
+  path = here("img", "Total"),
   scale = 5,
   width = 8,
   height = 8,

@@ -24,7 +24,7 @@ source(here("code", "functions", "theme_custom.R")) # custom ggplot2 theme
 
 cluster <-
   read_csv(
-    here("data", "preproc", "cluster4.csv"),
+    here("data", "preproc", "Total", "cluster4.csv"),
     show_col_types = FALSE
   ) %>% 
   mutate(
@@ -70,7 +70,7 @@ ggsave(
   filename = "figure09.png",
   plot = lollipop_figure9,
   device = "png",
-  path = here("img"),
+  path = here("img", "Total"),
   scale = 3,
   width = 8,
   height = 8,
