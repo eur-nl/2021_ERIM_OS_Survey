@@ -129,7 +129,7 @@ We asked participants their school, department, and research institute affiliati
 
 ```{r figure1, fig.cap = "Affilliation per department.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure1.png"))
+knitr::include_graphics(here("img", "figure01.png"))
 
 ```
 
@@ -261,7 +261,7 @@ From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see t
 
 ```{r figure2, fig.cap = "Preregistration: importance vs. experience.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure2.png"))
+knitr::include_graphics(here("img", "figure02.png"))
 
 ```
 
@@ -289,7 +289,7 @@ Among the possible concerns that researchers could have about preregistering the
 
 ```{r figure3, fig.cap = "Preregistration: concerns.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure3.png"))
+knitr::include_graphics(here("img", "figure03.png"))
 
 ```
 
@@ -316,7 +316,7 @@ From the question *`r ERIM_OS_materials_importance$question[1]`*, we can see tha
 
 ```{r figure4, fig.cap = "Open materials and/or code: importance.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure4.png"))
+knitr::include_graphics(here("img", "figure04.png"))
 
 ```
 
@@ -344,7 +344,7 @@ Based on these results, we observe that researchers at ESE and RSM share their m
 
 ```{r figure5, fig.cap = "Open materials and/or code: using vs. sharing.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure5.png"))
+knitr::include_graphics(here("img", "figure05.png"))
 
 ```
 
@@ -367,7 +367,7 @@ Notably, however, the majority of respondents (`r paste0(pull(filter(ERIM_OS_mat
 
 ```{r figure6, fig.cap = "Open materials and/or code: concerns.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure6.png"))
+knitr::include_graphics(here("img", "figure06.png"))
 
 ```
 
@@ -394,7 +394,7 @@ From the question *`r ERIM_OS_data_importance$question[1]`*, `r paste0(format(su
 
 ```{r figure7, fig.cap = "Open data: importance.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure7.png"))
+knitr::include_graphics(here("img", "figure07.png"))
 
 ```
 
@@ -422,7 +422,7 @@ Based on these results, it seems that researchers at ESE and RSM have more exper
 
 ```{r figure8, fig.cap = "Open data: using vs. sharing.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure8.png"))
+knitr::include_graphics(here("img", "figure08.png"))
 
 ```
 
@@ -445,7 +445,7 @@ Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_data_concerns,
 
 ```{r figure9, fig.cap = "Open data: concerns.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure9.png"))
+knitr::include_graphics(here("img", "figure09.png"))
 
 ```
 
