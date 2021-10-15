@@ -81,7 +81,7 @@ The survey explored how researchers perceive and use open science practices. Eig
 7. Awareness of available tools
 8. Role of ERIM
 
-This report has all the total responses (combined ESE and RSM)[^1].
+This report displays the combined results (ESE and RSM) as well as separately for each school[^1].
 
 This is a living document that will be updated with new information and insights. For any comments or questions, please contact [Dr. Lizette Guzman-Ramirez](mailto:guzmanramirez@rsm.nl) (ERIM Research Data Steward) or [Dr. Antonio Schettino](mailto:schettino@eur.nl) (ERS Open Science Coordinator).
 
@@ -89,7 +89,7 @@ This is a living document that will be updated with new information and insights
 
 ERIM_OS_clean <-
   read_csv(
-    here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv") 
+    here("data", "preproc", "Total", "CLEAN_20210608_ERIM_OS_Survey.csv") 
     )
 
 ```
@@ -118,7 +118,7 @@ A total of `r sum(ERIM_OS_clean_unfinished$n)` respondents started the survey, a
 
 ERIM_OS_demographics <-
   read_csv(
-    here("data", "preproc", "cluster0.csv")
+    here("data", "preproc", "Total", "cluster0.csv")
   )
 
 ```
@@ -129,7 +129,7 @@ We asked participants their school, department, and research institute affiliati
 
 ```{r figure1, fig.cap = "Affilliation per department.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure01.png"))
+knitr::include_graphics(here("img", "Total", "figure01.png"))
 
 ```
 
@@ -236,7 +236,7 @@ ERIM_OS_school_position_response_rate %>%
 
 ERIM_OS_preregistration <-
   read_csv(
-    here("data", "preproc", "cluster2.csv")
+    here("data", "preproc", "Total", "cluster2.csv")
   )
 
 ```
@@ -263,7 +263,7 @@ From the question *`r ERIM_OS_preregistration_experience$question[1]`*, we see t
 
 ```{r figure2, fig.cap = "Preregistration: importance vs. experience.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure02.png"))
+knitr::include_graphics(here("img", "Total", "figure02.png"))
 
 ```
 
@@ -291,7 +291,7 @@ Among the possible concerns that researchers could have about preregistering the
 
 ```{r figure3, fig.cap = "Preregistration: concerns.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure03.png"))
+knitr::include_graphics(here("img", "Total", "figure03.png"))
 
 ```
 
@@ -346,7 +346,7 @@ Text.
 
 ERIM_OS_materials <-
   read_csv(
-    here("data", "preproc", "cluster3.csv")
+    here("data", "preproc", "Total", "cluster3.csv")
   )
 
 ```
@@ -363,7 +363,7 @@ From the question *`r ERIM_OS_materials_importance$question[1]`*, we can see tha
 
 ```{r figure4, fig.cap = "Open materials and/or code: importance.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure04.png"))
+knitr::include_graphics(here("img", "Total", "figure04.png"))
 
 ```
 
@@ -391,7 +391,7 @@ Based on these results, we observe that researchers at ESE and RSM share their m
 
 ```{r figure5, fig.cap = "Open materials and/or code: using vs. sharing.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure05.png"))
+knitr::include_graphics(here("img", "Total", "figure05.png"))
 
 ```
 
@@ -414,7 +414,7 @@ Notably, however, the majority of respondents (`r paste0(pull(filter(ERIM_OS_mat
 
 ```{r figure6, fig.cap = "Open materials and/or code: concerns.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure06.png"))
+knitr::include_graphics(here("img", "Total", "figure06.png"))
 
 ```
 
@@ -467,7 +467,7 @@ Text.
 
 ERIM_OS_data <-
   read_csv(
-    here("data", "preproc", "cluster4.csv")
+    here("data", "preproc", "Total", "cluster4.csv")
   )
 
 ```
@@ -484,7 +484,7 @@ From the question *`r ERIM_OS_data_importance$question[1]`*, `r paste0(format(su
 
 ```{r figure7, fig.cap = "Open data: importance.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure07.png"))
+knitr::include_graphics(here("img", "Total", "figure07.png"))
 
 ```
 
@@ -512,7 +512,7 @@ Based on these results, it seems that researchers at ESE and RSM have more exper
 
 ```{r figure8, fig.cap = "Open data: using vs. sharing.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure08.png"))
+knitr::include_graphics(here("img", "Total", "figure08.png"))
 
 ```
 
@@ -535,7 +535,7 @@ Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_data_concerns,
 
 ```{r figure9, fig.cap = "Open data: concerns.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure09.png"))
+knitr::include_graphics(here("img", "Total", "figure09.png"))
 
 ```
 
@@ -584,7 +584,7 @@ Text.
 
 ERIM_OS_archiving <-
   read_csv(
-    here("data", "preproc", "cluster5.csv")
+    here("data", "preproc", "Total", "cluster5.csv")
   )
 
 ```
@@ -611,7 +611,7 @@ From the question *`r ERIM_OS_archiving_experience$question[1]`*, we see that mo
 
 ```{r figure10, fig.cap = "Pre-publication: importance vs. experience.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure10.png"))
+knitr::include_graphics(here("img", "Total", "figure10.png"))
 
 ```
 
@@ -634,7 +634,7 @@ Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_archiving_conc
 
 ```{r figure11, fig.cap = "Pre-publication: concerns.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure11.png"))
+knitr::include_graphics(here("img", "Total", "figure11.png"))
 
 ```
 
@@ -683,7 +683,7 @@ Text.
 
 ERIM_OS_oa <-
   read_csv(
-    here("data", "preproc", "cluster6.csv")
+    here("data", "preproc", "Total", "cluster6.csv")
   )
 
 ```
@@ -771,7 +771,7 @@ Text.
 
 ERIM_OS_general <-
   read_csv(
-    here("data", "preproc", "cluster1.csv")
+    here("data", "preproc", "Total", "cluster1.csv")
   )
 
 ```
@@ -788,7 +788,7 @@ When asked *`r ERIM_OS_general_experience$question[1]`*, `r pull(filter(ERIM_OS_
 
 ```{r figure12, fig.cap = "Open science practices: experience.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure12.png"))
+knitr::include_graphics(here("img", "Total", "figure12.png"))
 
 ```
 
@@ -819,7 +819,7 @@ During March 2021 ERIM launched an ORCID campaign. When asked about participatio
 
 ERIM_OS_general_concerns <-
   read_csv(
-    here("data", "preproc", "cluster7.csv")
+    here("data", "preproc", "Total", "cluster7.csv")
   ) %>% 
   arrange(desc(perc))
 
@@ -835,7 +835,7 @@ For details, see Figure \@ref(fig:figure13).
 
 ```{r figure13, fig.cap = "Open science: barriers.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure13.png"))
+knitr::include_graphics(here("img", "Total", "figure13.png"))
 
 ```
 
@@ -884,7 +884,7 @@ Text.
 
 ERIM_OS_tools <-
   read_csv(
-    here("data", "preproc", "cluster8.csv")
+    here("data", "preproc", "Total", "cluster8.csv")
   ) %>% 
   arrange(desc(item), desc(perc))
 
@@ -894,7 +894,7 @@ We asked researchers to indicate their awareness of some popular open science re
 
 ```{r figure14, fig.cap = "Open science tools: awareness.", out.width = '100%'}
 
-knitr::include_graphics(here("img", "figure14.png"))
+knitr::include_graphics(here("img", "Total", "figure14.png"))
 
 ```
 
@@ -943,7 +943,7 @@ Text.
 
 ERIM_OS_support <-
   read_csv(
-    here("data", "preproc", "cluster9.csv")
+    here("data", "preproc", "Total", "cluster9.csv")
   )
 
 ```
