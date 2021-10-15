@@ -79,7 +79,7 @@ The aggreated (both ESE and RSM) responses report can be found [here](https://eu
     ├── README.md                      # Project description
    
 <!--  You can consider adding the following to this file:                    -->
-<!--  * A citation reference for your project                                -->
+<!--  * A citation reference for your project 10.25397/eur.16817605          -->
 <!--  * Contact information for questions/comments                           -->
 <!--  * How people can offer to contribute to the project                    -->
 <!--  * A contributor code of conduct, https://www.contributor-covenant.org/ -->
