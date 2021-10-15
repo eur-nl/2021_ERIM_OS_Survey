@@ -1,0 +1,25 @@
+question,item,number_responses,prop,perc,lab_perc
+"In your opinion, how important for your field is it that data from published research are openly available?",Extremely important,11,0.2391304347826087,23.91,23.91%
+"In your opinion, how important for your field is it that data from published research are openly available?",Moderately important,12,0.2608695652173913,26.09,26.09%
+"In your opinion, how important for your field is it that data from published research are openly available?",Not at all important,1,0.021739130434782608,2.17,2.17%
+"In your opinion, how important for your field is it that data from published research are openly available?",Slightly important,3,0.06521739130434782,6.52,6.52%
+"In your opinion, how important for your field is it that data from published research are openly available?",Very important,19,0.41304347826086957,41.3,41.3%
+What is your experience with using open data?,"I am aware of open data, but have not used this in my research",14,0.30434782608695654,30.43,30.43%
+What is your experience with using open data?,I don’t know/prefer not to answer,1,0.021739130434782608,2.17,2.17%
+What is your experience with using open data?,"I have some experience using open data, but do not use them regularly",15,0.32608695652173914,32.61,32.61%
+What is your experience with using open data?,I regularly use open data,16,0.34782608695652173,34.78,34.78%
+What is your experience with sharing open data?,"I am aware of open data, but have not shared my data",15,0.32608695652173914,32.61,32.61%
+What is your experience with sharing open data?,I don’t know/prefer not to answer,2,0.043478260869565216,4.35,4.35%
+What is your experience with sharing open data?,"I have some experience sharing open data, but not regularly",16,0.34782608695652173,34.78,34.78%
+What is your experience with sharing open data?,I regularly share open data,13,0.2826086956521739,28.26,28.26%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,I do not share any of these concerns,9,0.1956521739130435,19.57,19.57%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,I don’t know/prefer not to answer,1,0.021739130434782608,2.17,2.17%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,I might lose control over how my data are being used,1,0.021739130434782608,2.17,2.17%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,I might not receive appropriate credit for my data collection,4,0.08695652173913043,8.7,8.7%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,"I think it is unfair for researchers beyond the original team to benefit (e.g. through future publications, career advancement) from my data collection",1,0.021739130434782608,2.17,2.17%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,Other,2,0.043478260869565216,4.35,4.35%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,Other researchers could use my data for another study that I intended to conduct in the future,2,0.043478260869565216,4.35,4.35%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,Other researchers might criticise my data and/or research practices,3,0.06521739130434782,6.52,6.52%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,There could be issues related to ethics,2,0.043478260869565216,4.35,4.35%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,There could be issues related to intellectual property,15,0.32608695652173914,32.61,32.61%
+The following are possible concerns that researchers could have about making their data openly available. Which of these concerns would apply to you?,There could be issues related to privacy,6,0.13043478260869565,13.04,13.04%

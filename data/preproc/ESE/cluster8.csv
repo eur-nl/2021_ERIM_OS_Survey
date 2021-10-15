@@ -1,0 +1,30 @@
+question,item,number_responses,prop,perc,lab_perc
+Open Science Framework,"I am aware of it, but don't use it",20,0.43478260869565216,43.48,43.48%
+Open Science Framework,I am unaware of this,22,0.4782608695652174,47.83,47.83%
+Open Science Framework,I use this,4,0.08695652173913043,8.7,8.7%
+GitHub,"I am aware of it, but don't use it",15,0.32608695652173914,32.61,32.61%
+GitHub,I am unaware of this,8,0.17391304347826086,17.39,17.39%
+GitHub,I use this,23,0.5,50,50%
+EUR data repository/Figshare,"I am aware of it, but don't use it",21,0.45652173913043476,45.65,45.65%
+EUR data repository/Figshare,I am unaware of this,19,0.41304347826086957,41.3,41.3%
+EUR data repository/Figshare,I use this,6,0.13043478260869565,13.04,13.04%
+4TU Center for Research Data,"I am aware of it, but don't use it",2,0.043478260869565216,4.35,4.35%
+4TU Center for Research Data,I am unaware of this,44,0.9565217391304348,95.65,95.65%
+EUR SurfDrive,"I am aware of it, but don't use it",16,0.34782608695652173,34.78,34.78%
+EUR SurfDrive,I am unaware of this,10,0.21739130434782608,21.74,21.74%
+EUR SurfDrive,I use this,20,0.43478260869565216,43.48,43.48%
+EUR Dropbox (not personal),"I am aware of it, but don't use it",11,0.2391304347826087,23.91,23.91%
+EUR Dropbox (not personal),I am unaware of this,15,0.32608695652173914,32.61,32.61%
+EUR Dropbox (not personal),I use this,20,0.43478260869565216,43.48,43.48%
+FAIR data principles,"I am aware of it, but don't use it",7,0.15217391304347827,15.22,15.22%
+FAIR data principles,I am unaware of this,34,0.7391304347826086,73.91,73.91%
+FAIR data principles,I use this,5,0.10869565217391304,10.87,10.87%
+EUR RePub,"I am aware of it, but don't use it",14,0.30434782608695654,30.43,30.43%
+EUR RePub,I am unaware of this,13,0.2826086956521739,28.26,28.26%
+EUR RePub,I use this,19,0.41304347826086957,41.3,41.3%
+Zenodo,"I am aware of it, but don't use it",4,0.08888888888888889,8.89,8.89%
+Zenodo,I am unaware of this,40,0.8888888888888888,88.89,88.89%
+Zenodo,I use this,1,0.022222222222222223,2.22,2.22%
+Other 1,I am unaware of this,1,0.16666666666666666,16.67,16.67%
+Other 1,I use this,5,0.8333333333333334,83.33,83.33%
+Other 2,I use this,1,1,100,100%
