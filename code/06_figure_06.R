@@ -36,82 +36,42 @@ cluster <-
 # extract questions
 questions <- levels(cluster$question)
 
-# Question 2, lollipop graph ----------------------------------------------------------------
+# Question4, lollipop graph ----------------------------------------------------------------
 
-num_question <- 2
+num_question <- 4
 
-data_cluster3_question2 <-
+data_cluster3_question4 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
   droplevels() %>% 
   mutate(item = str_wrap(item, width = 40))
 
-lollipop_cluster3_question2 <-
-  data_cluster3_question2 %>%
+lollipop_figure6 <-
+  data_cluster3_question4 %>%
   ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
-    breaks = seq(0, 50, 5),
-    limits = c(0, 50)
+    breaks = seq(0, 35, 5),
+    limits = c(0, 35)
   ) +
   labs(
-    title = "Your experience using them",
+    title = "Concerns about open materials and/or code",
     x = ""
   ) +
   coord_flip() +
   theme_custom
 
-lollipop_cluster3_question2
-
-# Question 3, lollipop graph ----------------------------------------------------------------
-
-num_question <- 3
-
-data_cluster3_question3 <-
-  cluster %>%
-  filter(question == questions[num_question]) %>%
-  droplevels() %>% 
-  mutate(item = str_wrap(item, width = 40))
-
-lollipop_cluster3_question3 <-
-  data_cluster3_question3 %>%
-  ggplot(aes(x = reorder(item, perc), y = perc)) +
-  geom_point(size = 6, color = "#0C8066") +
-  geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
-  geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
-  scale_y_continuous(
-    breaks = seq(0, 40, 5),
-    limits = c(0, 40)
-  ) +
-  labs(
-    title = "Your experience sharing them",
-    x = ""
-  ) +
-  coord_flip() +
-  theme_custom
-
-lollipop_cluster3_question3
-
-# Merge in one figure ----------------------------------------------------------------
-
-lollipop_figure5 <-
-  lollipop_cluster3_question2 / lollipop_cluster3_question3 +
-  plot_annotation(
-    title = "Open materials and/or code"
-  ) &
-  theme(plot.title = element_text(size = 26, hjust = .5))
-
-lollipop_figure5
+lollipop_figure6
 
 # save to file
 ggsave(
-  filename = "figure5.png",
-  plot = lollipop_figure5,
+  filename = "figure06.png",
+  plot = lollipop_figure6,
   device = "png",
   path = here("img"),
-  scale = 3,
+  scale = 3.1,
   width = 8,
   height = 8,
   units = "cm",

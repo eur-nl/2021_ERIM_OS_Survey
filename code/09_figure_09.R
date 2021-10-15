@@ -36,18 +36,18 @@ cluster <-
 # extract questions
 questions <- levels(cluster$question)
 
-# Question 1, lollipop graph ----------------------------------------------------------------
+# Question4, lollipop graph ----------------------------------------------------------------
 
-num_question <- 1
+num_question <- 4
 
-data_cluster4_question1 <-
+data_cluster4_question4 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
   droplevels() %>% 
   mutate(item = str_wrap(item, width = 40))
 
-lollipop_figure7 <-
-  data_cluster4_question1 %>%
+lollipop_figure9 <-
+  data_cluster4_question4 %>%
   ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
@@ -57,19 +57,18 @@ lollipop_figure7 <-
     limits = c(0, 35)
   ) +
   labs(
-    title = "Open data",
-    subtitle = "Importance for your field",
+    title = "Concerns about open data",
     x = ""
   ) +
   coord_flip() +
   theme_custom
 
-lollipop_figure7
+lollipop_figure9
 
 # save to file
 ggsave(
-  filename = "figure7.png",
-  plot = lollipop_figure7,
+  filename = "figure09.png",
+  plot = lollipop_figure9,
   device = "png",
   path = here("img"),
   scale = 3,

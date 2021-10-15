@@ -24,7 +24,7 @@ source(here("code", "functions", "theme_custom.R")) # custom ggplot2 theme
 
 cluster <-
   read_csv(
-    here("data", "preproc", "cluster4.csv"),
+    here("data", "preproc", "cluster2.csv"),
     show_col_types = FALSE
   ) %>% 
   mutate(
@@ -36,18 +36,18 @@ cluster <-
 # extract questions
 questions <- levels(cluster$question)
 
-# Question4, lollipop graph ----------------------------------------------------------------
+# Question 3, lollipop graph ----------------------------------------------------------------
 
-num_question <- 4
+num_question <- 3
 
-data_cluster4_question4 <-
+data_cluster2_question3 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
   droplevels() %>% 
   mutate(item = str_wrap(item, width = 40))
 
-lollipop_figure9 <-
-  data_cluster4_question4 %>%
+lollipop_figure3 <-
+  data_cluster2_question3 %>%
   ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
@@ -57,18 +57,18 @@ lollipop_figure9 <-
     limits = c(0, 35)
   ) +
   labs(
-    title = "Concerns about open data",
+    title = "Concerns about preregistration",
     x = ""
   ) +
   coord_flip() +
   theme_custom
 
-lollipop_figure9
+lollipop_figure3
 
 # save to file
 ggsave(
-  filename = "figure9.png",
-  plot = lollipop_figure9,
+  filename = "figure03.png",
+  plot = lollipop_figure3,
   device = "png",
   path = here("img"),
   scale = 3,

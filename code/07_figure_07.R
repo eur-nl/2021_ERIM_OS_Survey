@@ -24,7 +24,7 @@ source(here("code", "functions", "theme_custom.R")) # custom ggplot2 theme
 
 cluster <-
   read_csv(
-    here("data", "preproc", "cluster3.csv"),
+    here("data", "preproc", "cluster4.csv"),
     show_col_types = FALSE
   ) %>% 
   mutate(
@@ -36,18 +36,18 @@ cluster <-
 # extract questions
 questions <- levels(cluster$question)
 
-# Question4, lollipop graph ----------------------------------------------------------------
+# Question 1, lollipop graph ----------------------------------------------------------------
 
-num_question <- 4
+num_question <- 1
 
-data_cluster3_question4 <-
+data_cluster4_question1 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
   droplevels() %>% 
   mutate(item = str_wrap(item, width = 40))
 
-lollipop_figure6 <-
-  data_cluster3_question4 %>%
+lollipop_figure7 <-
+  data_cluster4_question1 %>%
   ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
@@ -57,21 +57,22 @@ lollipop_figure6 <-
     limits = c(0, 35)
   ) +
   labs(
-    title = "Concerns about open materials and/or code",
+    title = "Open data",
+    subtitle = "Importance for your field",
     x = ""
   ) +
   coord_flip() +
   theme_custom
 
-lollipop_figure6
+lollipop_figure7
 
 # save to file
 ggsave(
-  filename = "figure6.png",
-  plot = lollipop_figure6,
+  filename = "figure07.png",
+  plot = lollipop_figure7,
   device = "png",
   path = here("img"),
-  scale = 3.1,
+  scale = 3,
   width = 8,
   height = 8,
   units = "cm",

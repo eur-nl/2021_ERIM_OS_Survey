@@ -107,7 +107,7 @@ lollipop_figure8
 
 # save to file
 ggsave(
-  filename = "figure8.png",
+  filename = "figure08.png",
   plot = lollipop_figure8,
   device = "png",
   path = here("img"),
