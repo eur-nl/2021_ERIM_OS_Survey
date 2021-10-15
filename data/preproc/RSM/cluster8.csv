@@ -1,0 +1,31 @@
+question,item,number_responses,prop,perc,lab_perc
+Open Science Framework,"I am aware of it, but don't use it",33,0.5,50,50%
+Open Science Framework,I am unaware of this,18,0.2727272727272727,27.27,27.27%
+Open Science Framework,I use this,15,0.22727272727272727,22.73,22.73%
+GitHub,"I am aware of it, but don't use it",41,0.6212121212121212,62.12,62.12%
+GitHub,I am unaware of this,15,0.22727272727272727,22.73,22.73%
+GitHub,I use this,10,0.15151515151515152,15.15,15.15%
+EUR data repository/Figshare,"I am aware of it, but don't use it",42,0.65625,65.62,65.62%
+EUR data repository/Figshare,I am unaware of this,11,0.171875,17.19,17.19%
+EUR data repository/Figshare,I use this,11,0.171875,17.19,17.19%
+4TU Center for Research Data,"I am aware of it, but don't use it",6,0.09375,9.38,9.38%
+4TU Center for Research Data,I am unaware of this,58,0.90625,90.62,90.62%
+EUR SurfDrive,"I am aware of it, but don't use it",27,0.4153846153846154,41.54,41.54%
+EUR SurfDrive,I am unaware of this,11,0.16923076923076924,16.92,16.92%
+EUR SurfDrive,I use this,27,0.4153846153846154,41.54,41.54%
+EUR Dropbox (not personal),"I am aware of it, but don't use it",21,0.3230769230769231,32.31,32.31%
+EUR Dropbox (not personal),I am unaware of this,10,0.15384615384615385,15.38,15.38%
+EUR Dropbox (not personal),I use this,34,0.5230769230769231,52.31,52.31%
+FAIR data principles,"I am aware of it, but don't use it",12,0.1875,18.75,18.75%
+FAIR data principles,I am unaware of this,41,0.640625,64.06,64.06%
+FAIR data principles,I use this,11,0.171875,17.19,17.19%
+EUR RePub,"I am aware of it, but don't use it",21,0.328125,32.81,32.81%
+EUR RePub,I am unaware of this,25,0.390625,39.06,39.06%
+EUR RePub,I use this,18,0.28125,28.12,28.12%
+Zenodo,"I am aware of it, but don't use it",3,0.047619047619047616,4.76,4.76%
+Zenodo,I am unaware of this,60,0.9523809523809523,95.24,95.24%
+Other 1,"I am aware of it, but don't use it",1,0.2,20,20%
+Other 1,I am unaware of this,2,0.4,40,40%
+Other 1,I use this,2,0.4,40,40%
+Other 2,"I am aware of it, but don't use it",1,0.5,50,50%
+Other 2,I am unaware of this,1,0.5,50,50%
