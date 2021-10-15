@@ -24,7 +24,7 @@ source(here("code", "functions", "theme_custom.R")) # custom ggplot2 theme
 
 cluster <-
   read_csv(
-    here("data", "preproc", "cluster3.csv"),
+    here("data", "preproc", "ESE", "cluster5.csv"),
     show_col_types = FALSE
   ) %>% 
   mutate(
@@ -36,81 +36,81 @@ cluster <-
 # extract questions
 questions <- levels(cluster$question)
 
+# Question 1, lollipop graph ----------------------------------------------------------------
+
+num_question <- 1
+
+data_cluster5_question1 <-
+  cluster %>%
+  filter(question == questions[num_question]) %>%
+  droplevels() %>% 
+  mutate(item = str_wrap(item, width = 40))
+
+lollipop_cluster5_question1 <-
+  data_cluster5_question1 %>%
+  ggplot(aes(x = reorder(item, perc), y = perc)) +
+  geom_point(size = 6, color = "#0C8066") +
+  geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
+  geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
+  scale_y_continuous(
+    breaks = seq(0, 45, 5),
+    limits = c(0, 45)
+  ) +
+  labs(
+    title = "Importance for your field",
+    x = ""
+  ) +
+  coord_flip() +
+  theme_custom
+
+lollipop_cluster5_question1
+
 # Question 2, lollipop graph ----------------------------------------------------------------
 
 num_question <- 2
 
-data_cluster3_question2 <-
+data_cluster5_question2 <-
   cluster %>%
   filter(question == questions[num_question]) %>%
   droplevels() %>% 
   mutate(item = str_wrap(item, width = 40))
 
-lollipop_cluster3_question2 <-
-  data_cluster3_question2 %>%
+lollipop_cluster5_question2 <-
+  data_cluster5_question2 %>%
   ggplot(aes(x = reorder(item, perc), y = perc)) +
   geom_point(size = 6, color = "#0C8066") +
   geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
   geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
   scale_y_continuous(
-    breaks = seq(0, 50, 5),
-    limits = c(0, 50)
+    breaks = seq(0, 45, 5),
+    limits = c(0, 45)
   ) +
   labs(
-    title = "Your experience using them",
+    title = "Your experience",
     x = ""
   ) +
   coord_flip() +
   theme_custom
 
-lollipop_cluster3_question2
-
-# Question 3, lollipop graph ----------------------------------------------------------------
-
-num_question <- 3
-
-data_cluster3_question3 <-
-  cluster %>%
-  filter(question == questions[num_question]) %>%
-  droplevels() %>% 
-  mutate(item = str_wrap(item, width = 40))
-
-lollipop_cluster3_question3 <-
-  data_cluster3_question3 %>%
-  ggplot(aes(x = reorder(item, perc), y = perc)) +
-  geom_point(size = 6, color = "#0C8066") +
-  geom_segment(aes(x = item, xend = item, y = 0, yend = perc), color = "#012328") +
-  geom_label_repel(aes(item, perc, label = lab_perc), size = 4, nudge_y = 4, segment.alpha = 0, fill = "white", color = "#171C54") +
-  scale_y_continuous(
-    breaks = seq(0, 40, 5),
-    limits = c(0, 40)
-  ) +
-  labs(
-    title = "Your experience sharing them",
-    x = ""
-  ) +
-  coord_flip() +
-  theme_custom
-
-lollipop_cluster3_question3
+lollipop_cluster5_question2
 
 # Merge in one figure ----------------------------------------------------------------
 
-lollipop_figure5 <-
-  lollipop_cluster3_question2 / lollipop_cluster3_question3 +
+lollipop_figure10 <-
+  lollipop_cluster5_question1 / lollipop_cluster5_question2 +
   plot_annotation(
-    title = "Open materials and/or code"
+    title = "Pre-publication archiving"
   ) &
   theme(plot.title = element_text(size = 26, hjust = .5))
 
-lollipop_figure5
+lollipop_figure10
 
 # save to file
 ggsave(
-  filename = "figure05.png",
-  plot = lollipop_figure5,
+  filename = "figure10.png",
+  plot = lollipop_figure10,
   device = "png",
-  path = here("img"),
+  path = here("img", "ESE"),
   scale = 3,
   width = 8,
   height = 8,
