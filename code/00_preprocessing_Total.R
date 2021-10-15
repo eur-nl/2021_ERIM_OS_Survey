@@ -123,7 +123,7 @@ ERIM_OS_clean
 # save as .csv
 write_csv(
   ERIM_OS_clean,
-  here("data", "preproc", "CLEAN_20210608_ERIM_OS_Survey.csv")
+  here("data", "preproc", "Total", "CLEAN_20210608_ERIM_OS_Survey.csv")
 )
 
 # Cluster 0 ----------------------------------------------------------------
@@ -166,7 +166,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 1 ----------------------------------------------------------------
@@ -206,7 +206,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 2 ----------------------------------------------------------------
@@ -246,7 +246,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 3 ----------------------------------------------------------------
@@ -287,7 +287,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 4 ----------------------------------------------------------------
@@ -328,7 +328,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 5 ----------------------------------------------------------------
@@ -368,7 +368,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 6 ----------------------------------------------------------------
@@ -407,7 +407,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 7 ----------------------------------------------------------------
@@ -439,7 +439,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 8 ----------------------------------------------------------------
@@ -486,7 +486,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # Cluster 9 ----------------------------------------------------------------
@@ -526,7 +526,7 @@ cluster <-
 # save
 write_csv(
   cluster,
-  here("data", "preproc", paste0("cluster", num_cluster, ".csv"))
+  here("data", "preproc", "Total", paste0("cluster", num_cluster, ".csv"))
 )
 
 # END ----------------------------------------------------------------
