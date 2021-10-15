@@ -18,7 +18,7 @@ library(tidyverse)
 library(ggrepel)
 library(patchwork)
 
-source(here("code", "theme_custom.R")) # custom ggplot2 theme
+source(here("code", "functions", "theme_custom.R")) # custom ggplot2 theme
 
 # EUR color palette (https://www.eur.nl/en/about-eur/house-style/brand-elements/colours)
 EUR_palette <- c("#0C8066", # Erasmus Bright Green

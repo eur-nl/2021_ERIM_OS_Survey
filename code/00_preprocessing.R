@@ -15,7 +15,7 @@ library(here)
 library(tidyverse)
 
 # load custom function to split variable into multiple columns
-source(here("code", "split_into_multiple.R"))
+source(here("code", "functions", "split_into_multiple.R"))
 
 # Load data ----------------------------------------------------------------
 

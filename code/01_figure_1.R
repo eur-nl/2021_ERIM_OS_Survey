@@ -18,7 +18,7 @@ library(tidyverse)
 library(ggrepel)
 library(patchwork)
 
-source(here("code", "theme_custom.R")) # custom ggplot2 theme
+source(here("code", "functions", "theme_custom.R")) # custom ggplot2 theme
 
 # Data ----------------------------------------------------------------
 
