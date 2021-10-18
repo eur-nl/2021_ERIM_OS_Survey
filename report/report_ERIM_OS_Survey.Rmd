@@ -1555,40 +1555,97 @@ ERIM_OS_support_practice %>%
 
 ```
 
-
 ## ESE
 
-Text.
+```{r ESE-support-data}
 
+ESE_support <-
+  read_csv(
+    here("data", "preproc", "ESE", "cluster9.csv")
+  )
 
+```
 
+```{r ESE-support-expectations-data}
 
+ESE_support_expectations <-
+  ESE_support %>% 
+  filter(question == "Do you expect that ERIM supports you in learning open science practices?")
 
+```
 
+Finally, researchers were asked *`r ESE_support_expectations$question[1]`*. `r pull(filter(ESE_support_expectations, item == "Yes"), lab_perc)` of respondents said *`r pull(filter(ESE_support_expectations, item == "Yes"), item)`* whereas `r pull(filter(ESE_support_expectations, item == "No"), lab_perc)` said *`r pull(filter(ESE_support_expectations, item == "No"), item)`*.
 
+```{r ESE-support-practice-data}
 
+ESE_support_practice <-
+  ESE_support %>% 
+  filter(question == "Which of the following open science practices would you like ERIM to provide information or support for?") %>% 
+  arrange(desc(perc))
 
+```
 
+When specifically asked *`r ESE_support_practice$question[1]`*, the top 3 were:
 
+* *`r ESE_support_practice$item[1]`* (`r ESE_support_practice[1, "lab_perc"]`)
+* *`r ESE_support_practice$item[2]`* (`r ESE_support_practice[2, "lab_perc"]`)
+* *`r ESE_support_practice$item[3]`* (`r ESE_support_practice[3, "lab_perc"]`)
 
+For an overview, see Table \@ref(tab:ESE-support-practice-table).
 
+```{r ESE-support-practice-table}
 
+ESE_support_practice %>% 
+ select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ESE_support_practice$question[1])
 
-
-
-
-
-
-
-
-
-
+```
 
 ## RSM
 
-Text.
+```{r RSM-support-data}
 
+RSM_support <-
+  read_csv(
+    here("data", "preproc", "RSM", "cluster9.csv")
+  )
 
+```
+
+```{r RSM-support-expectations-data}
+
+RSM_support_expectations <-
+  RSM_support %>% 
+  filter(question == "Do you expect that ERIM supports you in learning open science practices?")
+
+```
+
+Finally, researchers were asked *`r RSM_support_expectations$question[1]`*. `r pull(filter(RSM_support_expectations, item == "Yes"), lab_perc)` of respondents said *`r pull(filter(RSM_support_expectations, item == "Yes"), item)`* whereas `r pull(filter(RSM_support_expectations, item == "No"), lab_perc)` said *`r pull(filter(RSM_support_expectations, item == "No"), item)`*.
+
+```{r RSM-support-practice-data}
+
+RSM_support_practice <-
+  RSM_support %>% 
+  filter(question == "Which of the following open science practices would you like ERIM to provide information or support for?") %>% 
+  arrange(desc(perc))
+
+```
+
+When specifically asked *`r RSM_support_practice$question[1]`*, the top 3 were:
+
+* *`r RSM_support_practice$item[1]`* (`r RSM_support_practice[1, "lab_perc"]`)
+* *`r RSM_support_practice$item[2]`* (`r RSM_support_practice[2, "lab_perc"]`)
+* *`r RSM_support_practice$item[3]`* (`r RSM_support_practice[3, "lab_perc"]`)
+
+For an overview, see Table \@ref(tab:RSM-support-practice-table).
+
+```{r RSM-support-practice-table}
+
+RSM_support_practice %>% 
+ select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = RSM_support_practice$question[1])
+
+```
 
 # {-}
 
