@@ -944,40 +944,127 @@ knitr::include_graphics(here("img", "Total", "figure11.png"))
 
 ```
 
-
 ## ESE
 
-Text.
+```{r ESE-archiving-data}
 
+ESE_archiving <-
+  read_csv(
+    here("data", "preproc", "ESE", "cluster5.csv")
+  )
 
+```
 
+```{r ESE-archiving-importance-data}
 
+ESE_archiving_importance <-
+  ESE_archiving %>% 
+  filter(question == "In your opinion, how important is pre-publication archiving for your field?") %>% 
+  arrange(desc(perc))
 
+```
 
+The answers to the question *`r ESE_archiving_importance$question[1]`* reveal that respondents consider pre-publication archiving *`r ESE_archiving_importance$item[1]`* or *`r ESE_archiving_importance$item[2]`* (`r paste0(sum(ESE_archiving_importance[1, "perc"], ESE_archiving_importance[2, "perc"]), "%")`), while `r paste0(pull(filter(ESE_archiving_importance, item == "Not at all important"), "perc"), "%")` believe that pre-publication archiving is *`r pull(filter(ESE_archiving_importance, item == "Not at all important"), item)`*.
 
+```{r ESE-archiving-experience-data}
 
+ESE_archiving_experience <-
+  ESE_archiving %>% 
+  filter(question == "What is your experience with pre-publication archiving?")
 
+```
 
+From the question *`r ESE_archiving_experience$question[1]`*, we see that `r pull(filter(ESE_archiving_experience, item == "I am aware of pre-publication archiving but have not used it"), lab_perc)` of respondents are aware of pre-publication archiving but have not used it in their own projects. `r pull(filter(ESE_archiving_experience, item == "I have extensive experience with preprint archiving"), lab_perc)` of respondents have extensive experience with pre-publication archiving, while `r pull(filter(ESE_archiving_experience, item == "Until now, I was unaware of \"pre-publication archiving\""), lab_perc)` had never heard of pre-publication archiving before answering this survey. More details can be found in Figure \@ref(fig:ESE-figure10).
 
+```{r ESE-figure10, fig.cap = "Pre-publication: importance vs. experience.", out.width = '100%'}
 
+knitr::include_graphics(here("img", "ESE", "figure10.png"))
 
+```
 
+```{r ESE-archiving-concerns-data}
 
+ESE_archiving_concerns <-
+  ESE_archiving %>% 
+  filter(question == "The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
 
+```
 
+Among the possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review, the top 3 were: 
 
+* *`r ESE_archiving_concerns$item[1]`* (`r ESE_archiving_concerns[1, "lab_perc"]`)
+* *`r ESE_archiving_concerns$item[3]`* (`r ESE_archiving_concerns[3, "lab_perc"]`)
+* *`r ESE_archiving_concerns$item[4]`* (`r ESE_archiving_concerns[4, "lab_perc"]`)
 
+More details can be found in Figure \@ref(fig:ESE-figure11).
 
+```{r ESE-figure11, fig.cap = "Pre-publication: concerns.", out.width = '100%'}
 
+knitr::include_graphics(here("img", "ESE", "figure11.png"))
 
-
-
+```
 
 ## RSM
 
-Text.
+```{r RSM-archiving-data}
 
+RSM_archiving <-
+  read_csv(
+    here("data", "preproc", "RSM", "cluster5.csv")
+  )
 
+```
+
+```{r RSM-archiving-importance-data}
+
+RSM_archiving_importance <-
+  RSM_archiving %>% 
+  filter(question == "In your opinion, how important is pre-publication archiving for your field?") %>% 
+  arrange(desc(perc))
+
+```
+
+The answers to the question *`r RSM_archiving_importance$question[1]`* reveal that respondents consider pre-publication archiving *`r RSM_archiving_importance$item[1]`* or *`r RSM_archiving_importance$item[2]`* (`r paste0(sum(RSM_archiving_importance[1, "perc"], RSM_archiving_importance[2, "perc"]), "%")`).
+
+```{r RSM-archiving-experience-data}
+
+RSM_archiving_experience <-
+  RSM_archiving %>% 
+  filter(question == "What is your experience with pre-publication archiving?")
+
+```
+
+From the question *`r RSM_archiving_experience$question[1]`*, we see that `r pull(filter(RSM_archiving_experience, item == "I am aware of pre-publication archiving but have not used it"), lab_perc)` of respondents are aware of pre-publication archiving but have not used it in their own projects. `r pull(filter(RSM_archiving_experience, item == "I have extensive experience with preprint archiving"), lab_perc)` of respondents have extensive experience with pre-publication archiving, while `r pull(filter(RSM_archiving_experience, item == "Until now, I was unaware of \"pre-publication archiving\""), lab_perc)` had never heard of pre-publication archiving before answering this survey. More details can be found in Figure \@ref(fig:RSM-figure10).
+
+```{r RSM-figure10, fig.cap = "Pre-publication: importance vs. experience.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "RSM", "figure10.png"))
+
+```
+
+```{r RSM-archiving-concerns-data}
+
+RSM_archiving_concerns <-
+  RSM_archiving %>% 
+  filter(question == "The following are possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review. Which of these concerns would apply to you?") %>% 
+  arrange(desc(perc))
+
+```
+
+Among the possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review, the top 3 were: 
+
+* *`r RSM_archiving_concerns$item[1]`* (`r RSM_archiving_concerns[1, "lab_perc"]`)
+* *`r RSM_archiving_concerns$item[3]`* (`r RSM_archiving_concerns[3, "lab_perc"]`)
+* *`r RSM_archiving_concerns$item[4]`* (`r RSM_archiving_concerns[4, "lab_perc"]`)
+
+More details can be found in Figure \@ref(fig:RSM-figure11).
+
+```{r RSM-figure11, fig.cap = "Pre-publication: concerns.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "RSM", "figure11.png"))
+
+```
 
 # {-}
 
