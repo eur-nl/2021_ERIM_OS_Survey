@@ -1117,40 +1117,103 @@ ERIM_OS_oa_apc %>%
 
 ```
 
-
 ## ESE
 
-Text.
+```{r ESE-oa-data}
 
+ESE_oa <-
+  read_csv(
+    here("data", "preproc", "ESE", "cluster6.csv")
+  )
 
+```
 
+```{r ESE-oa-pubs-proportion-data}
 
+ESE_oa_pubs <-
+  ESE_oa %>% 
+  filter(question == "Approximately what proportion of your publications from the last 5 years are open access?")
 
+```
 
+When asked *`r ESE_oa_pubs$question[1]`*, `r paste0(pull(filter(ESE_oa_pubs, item == "All"), "perc"), "%")` of respondents declared to have published all their papers open access, whereas `r paste0(pull(filter(ESE_oa_pubs, item == "None"), "perc"), "%")` have none of their publications open access (see details in Table \@ref(tab:ESE-oa-pubs-proportion-table)).
 
+```{r ESE-oa-pubs-proportion-table}
 
+ESE_oa_pubs %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ESE_oa_pubs$question[1])
 
+```
 
+```{r ESE-oa-pubs-apc-data}
 
+ESE_oa_apc <-
+  ESE_oa %>% 
+  filter(question == "Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?")
 
+```
 
+When asked how they paid article processing charges (APCs) for open access publications, `r pull(filter(ESE_oa_apc, item == "It was paid under the \"blanket agreement\" between VSNU and selected academic publishers"), lab_perc)` of respondents declared that APCs were covered by the "blanket agreement" between VSNU and selected academic publishers. More details can be found in Table \@ref(tab:ESE-oa-pubs-apc-table).
 
+```{r ESE-oa-pubs-apc-table}
 
+ESE_oa_apc %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = ESE_oa_apc$question[1])
 
-
-
-
-
-
-
-
-
+```
 
 ## RSM
 
-Text.
+```{r RSM-oa-data}
 
+RSM_oa <-
+  read_csv(
+    here("data", "preproc", "RSM", "cluster6.csv")
+  )
 
+```
+
+```{r RSM-oa-pubs-proportion-data}
+
+RSM_oa_pubs <-
+  RSM_oa %>% 
+  filter(question == "Approximately what proportion of your publications from the last 5 years are open access?")
+
+```
+
+When asked *`r RSM_oa_pubs$question[1]`*, `r paste0(pull(filter(RSM_oa_pubs, item == "All"), "perc"), "%")` of respondents declared to have published all their papers open access, whereas `r paste0(pull(filter(RSM_oa_pubs, item == "None"), "perc"), "%")` have none of their publications open access (see details in Table \@ref(tab:RSM-oa-pubs-proportion-table)).
+
+```{r RSM-oa-pubs-proportion-table}
+
+RSM_oa_pubs %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = RSM_oa_pubs$question[1])
+
+```
+
+```{r RSM-oa-pubs-apc-data}
+
+RSM_oa_apc <-
+  RSM_oa %>% 
+  filter(question == "Many open access journals charge a fee for processing the article for publication. How have you managed payment of these fees?")
+
+```
+
+When asked how they paid article processing charges (APCs) for open access publications, `r pull(filter(RSM_oa_apc, item == "It was paid under the \"blanket agreement\" between VSNU and selected academic publishers"), lab_perc)` of respondents declared that APCs were covered by the "blanket agreement" between VSNU and selected academic publishers. More details can be found in Table \@ref(tab:RSM-oa-pubs-apc-table).
+
+```{r RSM-oa-pubs-apc-table}
+
+RSM_oa_apc %>% 
+  arrange(desc(perc)) %>% 
+  select(response = item, percentage = lab_perc) %>% 
+  kable_custom(caption = RSM_oa_apc$question[1])
+
+```
 
 # {-}
 
@@ -1230,40 +1293,153 @@ knitr::include_graphics(here("img", "Total", "figure13.png"))
 
 ```
 
-
 ## ESE
 
-Text.
+```{r ESE-general-data}
 
+ESE_general <-
+  read_csv(
+    here("data", "preproc", "ESE", "cluster1.csv")
+  )
 
+```
 
+```{r ESE-general-experience-data}
 
+ESE_general_experience <-
+  ESE_general %>% 
+  filter(question == "What is your experience with open science practices?")
 
+```
 
+When asked *`r ESE_general_experience$question[1]`*, `r pull(filter(ESE_general_experience, item == "I have some experience with open science practices"), lab_perc)` of respondents have some experience with open science practices, `r pull(filter(ESE_general_experience, item == "I have extensive experience with open science practices"), lab_perc)` have extensive experience, and `r pull(filter(ESE_general_experience, item == "I am aware, but have not used open science practices in my research"), lab_perc)` are aware but have not used any open science practices in their research (see Figure \@ref(fig:ESE-figure12)).
 
+```{r ESE-figure12, fig.cap = "Open science practices: experience.", out.width = '100%'}
 
+knitr::include_graphics(here("img", "ESE", "figure12.png"))
 
+```
 
+```{r ESE-general-sharing-data}
 
+ESE_general_sharing <-
+  ESE_general %>% 
+  filter(question == "Are you sharing your knowledge about open science practices with others?") %>% 
+  arrange(desc(perc))
 
+```
 
+When asked *`r ESE_general_sharing$question[1]`*, `r pull(filter(ESE_general_sharing, item == "I share my knowledge with my colleagues informally"), lab_perc)` of respondents share their knowledge informally with colleagues, `r pull(filter(ESE_general_sharing, item == "I share my knowledge with my colleagues by offering seminars and/or giving talks"), lab_perc)` give seminars and/or talks, and `r pull(filter(ESE_general_sharing, item == "I share my knowledge with my students or fellow research students"), lab_perc)` discuss open science with students or fellow research students. The remaining respondents use other means of sharing knowledge (`r pull(filter(ESE_general_sharing, item == "Other"), lab_perc)`), do not share their knowledge (`r pull(filter(ESE_general_sharing, item == "No"), lab_perc)`), or do not know/prefer not to answer (`r pull(filter(ESE_general_sharing, item == "I don’t know/prefer not to answer"), lab_perc)`).
 
+```{r ESE-general-ORCID-data}
 
+ESE_general_ORCID <-
+  ESE_general %>% 
+  filter(question == "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?") %>% 
+  arrange(desc(perc))
 
+```
 
+During March 2021 ERIM launched an ORCID campaign. When asked about participation and creation of an ORCID record,
+`r pull(filter(ESE_general_ORCID, item == "No, I did not participate since I already had an ORCID iD"), lab_perc)` of respondents declared not to have participated since they already had it, while `r pull(filter(ESE_general_ORCID, item == "Yes, I participated and got an ORCID iD"), lab_perc)` did participate and get an ORCID ID.
+                                                
+```{r ESE-general-concerns-data}
 
+ESE_general_concerns <-
+  read_csv(
+    here("data", "preproc", "ESE", "cluster7.csv")
+  ) %>% 
+  arrange(desc(perc))
 
+```
 
+Among the perceived barriers to the uptake of open science practices, the top 3 were: 
 
+* *`r ESE_general_concerns$item[1]`* (`r ESE_general_concerns[1, "lab_perc"]`)
+* *`r ESE_general_concerns$item[3]`* (`r ESE_general_concerns[3, "lab_perc"]`)
+* *`r ESE_general_concerns$item[4]`* (`r ESE_general_concerns[4, "lab_perc"]`)
 
+For details, see Figure \@ref(fig:ESE-figure13).
 
+```{r ESE-figure13, fig.cap = "Open science: barriers.", out.width = '100%'}
 
+knitr::include_graphics(here("img", "ESE", "figure13.png"))
+
+```
 
 ## RSM
 
-Text.
+```{r RSM-general-data}
 
+RSM_general <-
+  read_csv(
+    here("data", "preproc", "RSM", "cluster1.csv")
+  )
 
+```
+
+```{r RSM-general-experience-data}
+
+RSM_general_experience <-
+  RSM_general %>% 
+  filter(question == "What is your experience with open science practices?")
+
+```
+
+When asked *`r RSM_general_experience$question[1]`*, `r pull(filter(RSM_general_experience, item == "I have some experience with open science practices"), lab_perc)` of respondents have some experience with open science practices, `r pull(filter(RSM_general_experience, item == "I have extensive experience with open science practices"), lab_perc)` have extensive experience, and `r pull(filter(RSM_general_experience, item == "I am aware, but have not used open science practices in my research"), lab_perc)` are aware but have not used any open science practices in their research (see Figure \@ref(fig:RSM-figure12)).
+
+```{r RSM-figure12, fig.cap = "Open science practices: experience.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "RSM", "figure12.png"))
+
+```
+
+```{r RSM-general-sharing-data}
+
+RSM_general_sharing <-
+  RSM_general %>% 
+  filter(question == "Are you sharing your knowledge about open science practices with others?") %>% 
+  arrange(desc(perc))
+
+```
+
+When asked *`r RSM_general_sharing$question[1]`*, `r pull(filter(RSM_general_sharing, item == "I share my knowledge with my colleagues informally"), lab_perc)` of respondents share their knowledge informally with colleagues, `r pull(filter(RSM_general_sharing, item == "I share my knowledge with my colleagues by offering seminars and/or giving talks"), lab_perc)` give seminars and/or talks, and `r pull(filter(RSM_general_sharing, item == "I share my knowledge with my students or fellow research students"), lab_perc)` discuss open science with students or fellow research students. The remaining respondents use other means of sharing knowledge (`r pull(filter(RSM_general_sharing, item == "Other"), lab_perc)`), do not share their knowledge (`r pull(filter(RSM_general_sharing, item == "No"), lab_perc)`), or do not know/prefer not to answer (`r pull(filter(RSM_general_sharing, item == "I don’t know/prefer not to answer"), lab_perc)`).
+
+```{r RSM-general-ORCID-data}
+
+RSM_general_ORCID <-
+  RSM_general %>% 
+  filter(question == "During March 2021 ERIM launched an ORCID campaign. Did you participate in it and got your own ORCID iD?") %>% 
+  arrange(desc(perc))
+
+```
+
+During March 2021 ERIM launched an ORCID campaign. When asked about participation and creation of an ORCID record,
+`r pull(filter(RSM_general_ORCID, item == "No, I did not participate since I already had an ORCID iD"), lab_perc)` of respondents declared not to have participated since they already had it, while `r pull(filter(RSM_general_ORCID, item == "Yes, I participated and got an ORCID iD"), lab_perc)` did participate and get an ORCID ID.
+                                                
+```{r RSM-general-concerns-data}
+
+RSM_general_concerns <-
+  read_csv(
+    here("data", "preproc", "RSM", "cluster7.csv")
+  ) %>% 
+  arrange(desc(perc))
+
+```
+
+Among the perceived barriers to the uptake of open science practices, the top 3 were: 
+
+* *`r RSM_general_concerns$item[1]`* (`r RSM_general_concerns[1, "lab_perc"]`)
+* *`r RSM_general_concerns$item[2]`* (`r RSM_general_concerns[2, "lab_perc"]`)
+* *`r RSM_general_concerns$item[3]`* (`r RSM_general_concerns[3, "lab_perc"]`)
+
+For details, see Figure \@ref(fig:RSM-figure13).
+
+```{r RSM-figure13, fig.cap = "Open science: barriers.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "RSM", "figure13.png"))
+
+```
 
 # {-}
 
