@@ -1465,40 +1465,45 @@ knitr::include_graphics(here("img", "Total", "figure14.png"))
 
 ```
 
-
 ## ESE
 
-Text.
+```{r ESE-tools-data}
 
+ESE_tools <-
+  read_csv(
+    here("data", "preproc", "ESE", "cluster8.csv")
+  ) %>% 
+  arrange(desc(item), desc(perc))
 
+```
 
+We asked researchers to indicate their awareness of some popular open science resources. Notably, services hosted or approved by EUR are frequently in use, for example Dropbox for Business (`r pull(filter(ESE_tools, question == "EUR Dropbox (not personal)" & item == "I use this"), lab_perc)`), SurfDrive (`r pull(filter(ESE_tools, question == "EUR SurfDrive" & item == "I use this"), lab_perc)`), and EUR RePub (`r pull(filter(ESE_tools, question == "EUR RePub" & item == "I use this"), lab_perc)`). An overview of all responses can be found in Figure \@ref(fig:ESE-figure14). 
 
+```{r ESE-figure14, fig.cap = "Open science tools: awareness.", out.width = '100%'}
 
+knitr::include_graphics(here("img", "ESE", "figure14.png"))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 ## RSM
 
-Text.
+```{r RSM-tools-data}
 
+RSM_tools <-
+  read_csv(
+    here("data", "preproc", "RSM", "cluster8.csv")
+  ) %>% 
+  arrange(desc(item), desc(perc))
 
+```
+
+We asked researchers to indicate their awareness of some popular open science resources. Notably, services hosted or approved by EUR are frequently in use, for example Dropbox for Business (`r pull(filter(RSM_tools, question == "EUR Dropbox (not personal)" & item == "I use this"), lab_perc)`), SurfDrive (`r pull(filter(RSM_tools, question == "EUR SurfDrive" & item == "I use this"), lab_perc)`), and EUR RePub (`r pull(filter(RSM_tools, question == "EUR RePub" & item == "I use this"), lab_perc)`). An overview of all responses can be found in Figure \@ref(fig:RSM-figure14). 
+
+```{r RSM-figure14, fig.cap = "Open science tools: awareness.", out.width = '100%'}
+
+knitr::include_graphics(here("img", "RSM", "figure14.png"))
+
+```
 
 # {-}
 
