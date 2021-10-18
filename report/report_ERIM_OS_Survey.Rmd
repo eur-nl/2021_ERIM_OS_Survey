@@ -481,7 +481,7 @@ Among the possible concerns that researchers could have about making their mater
 * *`r ERIM_OS_materials_concerns$item[3]`* (`r ERIM_OS_materials_concerns[3, "lab_perc"]`)
 * *`r ERIM_OS_materials_concerns$item[4]`* (`r ERIM_OS_materials_concerns[4, "lab_perc"]`)
 
-Notably, however, the majority of respondents (`r paste0(pull(filter(ERIM_OS_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure6)).
+`r paste0(pull(filter(ERIM_OS_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")` of respondents did not share any of the listed concerns (see Figure \@ref(fig:figure6)).
 
 ```{r figure6, fig.cap = "Open materials and/or code: concerns.", out.width = '100%'}
 
@@ -558,7 +558,7 @@ Among the possible concerns that researchers could have about making their mater
 * *`r ESE_materials_concerns$item[3]`* (`r ESE_materials_concerns[3, "lab_perc"]`)
 * *`r ESE_materials_concerns$item[4]`* (`r ESE_materials_concerns[4, "lab_perc"]`)
 
-Notably, however, the majority of respondents (`r paste0(pull(filter(ESE_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:ESE-figure6)).
+`r paste0(pull(filter(ESE_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")` of respondents did not share any of the listed concerns (see Figure \@ref(fig:ESE-figure6)).
 
 ```{r ESE-figure6, fig.cap = "Open materials and/or code: concerns.", out.width = '100%'}
 
@@ -635,7 +635,7 @@ Among the possible concerns that researchers could have about making their mater
 * *`r RSM_materials_concerns$item[3]`* (`r RSM_materials_concerns[3, "lab_perc"]`)
 * *`r RSM_materials_concerns$item[4]`* (`r RSM_materials_concerns[4, "lab_perc"]`)
 
-Notably, however, the majority of respondents (`r paste0(pull(filter(RSM_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:RSM-figure6)).
+`r paste0(pull(filter(RSM_materials_concerns, item == "I do not share any of these concerns"), "perc"), "%")` of respondents did not share any of the listed concerns (see Figure \@ref(fig:RSM-figure6)).
 
 ```{r RSM-figure6, fig.cap = "Open materials and/or code: concerns.", out.width = '100%'}
 
@@ -693,9 +693,7 @@ ERIM_OS_data_sharing <-
 
 ```
 
-From the question *`r ERIM_OS_data_sharing$question[1]`* we can see that `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I am aware of open data, but have not shared my data"), "perc"), "%")` of respondents are aware of sharing data, `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I have some experience sharing open data, but not regularly"), "perc"), "%")` have some experience, and `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I regularly share open data"), "perc"), "%")` regularly share open data.
-
-Based on these results, it seems that researchers at ESE and RSM have more experience using publicly available data rather than sharing their own data. More details can be found in Figure \@ref(fig:figure8).
+From the question *`r ERIM_OS_data_sharing$question[1]`* we can see that `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I am aware of open data, but have not shared my data"), "perc"), "%")` of respondents are aware of sharing data, `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I have some experience sharing open data, but not regularly"), "perc"), "%")` have some experience, and `r paste0(pull(filter(ERIM_OS_data_sharing, item == "I regularly share open data"), "perc"), "%")` regularly share open data. More details can be found in Figure \@ref(fig:figure8).
 
 ```{r figure8, fig.cap = "Open data: using vs. sharing.", out.width = '100%'}
 
@@ -718,7 +716,7 @@ Among the possible concerns that researchers could have about making their data 
 * *`r ERIM_OS_data_concerns$item[3]`* (`r ERIM_OS_data_concerns[3, "lab_perc"]`)
 * *`r ERIM_OS_data_concerns$item[4]`* (`r ERIM_OS_data_concerns[4, "lab_perc"]`)
 
-Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_data_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure9)).
+`r paste0(pull(filter(ERIM_OS_data_concerns, item == "I do not share any of these concerns"), "perc"), "%")` of respondents did not share any of the listed concerns (see Figure \@ref(fig:figure9)).
 
 ```{r figure9, fig.cap = "Open data: concerns.", out.width = '100%'}
 
@@ -936,7 +934,7 @@ Among the possible concerns that researchers could have about uploading a manusc
 * *`r ERIM_OS_archiving_concerns$item[3]`* (`r ERIM_OS_archiving_concerns[3, "lab_perc"]`)
 * *`r ERIM_OS_archiving_concerns$item[4]`* (`r ERIM_OS_archiving_concerns[4, "lab_perc"]`)
 
-Notably, however, many respondents (`r paste0(pull(filter(ERIM_OS_archiving_concerns, item == "I do not share any of these concerns"), "perc"), "%")`) did not share any of the listed concerns (see Figure \@ref(fig:figure11)).
+`r paste0(pull(filter(ERIM_OS_archiving_concerns, item == "I do not share any of these concerns"), "perc"), "%")` of respondents did not share any of the listed concerns (see Figure \@ref(fig:figure11)).
 
 ```{r figure11, fig.cap = "Pre-publication: concerns.", out.width = '100%'}
 
@@ -993,11 +991,11 @@ ESE_archiving_concerns <-
 
 Among the possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review, the top 3 were: 
 
-* *`r ESE_archiving_concerns$item[1]`* (`r ESE_archiving_concerns[1, "lab_perc"]`)
+* *`r ESE_archiving_concerns$item[2]`* (`r ESE_archiving_concerns[2, "lab_perc"]`)
 * *`r ESE_archiving_concerns$item[3]`* (`r ESE_archiving_concerns[3, "lab_perc"]`)
 * *`r ESE_archiving_concerns$item[4]`* (`r ESE_archiving_concerns[4, "lab_perc"]`)
 
-More details can be found in Figure \@ref(fig:ESE-figure11).
+`r paste0(pull(filter(ESE_archiving_concerns, item == "I do not share any of these concerns"), "perc"), "%")` of respondents did not share any of the listed concerns (see Figure \@ref(fig:ESE-figure11)).
 
 ```{r ESE-figure11, fig.cap = "Pre-publication: concerns.", out.width = '100%'}
 
@@ -1055,10 +1053,10 @@ RSM_archiving_concerns <-
 Among the possible concerns that researchers could have about uploading a manuscript to a pre-publication archive before submitting it for peer review, the top 3 were: 
 
 * *`r RSM_archiving_concerns$item[1]`* (`r RSM_archiving_concerns[1, "lab_perc"]`)
-* *`r RSM_archiving_concerns$item[3]`* (`r RSM_archiving_concerns[3, "lab_perc"]`)
+* *`r RSM_archiving_concerns$item[2]`* (`r RSM_archiving_concerns[2, "lab_perc"]`)
 * *`r RSM_archiving_concerns$item[4]`* (`r RSM_archiving_concerns[4, "lab_perc"]`)
 
-More details can be found in Figure \@ref(fig:RSM-figure11).
+`r paste0(pull(filter(ESE_archiving_concerns, item == "I do not share any of these concerns"), "perc"), "%")` of respondents did not share any of the listed concerns (see Figure \@ref(fig:RSM-figure11)).
 
 ```{r RSM-figure11, fig.cap = "Pre-publication: concerns.", out.width = '100%'}
 
