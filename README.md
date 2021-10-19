@@ -68,6 +68,7 @@ The aggreated (both ESE and RSM) responses report can be found [here](https://eu
     │   ├── figure8.png
     │   ├── figure9.png
     ├── materials
+    |   ├── RSM__ESE_Open_Science_Survey_2021 (3).qsf
     │   ├── RSM__ESE_Open_Science_Survey_2021_Questions.docx
     │   ├── Swinburne_Open_Science_Report_2019.pdf
     ├── report
